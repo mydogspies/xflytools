@@ -1,0 +1,11 @@
+.project
+.classpath
+.idea
+*.iml
+bin/
+/out/
+/target/
+/src/test/
+/rawdata/
+/deployment/
+/db_backup/
