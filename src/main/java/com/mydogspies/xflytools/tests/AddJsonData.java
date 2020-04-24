@@ -29,8 +29,8 @@ public class AddJsonData {
 
         // DATA 2
         byte[] value2 = {0, 0, 0, 0};
-        String base64Encoded2 = DatatypeConverter.printBase64Binary(value1);
-        DrefData data2 = new DrefData("LamCessna172", "taxi_light_off", "DREF+", base64Encoded2, "sim/cockpit2/switches/taxi_light_on");
+        String base64Encoded2 = DatatypeConverter.printBase64Binary(value2);
+        DrefData data2 = new DrefData("LamCessna172", "taxi_light_off", "DREF+", base64Encoded2, "sim/cockpit2/switches/taxi_light_off");
         startlist.add(data2);
 
         // add all to container

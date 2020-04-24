@@ -1,11 +1,16 @@
 package com.mydogspies.xflytools.gui;
 
+import com.mydogspies.xflytools.data.DrefDataIO;
+import com.mydogspies.xflytools.net.UDPSend;
+import com.mydogspies.xflytools.net.UDPStringBuilder;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.layout.AnchorPane;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.ArrayList;
 
 /**
  * This is the controller for the main window
@@ -26,6 +31,8 @@ public class MainWindowController {
     @FXML
     void initialize() {
 
+        // TODO initialize the state of all buttons and commands based on current scene in xplane
+
     }
 
     /* METHODS */
@@ -41,8 +48,15 @@ public class MainWindowController {
 
             case "taxiLights":
                 boolean buttonState = b.selectedProperty().getValue();
-                System.out.println(buttonState);
-
+                DrefDataIO io = new DrefDataIO();
+                ArrayList<String> dataref;
+                if (buttonState) {
+                    dataref = io.getDataRefsByCommand("taxi_light_on", "LamCessna172");
+                    UDPSend.sendUDPPacket(UDPStringBuilder.makeUDPString(dataref));
+                } else {
+                    dataref = io.getDataRefsByCommand("taxi_light_off", "LamCessna172");
+                    UDPSend.sendUDPPacket(UDPStringBuilder.makeUDPString(dataref));
+                }
 
         }
 
