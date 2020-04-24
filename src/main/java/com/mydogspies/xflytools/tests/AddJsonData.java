@@ -1,7 +1,8 @@
-package com.mydogspies.xflytools.data;
+package com.mydogspies.xflytools.tests;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mydogspies.xflytools.Initialize;
+import com.mydogspies.xflytools.data.DrefData;
+import com.mydogspies.xflytools.data.DrefDataContainer;
 
 import javax.xml.bind.DatatypeConverter;
 import java.io.File;

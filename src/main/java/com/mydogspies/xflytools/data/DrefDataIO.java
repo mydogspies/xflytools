@@ -1,11 +1,9 @@
 package com.mydogspies.xflytools.data;
 
 import com.fasterxml.jackson.core.JsonParseException;
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.core.util.DefaultPrettyPrinter;
 import com.fasterxml.jackson.databind.JsonMappingException;
-import com.fasterxml.jackson.databind.ObjectWriter;
 import com.mydogspies.xflytools.Initialize;
+import com.mydogspies.xflytools.Main;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -23,28 +21,48 @@ import java.util.List;
 public class DrefDataIO implements DrefDataDAO{
 
     private static final Logger log = LoggerFactory.getLogger(DrefDataIO.class);
-    
-    @Override
-    public void getDataRefsByCommand(String command, String aircraft) {
+    private final File jsonfile = readFile("src/main/java/com/mydogspies/xflytools/data/drefData.json");
 
+    /**
+     * Takes aircraft type and command and looks for the corresponding values in the datarefs database.
+     * NOTE: The Value field must be base64 decoded into a byte array!
+     * @param command the name of the datarefs command
+     * @param aircraft type of aircraft
+     * @return an array of datarefs values in order -> {aircraft, command, header, value, path}
+     */
+    @Override
+    public ArrayList<String> getDataRefsByCommand(String command, String aircraft) {
+
+        ArrayList<String> datarefs = new ArrayList<>();
+
+        for (DrefData data : Main.database) {
+
+            if (data.getCommand().equals(command) && data.getAircraft().equals(aircraft)) {
+
+                datarefs.add(aircraft);
+                datarefs.add(command);
+                datarefs.add(data.getHeader());
+                datarefs.add(data.getValue());
+                datarefs.add(data.getPath());
+            }
+
+        }
+
+        return datarefs;
     }
 
     /**
-     * Reads the json file with datarefs and returns all the contents as a single DrefData object.
+     * Reads the json file with datarefs and returns all the contents as a list of DrefData object.
      * @return a DrefData object. otherwise NULL.
      */
-    private List<DrefData> getJsonData() {
+    public List<DrefData> getJsonData() {
 
-        String pathToJson = "";
-        List<DrefData> content = new ArrayList<>();
-
-        //DrefData content = null;
-
-        File jsonfile = readFile(pathToJson);
+        List<DrefData> data = null;
 
         try {
-            content = Initialize.mapper.readValue(jsonfile, new TypeReference<List<DrefData>>(){});
-            log.info("getJsonData(): Data object has been successfully read from json file: " + content);
+            DrefDataContainer dreflist = Initialize.mapper.readValue(jsonfile, DrefDataContainer.class);
+            data = dreflist.getDrefdata();
+            log.info("getJsonData(): Data object has been successfully read from json file: " + data);
         } catch (JsonParseException e) {
             log.error("getJsonData(): Json parse (Jackson) failed.");
         } catch (JsonMappingException e) {
@@ -53,19 +71,12 @@ public class DrefDataIO implements DrefDataDAO{
             log.error("getJsonData(): Writing to json failed.");
         }
 
-        return content;
+        return data;
     }
 
-    private void saveJsonData(List<DrefData> data) {
+    private static void saveJsonData(List<DrefData> data) {
 
-        ObjectWriter writer = Initialize.mapper.writer(new DefaultPrettyPrinter());
-
-        try {
-            writer.writeValue(new File("D:/cp/dataTwo.json"), data);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
+        // TODO implement method
     }
 
     /**

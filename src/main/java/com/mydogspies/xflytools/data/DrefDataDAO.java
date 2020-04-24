@@ -1,7 +1,9 @@
 package com.mydogspies.xflytools.data;
 
+import java.util.ArrayList;
+
 public interface DrefDataDAO {
 
-    public void getDataRefsByCommand(String command, String aircraft);
+    public ArrayList<String> getDataRefsByCommand(String command, String aircraft);
 
 }

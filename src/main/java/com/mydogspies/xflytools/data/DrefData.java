@@ -1,7 +1,5 @@
 package com.mydogspies.xflytools.data;
 
-import java.lang.reflect.Array;
-
 /**
  * It's our dref data pojo. Not that field "value" is base64 en/decoded.
  * @author Peter Mankowski#
