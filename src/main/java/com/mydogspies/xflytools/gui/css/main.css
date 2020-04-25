@@ -23,16 +23,43 @@ This is the general stylesheet for the main window
 /* TOGGLE BUTTONS */
 
 .toggle-button {
-    -fx-base: #d4d6d5;
+    -fx-base: #424242;
+    -fx-text-fill: #B1B4B5;
     -fx-focus-color: transparent;
     -fx-faint-focus-colo: transparent;
 }
 
+/*
 .toggle-button:selected {
-    -fx-base: #ffee5d;
+    -fx-base: #F0C755;
+    -fx-text-fill: #1C1C1C;
 }
+ */
 
 .toggle-button:hover {
-    -fx-base: #7d8380;
+    -fx-base: #444444;
+    -fx-text-fill: #B1B4B5;
 }
 
+/* CONNECT LABEL and TOGGLE BUTTON*/
+
+#connect {
+    -fx-background-color: #303030;
+}
+
+#toggleConnect {
+    -fx-base: #424242;
+    -fx-text-fill: #B1B4B5;
+    -fx-focus-color: transparent;
+    -fx-faint-focus-colo: transparent;
+}
+
+#toggleConnect:hover {
+    -fx-base: #444444;
+    -fx-text-fill: #B1B4B5;
+}
+
+#toggleConnect:selected {
+    -fx-base: #689F38;
+    -fx-text-fill: #1C1C1C;
+}
