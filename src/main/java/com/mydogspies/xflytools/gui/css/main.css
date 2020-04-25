@@ -9,11 +9,30 @@ This is the general stylesheet for the main window
     -fx-background-color: #323232;
 }
 
-#menubar {
+.menu-bar {
     -fx-background-color: #262626;
+}
+
+.label {
+    -fx-text-fill: #B1B4B5;
 }
 
 .menu .label {
     -fx-text-fill: #B1B4B5;
+}
+/* TOGGLE BUTTONS */
+
+.toggle-button {
+    -fx-base: #d4d6d5;
+    -fx-focus-color: transparent;
+    -fx-faint-focus-colo: transparent;
+}
+
+.toggle-button:selected {
+    -fx-base: #ffee5d;
+}
+
+.toggle-button:hover {
+    -fx-base: #7d8380;
 }
 

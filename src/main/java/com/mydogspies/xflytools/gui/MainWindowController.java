@@ -51,10 +51,10 @@ public class MainWindowController {
                 DrefDataIO io = new DrefDataIO();
                 ArrayList<String> dataref;
                 if (buttonState) {
-                    dataref = io.getDataRefsByCommand("taxi_light_on", "LamCessna172");
+                    dataref = io.getDataRefsByCommand("taxi_light_on", "default");
                     UDPSend.sendUDPPacket(UDPStringBuilder.makeUDPString(dataref));
                 } else {
-                    dataref = io.getDataRefsByCommand("taxi_light_off", "LamCessna172");
+                    dataref = io.getDataRefsByCommand("taxi_light_off", "default");
                     UDPSend.sendUDPPacket(UDPStringBuilder.makeUDPString(dataref));
                 }
 
