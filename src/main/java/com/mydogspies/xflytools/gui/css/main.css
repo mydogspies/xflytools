@@ -1,0 +1,19 @@
+/*
+Xflytools version 0.1.0
+This is the general stylesheet for the main window
+ */
+
+/* GENERAL */
+
+#background {
+    -fx-background-color: #323232;
+}
+
+#menubar {
+    -fx-background-color: #262626;
+}
+
+.menu .label {
+    -fx-text-fill: #B1B4B5;
+}
+

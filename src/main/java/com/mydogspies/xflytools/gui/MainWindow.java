@@ -28,8 +28,8 @@ public class MainWindow extends Application {
 
             Scene scene = new Scene(root);
             log.trace("start(): New scene instantiated: " + scene);
-            // scene.getStylesheets().add(getClass().getResource("css/" + defCss).toExternalForm());
-            // log.trace("start(): Seems we loaded the default css file successfully.");
+            scene.getStylesheets().add(getClass().getResource("css/main.css").toExternalForm());
+            log.trace("start(): Seems we loaded the default css file successfully.");
 
             primaryStage.setTitle(appTitle);
             primaryStage.setScene(scene);

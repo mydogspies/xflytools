@@ -1,5 +1,8 @@
 package com.mydogspies.xflytools;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import ch.qos.logback.classic.Level;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,6 +15,14 @@ import org.slf4j.LoggerFactory;
 public class Initialize {
 
     private static final Logger log = LoggerFactory.getLogger(Initialize.class);
+    public static ObjectMapper mapper = new ObjectMapper();
+
+    public static void setObjectMapper() {
+
+        mapper.registerModule(new JavaTimeModule());
+        mapper.configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false);
+
+    }
 
     /**
      * Sets the reporting level of Logback
