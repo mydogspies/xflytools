@@ -4,8 +4,11 @@ public class ExtPlaneTest {
 
     public static void main(String[] args) {
 
-        Thread extPlane = new ExtPlaneTCP();
-        extPlane.start();
+        Thread extPlaneSend = new ExtPlaneTCPSend();
+        extPlaneSend.start();
+
+        Thread extPlaneRec = new ExtPlaneTCPReceive();
+        extPlaneRec.start();
 
     }
 }

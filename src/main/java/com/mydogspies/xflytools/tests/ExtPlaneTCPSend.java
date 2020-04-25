@@ -6,9 +6,9 @@ import org.slf4j.LoggerFactory;
 import java.io.*;
 import java.net.Socket;
 
-public class ExtPlaneTCP extends Thread {
+public class ExtPlaneTCPSend extends Thread {
 
-    private static final Logger log = LoggerFactory.getLogger(ExtPlaneTCP.class);
+    private static final Logger log = LoggerFactory.getLogger(ExtPlaneTCPSend.class);
 
     private final String server = "192.168.178.40";
     private final int port = 51000;
