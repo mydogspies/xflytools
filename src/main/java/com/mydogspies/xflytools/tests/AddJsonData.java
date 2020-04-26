@@ -4,7 +4,6 @@ import com.mydogspies.xflytools.Initialize;
 import com.mydogspies.xflytools.data.DrefData;
 import com.mydogspies.xflytools.data.DrefDataContainer;
 
-import javax.xml.bind.DatatypeConverter;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Paths;
@@ -21,17 +20,16 @@ public class AddJsonData {
 
         /* WRITE DATA */
 
-        // DATA 1
-        byte[] value1 = {0, 0, -128, 63};
-        String base64Encoded = DatatypeConverter.printBase64Binary(value1);
-        DrefData data1 = new DrefData("LamCessna172", "taxi_light_on", "DREF+", base64Encoded, "sim/cockpit2/switches/taxi_light_on");
+        DrefData data1 = new DrefData("taxi_light", "default", "sim/cockpit2/switches/taxi_light_on", "int");
         startlist.add(data1);
-
-        // DATA 2
-        byte[] value2 = {0, 0, 0, 0};
-        String base64Encoded2 = DatatypeConverter.printBase64Binary(value2);
-        DrefData data2 = new DrefData("LamCessna172", "taxi_light_off", "DREF+", base64Encoded2, "sim/cockpit2/switches/taxi_light_off");
+        DrefData data2 = new DrefData("nav_light", "default", "sim/cockpit2/switches/navigation_lights_on", "int");
         startlist.add(data2);
+        DrefData data3 = new DrefData("beacon_light", "default", "sim/cockpit2/switches/beacon_on", "int");
+        startlist.add(data3);
+        DrefData data4 = new DrefData("strobe_light", "default", "sim/cockpit2/switches/strobe_lights_on", "int");
+        startlist.add(data4);
+        DrefData data5 = new DrefData("landing_light", "default", "sim/cockpit2/switches/landing_lights_on", "int");
+        startlist.add(data5);
 
         // add all to container
         datalist.setDrefdata(startlist);
@@ -50,9 +48,7 @@ public class AddJsonData {
 
         try {
             DrefDataContainer dreflist = Initialize.mapper.readValue(jsonfile, DrefDataContainer.class);
-            List<DrefData> stuff = dreflist.getDrefdata();
-            byte[] gog = DatatypeConverter.parseBase64Binary(stuff.get(0).getValue());
-            System.out.println(gog[2]);
+            System.out.println(dreflist.getDrefdata());
         } catch (IOException e) {
             e.printStackTrace();
         }

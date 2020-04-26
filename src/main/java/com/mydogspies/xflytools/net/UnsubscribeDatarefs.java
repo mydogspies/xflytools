@@ -6,15 +6,15 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Subscribes to all the datarefs in he database.
+ * Unsubscribes from all the datarefs.
  * @author Peter Mankowski
  * @since 0.1.0
  */
-public class SubscribeDatarefs {
+public class UnsubscribeDatarefs {
 
-    private static final Logger log = LoggerFactory.getLogger(SubscribeDatarefs.class);
+    private static final Logger log = LoggerFactory.getLogger(UnsubscribeDatarefs.class);
 
-    public static void subRefs() {
+    public static void unsubRefs() {
 
         SendData sendData = new SendData();
         String string;
@@ -22,9 +22,9 @@ public class SubscribeDatarefs {
         // fetch from database
         for (DrefData data : Main.database) {
 
-            string = "sub " + data.getDataref();
+            string = "unsub " + data.getDataref();
             sendData.send(string);
-            log.trace("subRefs(): Dataref (" + string + ") recalled.");
+            log.trace("unsubRefs(): Dataref (" + string + ") recalled.");
         }
     }
 }

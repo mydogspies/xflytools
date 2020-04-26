@@ -1,62 +1,56 @@
 package com.mydogspies.xflytools.data;
 
 /**
- * It's our dref data pojo. Not that field "value" is base64 en/decoded.
+ * It's our dataref data pojo.
  * @author Peter Mankowski#
  * @since 0.1.0
  */
 public class DrefData {
 
+    private String name;
     private String aircraft;
-    private String command;
-    private String header;
-    private String value; // a base64 encoded byte array
-    private String path;
+    private String dataref;
+    private String type;
 
     public DrefData() {
     }
 
-    public DrefData(String aircraft, String command, String header, String value, String path) {
+    public DrefData(String name, String aircraft, String dataref, String type) {
+        this.name = name;
         this.aircraft = aircraft;
-        this.command = command;
-        this.header = header;
-        this.value = value;
-        this.path = path;
+        this.dataref = dataref;
+        this.type = type;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getAircraft() {
         return aircraft;
     }
 
-    public String getCommand() {
-        return command;
-    }
-
-    public void setCommand(String command) {
-        this.command = command;
-    }
-
     public void setAircraft(String aircraft) {
         this.aircraft = aircraft;
     }
 
-    public String getHeader() {
-        return header;
+    public String getDataref() {
+        return dataref;
     }
 
-    public String getValue() { return value; }
-
-    public void setValue(String value) { this.value = value; }
-
-    public void setHeader(String header) {
-        this.header = header;
+    public void setDataref(String dataref) {
+        this.dataref = dataref;
     }
 
-    public String getPath() {
-        return path;
+    public String getType() {
+        return type;
     }
 
-    public void setPath(String path) {
-        this.path = path;
+    public void setType(String type) {
+        this.type = type;
     }
 }

@@ -31,31 +31,17 @@ public class DrefDataIO implements DrefDataDAO{
      * @return an array of datarefs values in order -> {aircraft, command, header, value, path}
      */
     @Override
-    public ArrayList<String> getDataRefsByCommand(String command, String aircraft) {
+    public ArrayList<String> getDataref(String command, String aircraft) {
 
-        ArrayList<String> datarefs = new ArrayList<>();
-
-        for (DrefData data : Main.database) {
-
-            if (data.getCommand().equals(command) && data.getAircraft().equals(aircraft)) {
-
-                datarefs.add(aircraft);
-                datarefs.add(command);
-                datarefs.add(data.getHeader());
-                datarefs.add(data.getValue());
-                datarefs.add(data.getPath());
-            }
-
-        }
-
-        return datarefs;
+        return null;
     }
 
     /**
      * Reads the json file with datarefs and returns all the contents as a list of DrefData object.
      * @return a DrefData object. otherwise NULL.
      */
-    public List<DrefData> getJsonData() {
+    @Override
+    public List<DrefData> loadDatabase() {
 
         List<DrefData> data = null;
 
@@ -72,11 +58,6 @@ public class DrefDataIO implements DrefDataDAO{
         }
 
         return data;
-    }
-
-    private static void saveJsonData(List<DrefData> data) {
-
-        // TODO implement method
     }
 
     /**

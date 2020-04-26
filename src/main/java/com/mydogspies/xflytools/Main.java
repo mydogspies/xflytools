@@ -26,7 +26,7 @@ public class Main {
 
         // load database
         DrefDataIO io = new DrefDataIO();
-        database = io.getJsonData();
+        database = io.loadDatabase();
 
         MainWindow.main(args);
         log.info("main(): Application initialized and main window called.");
