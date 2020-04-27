@@ -6,6 +6,7 @@ import java.util.List;
 public interface DrefDataDAO {
 
     public List<DrefData> loadDatabase();
-    public ArrayList<String> getDataref(String command, String aircraft);
+    public List<String> getDatarefByActAndCmnd(String command, String aircraft); // returns {dataref, type}
+    public List<DrefData> getDatarefsByAct(String aircraft);
 
 }

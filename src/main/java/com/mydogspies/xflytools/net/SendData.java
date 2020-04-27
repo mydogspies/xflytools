@@ -16,16 +16,18 @@ public class SendData {
 
     private static final Logger log = LoggerFactory.getLogger(SendData.class);
 
-    public void send(String dataref) {
+    public boolean send(String dataref) {
 
         try {
             OutputStream out = SocketConnect.socket.getOutputStream();
             PrintWriter writer = new PrintWriter(out, true);
             writer.println(dataref);
             log.trace("send(): String (" + dataref +") sent via TCP to Xplane using socket: " + SocketConnect.socket);
+            return true;
         } catch (IOException e) {
             log.error("send(): IO Error! String could not be sent: " + e.getMessage());
         }
+        return false;
 
     }
 }

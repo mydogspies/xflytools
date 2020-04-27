@@ -30,10 +30,27 @@ public class AddJsonData {
         startlist.add(data4);
         DrefData data5 = new DrefData("landing_light", "default", "sim/cockpit2/switches/landing_lights_on", "int");
         startlist.add(data5);
+        DrefData data6 = new DrefData("com1_freq", "default", "sim/cockpit/radios/com1_freq_hz", "double");
+        startlist.add(data6);
+        DrefData data7 = new DrefData("com2_freq", "default", "sim/cockpit/radios/com2_freq_hz", "double");
+        startlist.add(data7);
+        DrefData data8 = new DrefData("nav1_freq", "default", "sim/cockpit/radios/nav1_freq_hz", "double");
+        startlist.add(data8);
+        DrefData data9 = new DrefData("nav2_freq", "default", "sim/cockpit/radios/nav2_freq_hz", "double");
+        startlist.add(data9);
+        DrefData data10 = new DrefData("transponder_code", "default", "sim/cockpit/radios/transponder_code", "int");
+        startlist.add(data10);
+        DrefData data11 = new DrefData("com1_stdby_freq", "default", "sim/cockpit/radios/com1_stdby_freq_hz", "double");
+        startlist.add(data11);
+        DrefData data12 = new DrefData("com2_stdby_freq", "default", "sim/cockpit/radios/com2_stdby_freq_hz", "double");
+        startlist.add(data12);
+        DrefData data13 = new DrefData("nav1_stdby_freq", "default", "sim/cockpit/radios/nav1_stdby_freq_hz", "double");
+        startlist.add(data13);
+        DrefData data14 = new DrefData("nav2_stdby_freq", "default", "sim/cockpit/radios/nav2_stdby_freq_hz", "double");
+        startlist.add(data14);
 
         // add all to container
         datalist.setDrefdata(startlist);
-
 
         try {
             Initialize.mapper.writeValue(jsonfile, datalist);
@@ -41,35 +58,18 @@ public class AddJsonData {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-        /* READ BACK DATA */
-
-
-
-        try {
-            DrefDataContainer dreflist = Initialize.mapper.readValue(jsonfile, DrefDataContainer.class);
-            System.out.println(dreflist.getDrefdata());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
     }
 
     /* STUFF */
 
     private static File readFile(String filePath) {
 
-
         File file = Paths.get(filePath).toFile();
 
         if (file.exists()) {
 
-
             return file;
         }
-
-
         return null;
     }
-
 }

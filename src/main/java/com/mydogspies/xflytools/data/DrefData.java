@@ -7,7 +7,7 @@ package com.mydogspies.xflytools.data;
  */
 public class DrefData {
 
-    private String name;
+    private String command;
     private String aircraft;
     private String dataref;
     private String type;
@@ -15,19 +15,19 @@ public class DrefData {
     public DrefData() {
     }
 
-    public DrefData(String name, String aircraft, String dataref, String type) {
-        this.name = name;
+    public DrefData(String command, String aircraft, String dataref, String type) {
+        this.command = command;
         this.aircraft = aircraft;
         this.dataref = dataref;
         this.type = type;
     }
 
-    public String getName() {
-        return name;
+    public String getCommand() {
+        return command;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setCommand(String command) {
+        this.command = command;
     }
 
     public String getAircraft() {

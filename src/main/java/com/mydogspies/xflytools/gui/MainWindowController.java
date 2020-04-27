@@ -1,22 +1,17 @@
 package com.mydogspies.xflytools.gui;
 
-import com.mydogspies.xflytools.net.SendData;
-import com.mydogspies.xflytools.net.SocketConnect;
-import com.mydogspies.xflytools.net.SubscribeDatarefs;
-import com.mydogspies.xflytools.net.UnsubscribeDatarefs;
+import com.mydogspies.xflytools.data.DrefData;
+import com.mydogspies.xflytools.data.DrefDataIO;
+import com.mydogspies.xflytools.net.*;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.layout.AnchorPane;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.io.IOException;
-import java.net.Socket;
-import java.util.Timer;
-import java.util.TimerTask;
-import java.util.concurrent.TimeUnit;
+import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
@@ -28,13 +23,15 @@ import java.util.concurrent.atomic.AtomicBoolean;
 public class MainWindowController {
 
     private static final Logger log = LoggerFactory.getLogger(MainWindowController.class);
-    // private static Socket socket = null;
 
     @FXML
     private AnchorPane background;
 
     @FXML
     private ToggleButton taxiLights;
+
+    @FXML
+    private ComboBox<String> aircraftCombo;
 
     @FXML
     private Label connectLabel;
@@ -52,16 +49,25 @@ public class MainWindowController {
         refsSubbed = new AtomicBoolean(false);
         setNotConnected();
 
+        // aircraft combo box
+        aircraftCombo.getItems().addAll(
+                "default");
+        aircraftCombo.getSelectionModel().select("default");
+
         log.debug("initialize(): Main window has been initialized.");
 
     }
 
     /* UI ELEMENT METHODS */
 
+    /**
+     * This FXML method listens to all Lighting and A/P buttons and calls corresponding execution code.
+     * @param event An event sent by the button when clicked.
+     */
     @FXML
     private void clickButton(ActionEvent event) {
 
-        log.trace("clickButton(): ActionEvent called: " + event);
+        log.debug("clickButton(): ActionEvent called: " + event);
 
         ToggleButton b = (ToggleButton) event.getSource();
         String button_id = b.getId();
@@ -69,65 +75,100 @@ public class MainWindowController {
         if (SocketConnect.socket != null) {
 
             SendData snd = new SendData();
+            DrefDataIO io = new DrefDataIO();
+            String act = aircraftCombo.getValue();
+
+            snd.send("get sim/cockpit2/switches/landing_lights_on"); // TODO test only!!!! Delete!
 
             switch (button_id) {
 
                 case "taxi":
 
                     if (b.selectedProperty().getValue()) {
-                        snd.send("set sim/cockpit2/switches/taxi_light_on 1");
+                        snd.send("set " + io.getDatarefByActAndCmnd("taxi_light", act).get(0) + " 1");
                         b.setStyle("-fx-base: #F0C755; -fx-text-fill: #1C1C1C;");
+                        log.trace("clickButton(): taxi_light set to 1");
                     } else {
-                        snd.send("set sim/cockpit2/switches/taxi_light_on 0");
+                        snd.send("set " + io.getDatarefByActAndCmnd("taxi_light", act).get(0) + " 0");
                         b.setStyle("-fx-base: #424242; -fx-text-fill: #B1B4B5;");
+                        log.trace("clickButton(): taxi_light set to 0");
                     }
                     break;
 
                 case "nav":
                     if (b.selectedProperty().getValue()) {
-                        snd.send("set sim/cockpit2/switches/navigation_lights_on 1");
+                        snd.send("set " + io.getDatarefByActAndCmnd("nav_light", act).get(0) + " 1");
                         b.setStyle("-fx-base: #F0C755; -fx-text-fill: #1C1C1C;");
+                        log.trace("clickButton(): nav_light set to 1");
                     } else {
-                        snd.send("set sim/cockpit2/switches/navigation_lights_on 0");
+                        snd.send("set " + io.getDatarefByActAndCmnd("nav_light", act).get(0) + " 0");
                         b.setStyle("-fx-base: #424242; -fx-text-fill: #B1B4B5;");
+                        log.trace("clickButton(): nav_light set to 0");
                     }
                     break;
 
                 case "beacon":
                     if (b.selectedProperty().getValue()) {
-                        snd.send("set sim/cockpit2/switches/beacon_on 1");
+                        snd.send("set " + io.getDatarefByActAndCmnd("beacon_light", act).get(0) + " 1");
                         b.setStyle("-fx-base: #F0C755; -fx-text-fill: #1C1C1C;");
+                        log.trace("clickButton(): beacon_light set to 1");
                     } else {
-                        snd.send("set sim/cockpit2/switches/beacon_on 0");
+                        snd.send("set " + io.getDatarefByActAndCmnd("beacon_light", act).get(0) + " 0");
                         b.setStyle("-fx-base: #424242; -fx-text-fill: #B1B4B5;");
+                        log.trace("clickButton(): beacon_light set to 0");
                     }
                     break;
 
                 case "strobe":
                     if (b.selectedProperty().getValue()) {
-                        snd.send("set sim/cockpit2/switches/strobe_lights_on 1");
+                        snd.send("set " + io.getDatarefByActAndCmnd("strobe_light", act).get(0) + " 1");
                         b.setStyle("-fx-base: #F0C755; -fx-text-fill: #1C1C1C;");
+                        log.trace("clickButton(): strobe_light set to 1");
                     } else {
-                        snd.send("set sim/cockpit2/switches/strobe_lights_on 0");
+                        snd.send("set " + io.getDatarefByActAndCmnd("strobe_light", act).get(0) + " 0");
                         b.setStyle("-fx-base: #424242; -fx-text-fill: #B1B4B5;");
+                        log.trace("clickButton(): strobe_light set to 0");
                     }
                     break;
 
+                    /*
                 case "landing":
                     if (b.selectedProperty().getValue()) {
-                        snd.send("set sim/cockpit2/switches/landing_lights_on 1");
+                        snd.send("set " + io.getDatarefByActAndCmnd("landing_light", act).get(0) + " 1");
                         b.setStyle("-fx-base: #F0C755; -fx-text-fill: #1C1C1C;");
+                        log.trace("clickButton(): landing_light set to 1");
                     } else {
-                        snd.send("set sim/cockpit2/switches/landing_lights_on 0");
+                        snd.send("set " + io.getDatarefByActAndCmnd("landing_light", act).get(0) + " 0");
                         b.setStyle("-fx-base: #424242; -fx-text-fill: #B1B4B5;");
+                        log.trace("clickButton(): lading_light set to 0");
                     }
                     break;
+                     */
+
+                case "landing":
+                    ReceiveData.readData();
+
 
             }
         } else {
             b.setSelected(false);
             b.setStyle("-fx-base: #424242; -fx-text-fill: #B1B4B5;");
         }
+    }
+
+    @FXML
+    private void chooseAircraft() {
+
+    }
+
+    @FXML
+    private void toggleCom() {
+
+    }
+
+    @FXML
+    private void clickButtonAP() {
+
     }
 
     /**
@@ -175,11 +216,9 @@ public class MainWindowController {
         } else if (SocketConnect.socket.isConnected()) {
 
             // clean disconnect
-            UnsubscribeDatarefs.unsubRefs();
             refsSubbed.set(false);
-            SocketConnect.socket = null;
             setNotConnected();
-            log.info("toggleConnect(): Xplane was disconnected and socket reset.");
+            Exit.shutdown();
 
         }
     }

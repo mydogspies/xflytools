@@ -5,9 +5,45 @@ This is the general stylesheet for the main window
 
 /* GENERAL */
 
+.root {
+    -fx-focus-color: transparent;
+    -fx-faint-focus-color: transparent;
+    -fx-border-style: none;
+    -fx-border-width: 0;
+    -fx-border-insets: 0;
+}
+
 #background {
     -fx-background-color: #323232;
 }
+
+/* BUTTONS */
+
+.button {
+    -fx-background-color:
+            linear-gradient(from 0% 93% to 0% 100%, #444444 0%, #505050 100%),
+            #444444,
+            #505050,
+            radial-gradient(center 50% 50%, radius 100%, #444444, #505050);
+    -fx-text-fill: #B1B4B5;
+}
+
+.button:hover {
+    -fx-background-color:
+            linear-gradient(from 0% 93% to 0% 100%, #666666 0%, #707070 100%),
+            #666666,
+            #707070,
+            radial-gradient(center 50% 50%, radius 100%, #666666, #707070);
+    -fx-text-fill: #B1B4B5;
+}
+
+/* FILEDS */
+
+.text-field {
+    -fx-background-color: #31353D;
+}
+
+/* MENUS */
 
 .menu-bar {
     -fx-background-color: #262626;
@@ -20,21 +56,35 @@ This is the general stylesheet for the main window
 .menu .label {
     -fx-text-fill: #B1B4B5;
 }
+
+/* COMBO BOXES */
+
+.combo-box {
+    -fx-background-color: #31353D;
+}
+
+.combo-box .list-cell {
+    -fx-background-color: #31353D;
+    -fx-text-fill: #B1B4B5;
+}
+
+.combo-box-popup .list-view{
+    -fx-background: #323232;
+    -fx-text-fill: #B1B4B5;
+}
+
 /* TOGGLE BUTTONS */
 
 .toggle-button {
     -fx-base: #424242;
     -fx-text-fill: #B1B4B5;
-    -fx-focus-color: transparent;
-    -fx-faint-focus-colo: transparent;
 }
 
-/*
+
 .toggle-button:selected {
-    -fx-base: #F0C755;
-    -fx-text-fill: #1C1C1C;
+    -fx-base: #424242;
+    -fx-text-fill: #B1B4B5;
 }
- */
 
 .toggle-button:hover {
     -fx-base: #444444;
@@ -50,8 +100,6 @@ This is the general stylesheet for the main window
 #toggleConnect {
     -fx-base: #424242;
     -fx-text-fill: #B1B4B5;
-    -fx-focus-color: transparent;
-    -fx-faint-focus-colo: transparent;
 }
 
 #toggleConnect:hover {

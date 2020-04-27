@@ -19,6 +19,7 @@ public class SocketConnect {
     private final String server = "192.168.178.40"; // TODO needs to go into some settings
     private final int port = 51000;
     public static Socket socket;
+    public static boolean receiving = false;
 
    public void connect() {
 
@@ -30,6 +31,11 @@ public class SocketConnect {
            log.error("connect(): Connection error (Socket timed out): " + e_timeout.getMessage());
        } catch (IOException e) {
            log.error("connect(): I/O error - could not connect to " + server + ": " + e.getMessage());
+       }
+
+       if (socket.isConnected()) {
+           receiving = true;
+
        }
    }
 }
