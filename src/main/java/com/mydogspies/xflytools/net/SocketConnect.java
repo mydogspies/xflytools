@@ -35,7 +35,8 @@ public class SocketConnect {
 
        if (socket.isConnected()) {
            receiving = true;
-
+           Thread t = new ReceiveData();
+           t.start();
        }
    }
 }
