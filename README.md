@@ -6,6 +6,8 @@ Xflytools is a remote application to set the autopilot, radios frequencies/trans
 
 NOTE! Xflytools uses the excellent ExtPlane plugin from Ville Franki to interface with Xplane and will not work without. Simply download the latest version of the plugin from [github] and drop it into your "plugins" folder in Xplane.
 
+#####IMPORTANT! There are no binaries for the alpha pre-releases! It's all in a testing stage and for now you have to compile your own java executable for it to work!
+
 This project is licensed under the terms of the GNU General Public License v3.0.
 
 #### Version history:
