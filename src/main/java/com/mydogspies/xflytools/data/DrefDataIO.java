@@ -5,11 +5,13 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.mydogspies.xflytools.Initialize;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import java.io.File;
-import java.io.IOException;
+
+import java.io.*;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+
 import static com.mydogspies.xflytools.Main.database;
 
 /**
@@ -20,7 +22,8 @@ import static com.mydogspies.xflytools.Main.database;
 public class DrefDataIO implements DrefDataDAO{
 
     private static final Logger log = LoggerFactory.getLogger(DrefDataIO.class);
-    private final File jsonfile = readFile("src/main/java/com/mydogspies/xflytools/data/drefData.json"); // TODO must be solved differently. Now loads json EVERY time class is called.
+    // private final File jsonfile = readFile("src/main/java/com/mydogspies/xflytools/data/drefData.json");
+    private final String jsonfile = readFileAsStream("com/mydogspies/xflytools/data/drefData.json");
 
     /**
      * Takes aircraft type and command and looks for the corresponding values in the datarefs database.
@@ -96,6 +99,7 @@ public class DrefDataIO implements DrefDataDAO{
      * @param filePath path to jason file
      * @return file object, or of not existent then NULL
      */
+    @Deprecated
     public File readFile(String filePath) {
 
         log.trace("readFile(): incoming path (filePath): " + filePath);
@@ -104,11 +108,25 @@ public class DrefDataIO implements DrefDataDAO{
 
         if (file.exists()) {
 
+            InputStream in = this.getClass().getClassLoader()
+                    .getResourceAsStream("com/mydogspies/xflytools/data/drefData.json");
+            String json = new BufferedReader(new InputStreamReader(in)).lines().collect(Collectors.joining());
+            System.out.println("INPUTSTREAM: " + json);
             log.info("readFile(): Returned successfully file " + filePath);
             return file;
         }
 
         log.warn("readFile(): Failed to read file in path " + filePath + " (Does file or location exist?)");
         return null;
+    }
+
+    public String readFileAsStream(String pathToFile) {
+
+            InputStream in = this.getClass().getClassLoader()
+                    .getResourceAsStream(pathToFile);
+            String json = new BufferedReader(new InputStreamReader(in)).lines().collect(Collectors.joining());
+            System.out.println("INPUTSTREAM: " + json);
+
+        return json;
     }
 }

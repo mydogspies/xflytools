@@ -25,12 +25,12 @@ public class MainWindow extends Application {
         String appTitle = "Xflytools v.0.1.0";
 
         try {
-            Parent root = FXMLLoader.load(getClass().getResource("fxml/mainWindow.fxml "));
+            Parent root = FXMLLoader.load(getClass().getResource("mainWindow.fxml"));
             log.trace("start(): Loaded MainWindow.fxml successfully.");
 
             Scene scene = new Scene(root);
             log.trace("start(): New scene instantiated: " + scene);
-            scene.getStylesheets().add(getClass().getResource("css/main.css").toExternalForm());
+            scene.getStylesheets().add(getClass().getResource("main.css").toExternalForm());
             log.trace("start(): Seems we loaded the default css file successfully.");
 
             primaryStage.setTitle(appTitle);
@@ -39,6 +39,7 @@ public class MainWindow extends Application {
             log.info("start(): Main window has been opened ({})", appTitle);
         } catch(Exception e) {
             log.error("start(): Main window could not be opened: {}", e.getCause().getLocalizedMessage());
+            e.printStackTrace();
         }
 
     }
