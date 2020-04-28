@@ -1,0 +1,8 @@
+Manifest-Version: 1.0
+Main-Class: com.mydogspies.xflytools.Main
+Class-Path: log4j-core-2.13.2.jar commons-lang3-3.10.jar logback-classic
+ -1.2.3.jar jackson-core-2.10.3.jar slf4j-api-1.7.30.jar jackson-databin
+ d-2.10.3.jar jackson-datatype-jsr310-2.10.3.jar jackson-annotations-2.1
+ 0.3.jar logback-core-1.2.3.jar controlsfx-8.40.16.jar log4j-api-2.13.2.
+ jar
+
