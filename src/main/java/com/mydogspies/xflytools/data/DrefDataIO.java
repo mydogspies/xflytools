@@ -20,7 +20,7 @@ import static com.mydogspies.xflytools.Main.database;
 public class DrefDataIO implements DrefDataDAO{
 
     private static final Logger log = LoggerFactory.getLogger(DrefDataIO.class);
-    private final File jsonfile = readFile("src/main/java/com/mydogspies/xflytools/data/drefData.json");
+    private final File jsonfile = readFile("src/main/java/com/mydogspies/xflytools/data/drefData.json"); // TODO must be solved differently. Now loads json EVERY time class is called.
 
     /**
      * Takes aircraft type and command and looks for the corresponding values in the datarefs database.
@@ -41,6 +41,7 @@ public class DrefDataIO implements DrefDataDAO{
                 result.add(data.getType());
             }
         }
+        log.trace("getDatarefByActAndCmnd(): Result returned: " + result);
         return result;
     }
 

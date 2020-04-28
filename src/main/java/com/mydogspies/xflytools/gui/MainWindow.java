@@ -1,6 +1,8 @@
 package com.mydogspies.xflytools.gui;
 
+import com.mydogspies.xflytools.system.ExitApp;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -43,6 +45,19 @@ public class MainWindow extends Application {
 
     public static void main(String[] args) {
         launch(args);
+    }
+
+    // clean shutdown
+    @Override
+    public void stop() {
+
+        // TODO sort this method out and queue up everything
+        ExitApp.exitAll();
+
+        // exit to OS
+        log.info("exitAll(): Exiting with a clean shutdown! Bye!");
+        Platform.exit();
+        System.exit(0);
     }
 
 }

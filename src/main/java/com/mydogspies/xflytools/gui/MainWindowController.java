@@ -1,8 +1,7 @@
 package com.mydogspies.xflytools.gui;
 
-import com.mydogspies.xflytools.data.DrefData;
 import com.mydogspies.xflytools.data.DrefDataIO;
-import com.mydogspies.xflytools.net.*;
+import com.mydogspies.xflytools.io.*;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
@@ -11,7 +10,7 @@ import javafx.scene.control.ToggleButton;
 import javafx.scene.layout.AnchorPane;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import java.util.List;
+
 import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
@@ -23,6 +22,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 public class MainWindowController {
 
     private static final Logger log = LoggerFactory.getLogger(MainWindowController.class);
+    public static String actProfile;
 
     @FXML
     private AnchorPane background;
@@ -53,6 +53,7 @@ public class MainWindowController {
         aircraftCombo.getItems().addAll(
                 "default");
         aircraftCombo.getSelectionModel().select("default");
+        actProfile = getAircraftCombo();
 
         log.debug("initialize(): Main window has been initialized.");
 
@@ -77,8 +78,6 @@ public class MainWindowController {
             SendData snd = new SendData();
             DrefDataIO io = new DrefDataIO();
             String act = aircraftCombo.getValue();
-
-            snd.send("get sim/cockpit2/switches/landing_lights_on"); // TODO test only!!!! Delete!
 
             switch (button_id) {
 
@@ -131,7 +130,6 @@ public class MainWindowController {
                     }
                     break;
 
-                    /*
                 case "landing":
                     if (b.selectedProperty().getValue()) {
                         snd.send("set " + io.getDatarefByActAndCmnd("landing_light", act).get(0) + " 1");
@@ -143,12 +141,6 @@ public class MainWindowController {
                         log.trace("clickButton(): lading_light set to 0");
                     }
                     break;
-                     */
-
-                case "landing":
-                    ReceiveData.readData();
-
-
             }
         } else {
             b.setSelected(false);
@@ -218,7 +210,7 @@ public class MainWindowController {
             // clean disconnect
             refsSubbed.set(false);
             setNotConnected();
-            Exit.shutdown();
+            DisconnectAll.shutdown();
 
         }
     }
@@ -250,5 +242,13 @@ public class MainWindowController {
         toggleConnect.setSelected(false);
         connectLabel.setText("Error! Could not connect!");
         connectLabel.setStyle("-fx-text-fill: #f44336");
+    }
+
+    /* GETTERS AND SETTERS */
+
+    // get current aircraft profile
+    public String getAircraftCombo() {
+
+        return aircraftCombo.getValue();
     }
 }

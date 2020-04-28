@@ -1,0 +1,23 @@
+Main license for the Xflxtools project can be found in the LICENSE.md file. The following is a list of code contributing to this project;
+---
+Jackson libraries
+https://github.com/FasterXML/jackson
+Licensed under Apache License, version 2.0 - http://www.apache.org/licenses/LICENSE-2.0
+---
+ControlsFX
+https://github.com/controlsfx/controlsfx
+Licensed under BSD 3-Clause License - https://opensource.org/licenses/BSD-3-Clause
+Copyright (c) 2013, ControlsFX
+All rights reserved.
+---
+SLF4J
+http://www.slf4j.org/
+Licensed under MIT License - https://opensource.org/licenses/MIT
+Copyright (c) 2004-2017 QOS.ch
+All rights reserved.
+---
+Logback
+http://logback.qos.ch/
+Dual-licensed under the EPL v1.0 and the LGPL 2.1 - http://www.eclipse.org/legal/epl-v10.html and http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+Copyright (C) 1999-2017, QOS.ch.
+All rights reserved.

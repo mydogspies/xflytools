@@ -1,27 +1,32 @@
 package com.mydogspies.xflytools.system;
 
 import ch.qos.logback.classic.LoggerContext;
-import javafx.application.Platform;
+import com.mydogspies.xflytools.io.DisconnectAll;
+import com.mydogspies.xflytools.io.SocketConnect;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * Cleanup of resources before exit.
+ * @author Peter Mankowski
+ * @since 0.1.0
+ */
 public class ExitApp {
 
     private static final Logger log = LoggerFactory.getLogger(ExitApp.class);
 
-    /**
-     * Exits the app cleanly
-     */
     public static void exitAll() {
-
-        log.info("exitAll(): Exit with a clean shutdown! Bye!");
 
         // release resources used by logback for a clean exit
         LoggerContext loggerContext = (LoggerContext) LoggerFactory.getILoggerFactory();
         loggerContext.stop();
+        log.info("exitAll(): Logger stopped.");
 
-        // exit to OS
-        Platform.exit();
-        System.exit(0);
+        // clean up network
+        if (SocketConnect.socket != null) {
+            DisconnectAll.shutdown();
+        }
+
+        // TODO make the platform exit dependent on the socket reset
     }
 }

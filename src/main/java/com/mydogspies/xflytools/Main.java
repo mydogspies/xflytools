@@ -23,12 +23,15 @@ public class Main {
 
         // set log level
         Initialize.logReportLevel("trace");
+        log.trace("main(): Log level initialised.");
 
         // load database
         DrefDataIO io = new DrefDataIO();
         database = io.loadDatabase();
+        log.trace("main(): Database called and loaded.");
 
+        // open main window
         MainWindow.main(args);
-        log.info("main(): Application initialized and main window called.");
+        log.debug("main(): Application initialized and main window called.");
     }
 }

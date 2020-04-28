@@ -1,11 +1,16 @@
-package com.mydogspies.xflytools.net;
+package com.mydogspies.xflytools.io;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class Exit {
+/**
+ * Disconnects from Xplane and resets the socket.
+ * @author Peter Mankowski
+ * @since 0.1.0
+ */
+public class DisconnectAll {
 
-    private static final Logger log = LoggerFactory.getLogger(Exit.class);
+    private static final Logger log = LoggerFactory.getLogger(DisconnectAll.class);
 
     public static void shutdown() {
 
