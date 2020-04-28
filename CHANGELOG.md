@@ -7,6 +7,7 @@ The latest stable production branch will always be [MASTER] once we are out of a
 ### [Unreleased]
 
 - App reads Xplane data but updating GUI is not implemented yet.
+- Option to enter the IP address Xplane is listening on.
 
 ### [0.1.0-alpha] - 2020-04-28
 
@@ -14,6 +15,7 @@ The latest stable production branch will always be [MASTER] once we are out of a
 
 - Working: Toggle buttons for exterior lighting
 - Placeholder: Field and buttons for radios and a/p
+- NOTE! IP address is hard coded in the SocketConnect class until next release.
 
 #### Changed
 

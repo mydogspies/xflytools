@@ -4,7 +4,7 @@
 
 Xflytools is a remote application to set the autopilot, radios frequencies/transponder and exterior lights for Xplane default aircraft. The app is meant to ease the workload during critical parts of the flight when it's more efficient to gather all functions in one window/screen rather than paning around the cockpit with the mouse.
 
-Xflytools uses the excellent ExtPlane plugin from Ville Franki to interface with Xplane and will not work without. Simply download the latest version of the plugin from [github] and drop it into your "plugins" folder in Xplane. Nothing else is required.
+NOTE! Xflytools uses the excellent ExtPlane plugin from Ville Franki to interface with Xplane and will not work without. Simply download the latest version of the plugin from [github] and drop it into your "plugins" folder in Xplane.
 
 This project is licensed under the terms of the GNU General Public License v3.0.
 
