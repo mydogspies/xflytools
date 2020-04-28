@@ -3,15 +3,14 @@ package com.mydogspies.xflytools.data;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.mydogspies.xflytools.Initialize;
-import com.mydogspies.xflytools.Main;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+import static com.mydogspies.xflytools.Main.database;
 
 /**
  * This class contains all the necessary methods to manipulate the json file with our datarefs
@@ -21,7 +20,7 @@ import java.util.List;
 public class DrefDataIO implements DrefDataDAO{
 
     private static final Logger log = LoggerFactory.getLogger(DrefDataIO.class);
-    private final File jsonfile = readFile("src/main/java/com/mydogspies/xflytools/data/drefData.json");
+    private final File jsonfile = readFile("src/main/java/com/mydogspies/xflytools/data/drefData.json"); // TODO must be solved differently. Now loads json EVERY time class is called.
 
     /**
      * Takes aircraft type and command and looks for the corresponding values in the datarefs database.
@@ -31,31 +30,48 @@ public class DrefDataIO implements DrefDataDAO{
      * @return an array of datarefs values in order -> {aircraft, command, header, value, path}
      */
     @Override
-    public ArrayList<String> getDataRefsByCommand(String command, String aircraft) {
+    public List<String> getDatarefByActAndCmnd(String command, String aircraft) {
 
-        ArrayList<String> datarefs = new ArrayList<>();
+        List<String> result = new ArrayList<>();
 
-        for (DrefData data : Main.database) {
+        for (DrefData data : database) {
 
-            if (data.getCommand().equals(command) && data.getAircraft().equals(aircraft)) {
-
-                datarefs.add(aircraft);
-                datarefs.add(command);
-                datarefs.add(data.getHeader());
-                datarefs.add(data.getValue());
-                datarefs.add(data.getPath());
+            if (data.getAircraft().equals(aircraft) && data.getCommand().equals(command)) {
+                result.add(data.getDataref());
+                result.add(data.getType());
             }
+        }
+        log.trace("getDatarefByActAndCmnd(): Result returned: " + result);
+        return result;
+    }
 
+    /**
+     * Get a list of DrefData objects corresponding to a particular aircraft.
+     * @param aircraft Type of aircraft as in the database. Note that the value "default" corresponds to most of the
+     *                 default Laminar Research aircraft that comes with Xplane.
+     * @return A list of DrefData objects corresponding to a certain aircraft type.
+     */
+    @Override
+    public List<DrefData> getDatarefsByAct(String aircraft) {
+
+        List<DrefData> refList = new ArrayList<>();
+
+        for (DrefData data : database) {
+
+            if (data.getAircraft().equals(aircraft)) {
+                refList.add(data);
+            }
         }
 
-        return datarefs;
+        return refList;
     }
 
     /**
      * Reads the json file with datarefs and returns all the contents as a list of DrefData object.
      * @return a DrefData object. otherwise NULL.
      */
-    public List<DrefData> getJsonData() {
+    @Override
+    public List<DrefData> loadDatabase() {
 
         List<DrefData> data = null;
 
@@ -72,11 +88,6 @@ public class DrefDataIO implements DrefDataDAO{
         }
 
         return data;
-    }
-
-    private static void saveJsonData(List<DrefData> data) {
-
-        // TODO implement method
     }
 
     /**
