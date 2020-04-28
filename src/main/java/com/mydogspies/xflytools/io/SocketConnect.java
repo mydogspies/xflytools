@@ -1,4 +1,4 @@
-package com.mydogspies.xflytools.net;
+package com.mydogspies.xflytools.io;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -35,8 +35,8 @@ public class SocketConnect {
 
        if (socket.isConnected()) {
            receiving = true;
-           Thread t = new ReceiveData();
-           t.start();
+           ReceiveData rec = new ReceiveData();
+           rec.startReceiver();
        }
    }
 }

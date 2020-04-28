@@ -1,9 +1,8 @@
 package com.mydogspies.xflytools.system;
 
 import ch.qos.logback.classic.LoggerContext;
-import com.mydogspies.xflytools.net.DisconnectAll;
-import com.mydogspies.xflytools.net.SocketConnect;
-import javafx.application.Platform;
+import com.mydogspies.xflytools.io.DisconnectAll;
+import com.mydogspies.xflytools.io.SocketConnect;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
