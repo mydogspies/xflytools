@@ -1,5 +1,6 @@
 package com.mydogspies.xflytools.io;
 
+import com.mydogspies.xflytools.gui.MainWindowController;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import java.util.ArrayList;
@@ -83,11 +84,15 @@ public class DataHandler {
                 dataMap.put(splitIntoStrings[0], valueArray);
             }
 
+            MainWindowController cl = new MainWindowController();
             for (Map.Entry<String, ArrayList<String>> entry : dataMap.entrySet()) {
 
+                cl.getFromXplane(entry.getKey(), entry.getValue().toString());
                 System.out.println(entry.getKey() + " : " + entry.getValue().toString());
 
             }
+
+
 
             /*
             DrefDataIO io = new DrefDataIO();

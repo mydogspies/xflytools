@@ -25,10 +25,10 @@ public class MainWindowController {
     public static String actProfile;
 
     @FXML
-    private AnchorPane background;
+    private ToggleButton taxiLight;
 
     @FXML
-    private ToggleButton taxiLights;
+    private ToggleButton navLight;
 
     @FXML
     private ComboBox<String> aircraftCombo;
@@ -75,70 +75,56 @@ public class MainWindowController {
 
         if (SocketConnect.socket != null) {
 
-            SendData snd = new SendData();
-            DrefDataIO io = new DrefDataIO();
-            String act = aircraftCombo.getValue();
-
             switch (button_id) {
 
                 case "taxi":
 
                     if (b.selectedProperty().getValue()) {
-                        snd.send("set " + io.getDatarefByActAndCmnd("taxi_light", act).get(0) + " 1");
+                        sendToXplane("set", "taxi_light", "1");
                         b.setStyle("-fx-base: #F0C755; -fx-text-fill: #1C1C1C;");
-                        log.trace("clickButton(): taxi_light set to 1");
                     } else {
-                        snd.send("set " + io.getDatarefByActAndCmnd("taxi_light", act).get(0) + " 0");
+                        sendToXplane("set", "taxi_light", "0");
                         b.setStyle("-fx-base: #424242; -fx-text-fill: #B1B4B5;");
-                        log.trace("clickButton(): taxi_light set to 0");
                     }
                     break;
 
                 case "nav":
                     if (b.selectedProperty().getValue()) {
-                        snd.send("set " + io.getDatarefByActAndCmnd("nav_light", act).get(0) + " 1");
+                        sendToXplane("set", "nav_light", "1");
                         b.setStyle("-fx-base: #F0C755; -fx-text-fill: #1C1C1C;");
-                        log.trace("clickButton(): nav_light set to 1");
                     } else {
-                        snd.send("set " + io.getDatarefByActAndCmnd("nav_light", act).get(0) + " 0");
+                        sendToXplane("set", "nav_light", "0");
                         b.setStyle("-fx-base: #424242; -fx-text-fill: #B1B4B5;");
-                        log.trace("clickButton(): nav_light set to 0");
                     }
                     break;
 
                 case "beacon":
                     if (b.selectedProperty().getValue()) {
-                        snd.send("set " + io.getDatarefByActAndCmnd("beacon_light", act).get(0) + " 1");
+                        sendToXplane("set", "beacon_light", "1");
                         b.setStyle("-fx-base: #F0C755; -fx-text-fill: #1C1C1C;");
-                        log.trace("clickButton(): beacon_light set to 1");
                     } else {
-                        snd.send("set " + io.getDatarefByActAndCmnd("beacon_light", act).get(0) + " 0");
+                        sendToXplane("set", "beacon_light", "0");
                         b.setStyle("-fx-base: #424242; -fx-text-fill: #B1B4B5;");
-                        log.trace("clickButton(): beacon_light set to 0");
                     }
                     break;
 
                 case "strobe":
                     if (b.selectedProperty().getValue()) {
-                        snd.send("set " + io.getDatarefByActAndCmnd("strobe_light", act).get(0) + " 1");
+                        sendToXplane("set", "strobe_light", "1");
                         b.setStyle("-fx-base: #F0C755; -fx-text-fill: #1C1C1C;");
-                        log.trace("clickButton(): strobe_light set to 1");
                     } else {
-                        snd.send("set " + io.getDatarefByActAndCmnd("strobe_light", act).get(0) + " 0");
+                        sendToXplane("set", "strobe_light", "0");
                         b.setStyle("-fx-base: #424242; -fx-text-fill: #B1B4B5;");
-                        log.trace("clickButton(): strobe_light set to 0");
                     }
                     break;
 
                 case "landing":
                     if (b.selectedProperty().getValue()) {
-                        snd.send("set " + io.getDatarefByActAndCmnd("landing_light", act).get(0) + " 1");
+                        sendToXplane("set", "landing_light", "1");
                         b.setStyle("-fx-base: #F0C755; -fx-text-fill: #1C1C1C;");
-                        log.trace("clickButton(): landing_light set to 1");
                     } else {
-                        snd.send("set " + io.getDatarefByActAndCmnd("landing_light", act).get(0) + " 0");
+                        sendToXplane("set", "landing_light", "0");
                         b.setStyle("-fx-base: #424242; -fx-text-fill: #B1B4B5;");
-                        log.trace("clickButton(): lading_light set to 0");
                     }
                     break;
             }
@@ -160,6 +146,51 @@ public class MainWindowController {
 
     @FXML
     private void clickButtonAP() {
+
+    }
+
+    /**
+     * Sends a string in the format METHOD COMMAND STRING to Xplane.
+     * Eg. "set sim/cockpit2/switches/taxi_light_on 1" in order to turn taxi lights on
+     * @param method ExtPlane methods, eg. "set", "get" etc... See ExtPlane documentation for more
+     * @param command the dataref
+     * @param value the value to set for the dataref
+     */
+    public void sendToXplane(String method, String command, String value) {
+
+        SendData snd = new SendData();
+        DrefDataIO io = new DrefDataIO();
+        String act = aircraftCombo.getValue();
+        String dataref = io.getDatarefByActAndCmnd(command, act).get(0);
+
+        // action = send
+        snd.send(method + " " + dataref + " " + value);
+        log.trace("sendToXplane(): " + method + " " + dataref + " " + value);
+    }
+
+    public void getFromXplane(String dataref, String value) {
+
+        DrefDataIO io = new DrefDataIO();
+        String command = io.getCmndByDataref(dataref);
+
+        System.out.println("COMMAND: " + command);
+        System.out.println(nav);
+
+        switch (command) {
+            case "nav_light":
+                /*
+                if (!navLights.isSelected() && !value.equals("0")) {
+                    navLights.setSelected(true);
+                    System.out.println("LIGHTS ON");
+                } else if (navLights.isSelected() && !value.equals("1")) {
+                    navLights.setSelected(false);
+                    System.out.println("LIGHTS OFF");
+                }
+                 */
+
+
+
+        }
 
     }
 
