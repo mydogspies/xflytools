@@ -21,8 +21,6 @@ public class DataHandler {
     private static final Logger log = LoggerFactory.getLogger(DataHandler.class);
 
     private String rawString;
-    private String header;
-    private String values;
 
     public DataHandler(String rawString) {
         this.rawString = rawString;
@@ -87,7 +85,7 @@ public class DataHandler {
             // send off the data to the receiving method of the GUI controller
             for (Map.Entry<String, ArrayList<String>> entry : dataMap.entrySet()) {
 
-                MainWindow.controller.getFromXplane(entry.getKey(), entry.getValue());
+                MainWindow.controller.receiveFromXplane(entry.getKey(), entry.getValue());
             }
         };
 

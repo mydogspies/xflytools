@@ -40,16 +40,22 @@ public class AddJsonData {
         startlist.add(data9);
         DrefData data10 = new DrefData("transponder_code", "default", "sim/cockpit/radios/transponder_code", "int");
         startlist.add(data10);
-        DrefData data11 = new DrefData("com1_stdby_freq", "default", "sim/cockpit/radios/com1_stdby_freq_hz", "double");
+        DrefData data11 = new DrefData("com1_stdby_freq", "default", "sim/cockpit2/radios/actuators/com1_standby_frequency_hz_833", "double");
         startlist.add(data11);
-        DrefData data12 = new DrefData("com2_stdby_freq", "default", "sim/cockpit/radios/com2_stdby_freq_hz", "double");
+        DrefData data12 = new DrefData("com2_stdby_freq", "default", "sim/cockpit2/radios/actuators/com2_standby_frequency_hz_833", "double");
         startlist.add(data12);
         DrefData data13 = new DrefData("nav1_stdby_freq", "default", "sim/cockpit/radios/nav1_stdby_freq_hz", "double");
         startlist.add(data13);
         DrefData data14 = new DrefData("nav2_stdby_freq", "default", "sim/cockpit/radios/nav2_stdby_freq_hz", "double");
         startlist.add(data14);
-
-
+        DrefData data15 = new DrefData("com1_selected", "default", "sim/cockpit2/radios/actuators/com1_right_is_selected", "int");
+        startlist.add(data15);
+        DrefData data16 = new DrefData("com2_selected", "default", "sim/cockpit2/radios/actuators/com2_right_is_selected", "int");
+        startlist.add(data16);
+        DrefData data17 = new DrefData("nav1_selected", "default", "sim/cockpit2/radios/actuators/nav1_right_is_selected", "int");
+        startlist.add(data17);
+        DrefData data18 = new DrefData("nav2_selected", "default", "sim/cockpit2/radios/actuators/nav2_right_is_selected", "int");
+        startlist.add(data18);
 
         // add all to container
         datalist.setDrefdata(startlist);

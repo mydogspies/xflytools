@@ -41,20 +41,27 @@ This is the general stylesheet for the main window
     -fx-text-fill: #B1B4B5;
 }
 
-/* RADIO LABELS and FIELDS*/
+/* RADIO LABELS, FIELDS and BUTTON */
 
 .radio-label {
     -fx-background-color: #323232;
-    -fx-text-fill: #FF733F;
+    -fx-text-fill: #FFC076;
     -fx-column-halignment: left;
+    -fx-max-width: 80px;
     -fx-font-size: 15px;
 }
 
 .radio-field {
-    -fx-background-color: #31355D;
-    -fx-text-fill: #B1B4B5;
+    -fx-background-color: #323232;
+    -fx-text-fill: #FFA031;
     -fx-max-width: 80px;
     -fx-font-size: 15px;
+}
+
+.swap-button {
+    -fx-base: #424242;
+    -fx-text-fill: #B1B4B5;
+    -fx-column-halignment: center;
 }
 
 
