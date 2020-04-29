@@ -3,6 +3,7 @@ package com.mydogspies.xflytools;
 import com.mydogspies.xflytools.data.DrefData;
 import com.mydogspies.xflytools.data.DrefDataIO;
 import com.mydogspies.xflytools.gui.MainWindow;
+import javafx.application.Platform;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import java.util.List;

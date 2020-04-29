@@ -30,9 +30,9 @@ public class AddJsonData {
         startlist.add(data4);
         DrefData data5 = new DrefData("landing_light", "default", "sim/cockpit2/switches/landing_lights_on", "int");
         startlist.add(data5);
-        DrefData data6 = new DrefData("com1_freq", "default", "sim/cockpit/radios/com1_freq_hz", "double");
+        DrefData data6 = new DrefData("com1_freq", "default", "sim/cockpit2/radios/actuators/com1_frequency_hz_833", "double");
         startlist.add(data6);
-        DrefData data7 = new DrefData("com2_freq", "default", "sim/cockpit/radios/com2_freq_hz", "double");
+        DrefData data7 = new DrefData("com2_freq", "default", "sim/cockpit2/radios/actuators/com2_frequency_hz_833", "double");
         startlist.add(data7);
         DrefData data8 = new DrefData("nav1_freq", "default", "sim/cockpit/radios/nav1_freq_hz", "double");
         startlist.add(data8);

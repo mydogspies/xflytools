@@ -58,14 +58,14 @@
                                     <Insets left="70.0" />
                                  </GridPane.margin>
                               </ComboBox>
-                              <Label text="Aircraft">
+                              <Label styleClass="general-label" text="Aircraft">
                                  <GridPane.margin>
                                     <Insets left="12.0" />
                                  </GridPane.margin>
                               </Label>
                            </children>
                         </GridPane>
-                        <GridPane GridPane.columnIndex="1">
+                        <GridPane fx:id="radioGrid" GridPane.columnIndex="1">
                           <columnConstraints>
                               <ColumnConstraints hgrow="SOMETIMES" maxWidth="85.0" minWidth="10.0" prefWidth="79.0" />
                               <ColumnConstraints hgrow="SOMETIMES" maxWidth="101.0" minWidth="10.0" prefWidth="101.0" />
@@ -82,52 +82,22 @@
                               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                           </rowConstraints>
                            <children>
-                              <Label text="com 1" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
-                              <Label text="com 2" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
-                              <Label text="nav 1" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
-                              <Label text="nav 2" GridPane.halignment="CENTER" GridPane.rowIndex="4" />
-                              <Label text="trans" GridPane.halignment="CENTER" GridPane.rowIndex="5" />
+                              <Label styleClass="general-label" text="com 1" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
+                              <Label styleClass="general-label" text="com 2" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
+                              <Label styleClass="general-label" text="nav 1" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
+                              <Label styleClass="general-label" text="nav 2" GridPane.halignment="CENTER" GridPane.rowIndex="4" />
+                              <Label styleClass="general-label" text="trans" GridPane.halignment="CENTER" GridPane.rowIndex="5" />
                               <ToggleButton id="comOne" fx:id="comOneToggle" mnemonicParsing="false" onAction="#toggleCom" text="&lt;&gt;" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
                               <ToggleButton id="comTwo" fx:id="cokTwoToggle" mnemonicParsing="false" onAction="#toggleCom" text="&lt;&gt;" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
                               <ToggleButton id="navOne" fx:id="navOneToggle" mnemonicParsing="false" onAction="#toggleCom" text="&lt;&gt;" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
                               <ToggleButton id="navTwo" fx:id="navTwoToggle" mnemonicParsing="false" onAction="#toggleCom" text="&lt;&gt;" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="4" />
-                              <TextField id="com1_2" fx:id="com1" GridPane.columnIndex="3" GridPane.rowIndex="1">
-                                 <GridPane.margin>
-                                    <Insets left="10.0" right="10.0" />
-                                 </GridPane.margin>
-                              </TextField>
-                              <TextField id="com2_2" fx:id="com2" GridPane.columnIndex="3" GridPane.rowIndex="2">
-                                 <GridPane.margin>
-                                    <Insets left="10.0" right="10.0" />
-                                 </GridPane.margin>
-                              </TextField>
-                              <TextField id="nav1_2" fx:id="com3" GridPane.columnIndex="3" GridPane.rowIndex="3">
-                                 <GridPane.margin>
-                                    <Insets left="10.0" right="10.0" />
-                                 </GridPane.margin>
-                              </TextField>
-                              <TextField id="nav2_2" fx:id="com4" GridPane.columnIndex="3" GridPane.rowIndex="4">
-                                 <GridPane.margin>
-                                    <Insets left="10.0" right="10.0" />
-                                 </GridPane.margin>
-                              </TextField>
-                              <TextField id="transponder" fx:id="transponder" GridPane.columnIndex="3" GridPane.rowIndex="5">
-                                 <GridPane.margin>
-                                    <Insets left="10.0" right="10.0" />
-                                 </GridPane.margin>
-                              </TextField>
-                              <Label fx:id="com1Text" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                              <Label fx:id="com2Text" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                              <Label fx:id="nav1Text" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                              <Label fx:id="nav2Text" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-                              <Label fx:id="transponderText" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="5" />
                               <ToggleButton fx:id="transponder" mnemonicParsing="false" onAction="#toggleCom" text="&lt;" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="5" />
-                              <Label text="Current" GridPane.columnIndex="1" GridPane.rowIndex="6">
+                              <Label styleClass="general-label" text="Current" GridPane.columnIndex="1" GridPane.rowIndex="6">
                                  <GridPane.margin>
                                     <Insets left="17.0" top="12.0" />
                                  </GridPane.margin>
                               </Label>
-                              <Label text="Current" GridPane.columnIndex="1">
+                              <Label styleClass="general-label" text="Current" GridPane.columnIndex="1">
                                  <padding>
                                     <Insets top="10.0" />
                                  </padding>
@@ -136,7 +106,7 @@
                         </GridPane>
                      </children>
                   </GridPane>
-                  <GridPane prefHeight="125.0" prefWidth="640.0">
+                  <GridPane fx:id="buttonGrid" prefHeight="125.0" prefWidth="640.0">
                     <columnConstraints>
                         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -158,17 +128,12 @@
                       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                      <children>
-                        <ToggleButton id="taxi" fx:id="taxiLight" mnemonicParsing="false" onAction="#clickButton" text="Taxi" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
-                        <Label text="Lights" GridPane.halignment="CENTER" GridPane.rowIndex="1">
+                        <Label styleClass="general-label" text="Lights" GridPane.halignment="CENTER" GridPane.rowIndex="1">
                            <GridPane.margin>
                               <Insets />
                            </GridPane.margin>
                         </Label>
-                        <Label text="A/P" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
-                        <ToggleButton id="nav" fx:id="navLight" mnemonicParsing="false" onAction="#clickButton" text="Nav" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
-                        <ToggleButton id="beacon" fx:id="beaconLight" mnemonicParsing="false" onAction="#clickButton" text="Bcn" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
-                        <ToggleButton id="strobe" fx:id="strobeLight" mnemonicParsing="false" onAction="#clickButton" text="Strb" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
-                        <ToggleButton id="landing" fx:id="landingLight" mnemonicParsing="false" onAction="#clickButton" text="Land" GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
+                        <Label styleClass="general-label" text="A/P" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
                         <Button fx:id="courseSelect" mnemonicParsing="false" onAction="#clickButtonAP" prefWidth="58.0" text="Course" GridPane.columnIndex="10" GridPane.halignment="RIGHT">
                            <font>
                               <Font size="11.0" />
@@ -199,10 +164,10 @@
                               <Insets left="15.0" right="15.0" />
                            </GridPane.margin>
                         </TextField>
-                        <Label fx:id="courseText" text="Label" GridPane.columnIndex="9" />
-                        <Label fx:id="headingText" text="Label" GridPane.columnIndex="9" GridPane.rowIndex="1" />
-                        <Label fx:id="levelText" text="Label" GridPane.columnIndex="9" GridPane.rowIndex="2" />
-                        <Label fx:id="verticalSpeedText" text="Label" GridPane.columnIndex="9" GridPane.rowIndex="3" />
+                        <Label fx:id="courseText" styleClass="general-label" text="Label" GridPane.columnIndex="9" />
+                        <Label fx:id="headingText" styleClass="general-label" text="Label" GridPane.columnIndex="9" GridPane.rowIndex="1" />
+                        <Label fx:id="levelText" styleClass="general-label" text="Label" GridPane.columnIndex="9" GridPane.rowIndex="2" />
+                        <Label fx:id="verticalSpeedText" styleClass="general-label" text="Label" GridPane.columnIndex="9" GridPane.rowIndex="3" />
                         <Button fx:id="verticalSpeedSelect" maxWidth="58.0" mnemonicParsing="false" onAction="#clickButtonAP" prefWidth="58.0" text="V/S" GridPane.columnIndex="10" GridPane.halignment="RIGHT" GridPane.rowIndex="3" />
                         <TextField fx:id="verticalSpeed" GridPane.columnIndex="11" GridPane.rowIndex="3">
                            <GridPane.margin>
