@@ -323,12 +323,7 @@ public class MainWindowController {
                     log.trace("toggleRadio(): Left Nav2 is selected.");
                 }
                 break;
-
-
         }
-
-        // TODO implement method
-        System.out.println("TOOGLE RADIO FREQs");
     }
 
     @FXML

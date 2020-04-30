@@ -16,18 +16,24 @@ public class SendData {
 
     private static final Logger log = LoggerFactory.getLogger(SendData.class);
 
-    public boolean send(String dataref) {
+    public void send(String dataref) {
 
-        try {
-            OutputStream out = SocketConnect.socket.getOutputStream();
-            PrintWriter writer = new PrintWriter(out, true);
-            writer.println(dataref);
-            log.trace("send(): String (" + dataref +") sent via TCP to Xplane using socket: " + SocketConnect.socket);
-            return true;
-        } catch (IOException e) {
-            log.error("send(): IO Error! String could not be sent: " + e.getMessage());
-        }
-        return false;
+        Runnable runnable = () -> {
 
+            try {
+                OutputStream out = SocketConnect.socket.getOutputStream();
+                System.out.println("out = " + out);
+                PrintWriter writer = new PrintWriter(out, true);
+                System.out.println("writer = " + writer);
+                writer.println(dataref);
+                log.trace("send(): String (" + dataref + ") sent via TCP to Xplane using socket: " + SocketConnect.socket);
+            } catch (IOException e) {
+                log.error("send(): IO Error! String could not be sent: " + e.getMessage());
+            }
+        };
+
+        Thread thread = new Thread(runnable);
+        thread.start();
+        log.trace("send.run(): Started a new thread: " + thread);
     }
 }

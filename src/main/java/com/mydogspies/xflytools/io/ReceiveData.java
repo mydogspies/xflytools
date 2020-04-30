@@ -25,7 +25,6 @@ public class ReceiveData {
         Runnable runnable = () -> {
 
             try {
-
                 InputStream input = SocketConnect.socket.getInputStream();
                 BufferedReader reader = new BufferedReader(new InputStreamReader(input));
                 log.trace("ReceiveData.run(): Reader ready: " + reader.ready());
