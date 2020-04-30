@@ -17,7 +17,11 @@ This is the general stylesheet for the main window
     -fx-background-color: #323232;
 }
 
-/* BUTTONS */
+.general-label {
+    -fx-text-fill: #B1B4B5;
+}
+
+/* GENERAL BUTTONS */
 
 .button {
     -fx-background-color:
@@ -37,20 +41,34 @@ This is the general stylesheet for the main window
     -fx-text-fill: #B1B4B5;
 }
 
-/* FILEDS */
+/* RADIO LABELS, FIELDS and BUTTON */
 
-.text-field {
-    -fx-background-color: #31353D;
+.radio-label {
+    -fx-background-color: #323232;
+    -fx-text-fill: #FFC076;
+    -fx-column-halignment: left;
+    -fx-max-width: 80px;
+    -fx-font-size: 15px;
 }
+
+.radio-field {
+    -fx-background-color: #323232;
+    -fx-text-fill: #FFA031;
+    -fx-max-width: 80px;
+    -fx-font-size: 15px;
+}
+
+.swap-button {
+    -fx-base: #424242;
+    -fx-text-fill: #B1B4B5;
+    -fx-column-halignment: center;
+}
+
 
 /* MENUS */
 
 .menu-bar {
     -fx-background-color: #262626;
-}
-
-.label {
-    -fx-text-fill: #B1B4B5;
 }
 
 .menu .label {
@@ -75,21 +93,22 @@ This is the general stylesheet for the main window
 
 /* TOGGLE BUTTONS */
 
-.toggle-button {
+.light-toggle-button {
     -fx-base: #424242;
     -fx-text-fill: #B1B4B5;
+    -fx-column-halignment: center;
 }
 
-
-.toggle-button:selected {
-    -fx-base: #424242;
-    -fx-text-fill: #B1B4B5;
+.light-toggle-button:selected {
+    -fx-base: #F0C755;
+    -fx-text-fill: #1C1C1C;
 }
 
-.toggle-button:hover {
+.light-toggle-button:hover {
     -fx-base: #444444;
     -fx-text-fill: #B1B4B5;
 }
+
 
 /* CONNECT LABEL and TOGGLE BUTTON*/
 

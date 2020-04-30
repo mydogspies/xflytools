@@ -5,9 +5,10 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.mydogspies.xflytools.Initialize;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.io.*;
-import java.nio.file.Paths;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -22,7 +23,6 @@ import static com.mydogspies.xflytools.Main.database;
 public class DrefDataIO implements DrefDataDAO{
 
     private static final Logger log = LoggerFactory.getLogger(DrefDataIO.class);
-    // private final File jsonfile = readFile("src/main/java/com/mydogspies/xflytools/data/drefData.json");
     private final String jsonfile = readFileAsStream("com/mydogspies/xflytools/data/drefData.json");
 
     /**
@@ -70,6 +70,25 @@ public class DrefDataIO implements DrefDataDAO{
     }
 
     /**
+     * Gets the xflytools command that corresponds to a certain dataref
+     * @param dataref the dataref
+     * @return the command that corresponds to that specific dataref
+     */
+    @Override
+    public String getCmndByDataref(String dataref) {
+
+        String result = "";
+
+        for (DrefData data : database) {
+
+            if (data.getDataref().equals(dataref)) {
+                result = data.getCommand();
+            }
+        }
+        return result;
+    }
+
+    /**
      * Reads the json file with datarefs and returns all the contents as a list of DrefData object.
      * @return a DrefData object. otherwise NULL.
      */
@@ -94,39 +113,15 @@ public class DrefDataIO implements DrefDataDAO{
     }
 
     /**
-     * Reads a file from the disc with either absolute path or relative path from source root.
-     * Eg. /src/some/folder/data.json
-     * @param filePath path to jason file
-     * @return file object, or of not existent then NULL
+     * Reads a file as a stream and returns the content as a string.
+     * @param pathToFile path to file
+     * @return file content as a string
      */
-    @Deprecated
-    public File readFile(String filePath) {
-
-        log.trace("readFile(): incoming path (filePath): " + filePath);
-
-        File file = Paths.get(filePath).toFile();
-
-        if (file.exists()) {
-
-            InputStream in = this.getClass().getClassLoader()
-                    .getResourceAsStream("com/mydogspies/xflytools/data/drefData.json");
-            String json = new BufferedReader(new InputStreamReader(in)).lines().collect(Collectors.joining());
-            System.out.println("INPUTSTREAM: " + json);
-            log.info("readFile(): Returned successfully file " + filePath);
-            return file;
-        }
-
-        log.warn("readFile(): Failed to read file in path " + filePath + " (Does file or location exist?)");
-        return null;
-    }
-
     public String readFileAsStream(String pathToFile) {
 
             InputStream in = this.getClass().getClassLoader()
                     .getResourceAsStream(pathToFile);
-            String json = new BufferedReader(new InputStreamReader(in)).lines().collect(Collectors.joining());
-            System.out.println("INPUTSTREAM: " + json);
 
-        return json;
+        return new BufferedReader(new InputStreamReader(in)).lines().collect(Collectors.joining());
     }
 }

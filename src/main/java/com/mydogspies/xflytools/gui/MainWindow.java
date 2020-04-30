@@ -18,14 +18,18 @@ import org.slf4j.LoggerFactory;
 public class MainWindow extends Application {
 
     private final Logger log = LoggerFactory.getLogger(MainWindow.class);
+    public static MainWindowController controller;
 
     public void start(Stage primaryStage) throws Exception {
 
         // get the current Javafx css theme
-        String appTitle = "Xflytools v.0.1.0";
+        String appTitle = "Xflytools v.0.2.0";
 
         try {
-            Parent root = FXMLLoader.load(getClass().getResource("mainWindow.fxml"));
+            FXMLLoader loader = new FXMLLoader (getClass().getResource("mainWindow.fxml"));
+            Parent root = loader.load();
+            controller = loader.getController();
+
             log.trace("start(): Loaded MainWindow.fxml successfully.");
 
             Scene scene = new Scene(root);
