@@ -144,6 +144,15 @@ This is the general stylesheet for the main window
     -fx-font-size: 12px;
 }
 
+#aptogglebtn:selected {
+    -fx-text-fill: #900B0A;
+    -fx-font-weight: bold;
+}
+
+.ap-fields {
+    -fx-background-color: #31353D;
+}
+
 /* CONNECT LABEL and TOGGLE BUTTON*/
 
 #toggleConnect {

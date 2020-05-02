@@ -6,10 +6,8 @@ import com.mydogspies.xflytools.io.*;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
-import javafx.scene.control.ToggleButton;
+import javafx.geometry.HPos;
+import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -56,10 +54,10 @@ public class MainWindowController {
     private SwapButton com2swap;
     private SwapButton nav1swap;
     private SwapButton nav2swap;
-    private String com1set;
-    private String com2set;
-    private String nav1set;
-    private String nav2set;
+//    private String com1set; // TODO obsolete code - delete!
+//    private String com2set;
+//    private String nav1set;
+//    private String nav2set;
     private AutopilotLabel apCourse;
     private AutopilotLabel apHeading;
     private AutopilotLabel apLevel;
@@ -68,6 +66,12 @@ public class MainWindowController {
     private AutoPilotButton apHeadingBtn;
     private AutoPilotButton apAltitudeBtn;
     private AutoPilotButton apVSBtn;
+    private AutoPilotButton apApprBtn;
+    private AutoPilotButton apNavBtn;
+    private AutoPilotField apCourseField;
+    private AutoPilotField apHeadingField;
+    private AutoPilotField apAltitudeField;
+    private AutoPilotField apVSField;
 
     @FXML
     private ToggleButton toggleConnect;
@@ -588,6 +592,12 @@ public class MainWindowController {
         apHeading.setText("");
         apCourse.setText("");
         apLevel.setText("");
+        apToggleBtn.setSelected(false);
+        apHeadingBtn.setSelected(false);
+        apAltitudeBtn.setSelected(false);
+        apNavBtn.setSelected(false);
+        apApprBtn.setSelected(false);
+        apVSBtn.setSelected(false);
     }
 
 
@@ -673,6 +683,41 @@ public class MainWindowController {
         apToggleBtn.getStyleClass().addAll("ap-buttons");
         apToggleBtn.setOnAction(this::clickButton);
         buttonGrid.add(apToggleBtn,1, 2);
+
+        apHeadingBtn = new AutoPilotButton();
+        apHeadingBtn.setId("apheadingbtn");
+        apHeadingBtn.setText("Hdg");
+        apHeadingBtn.getStyleClass().addAll("ap-buttons");
+        apHeadingBtn.setOnAction(this::clickButton);
+        buttonGrid.add(apHeadingBtn, 2, 2);
+
+        apAltitudeBtn = new AutoPilotButton();
+        apAltitudeBtn.setId("apaltitudebtn");
+        apAltitudeBtn.setText("Alt");
+        apAltitudeBtn.getStyleClass().add("ap-buttons");
+        apAltitudeBtn.setOnAction(this::clickButton);
+        buttonGrid.add(apAltitudeBtn, 3, 2);
+
+        apVSBtn = new AutoPilotButton();
+        apVSBtn.setId("apvsbtn");
+        apVSBtn.setText("V/S");
+        apVSBtn.getStyleClass().add("ap-buttons");
+        apVSBtn.setOnAction(this::clickButton);
+        buttonGrid.add(apVSBtn, 6, 2);
+
+        apApprBtn = new AutoPilotButton();
+        apApprBtn.setId("apapprbtn");
+        apApprBtn.setText("Apr");
+        apApprBtn.getStyleClass().addAll("ap-buttons");
+        apApprBtn.setOnAction(this::clickButton);
+        buttonGrid.add(apApprBtn, 5, 2);
+
+        apNavBtn = new AutoPilotButton();
+        apNavBtn.setId("apnavbtn");
+        apNavBtn.setText("Nav");
+        apNavBtn.getStyleClass().addAll("ap-buttons");
+        apNavBtn.setOnAction(this::clickButton);
+        buttonGrid.add(apNavBtn, 4, 2);
     }
 
     /**
@@ -803,7 +848,33 @@ public class MainWindowController {
         apVerticalSpeed.getStyleClass().add("ap-labels");
         buttonGrid.add(apVerticalSpeed, 9, 3);
 
+        apCourseField = new AutoPilotField();
+        apCourseField.setId("apcoursefield");
+        apCourseField.setText("");
+        apCourseField.getStyleClass().add("ap-fields");
+        apCourseField.setMaxWidth(60);
+        buttonGrid.add(apCourseField, 13, 0);
 
+        apHeadingField = new AutoPilotField();
+        apHeadingField.setId("apheadingfield");
+        apHeadingField.setText("");
+        apHeadingField.getStyleClass().add("ap-fields");
+        apHeadingField.setMaxWidth(60);
+        buttonGrid.add(apHeadingField, 13, 1);
+
+        apAltitudeField = new AutoPilotField();
+        apAltitudeField.setId("apaltitudefield");
+        apAltitudeField.setText("");
+        apAltitudeField.getStyleClass().add("ap-fields");
+        apAltitudeField.setMaxWidth(60);
+        buttonGrid.add(apAltitudeField, 13, 2);
+
+        apVSField = new AutoPilotField();
+        apVSField.setId("apvsfield");
+        apVSField.setText("");
+        apVSField.getStyleClass().add("ap-fields");
+        apVSField.setMaxWidth(60);
+        buttonGrid.add(apVSField, 13, 3);
 
     }
 
