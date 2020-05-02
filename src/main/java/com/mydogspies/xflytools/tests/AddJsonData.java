@@ -61,6 +61,8 @@ public class AddJsonData {
         startlist.add(data16);
         DrefData data17 = new DrefData("nav1_selected", "default", "sim/cockpit2/radios/actuators/nav1_right_is_selected", "int", "set");
         startlist.add(data17);
+        DrefData data18 = new DrefData("nav1_course", "default", "sim/cockpit/radios/nav1_obs_degm", "float", "set");
+        startlist.add(data18);
 
 
         // AP

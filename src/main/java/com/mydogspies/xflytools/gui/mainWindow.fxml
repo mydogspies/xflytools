@@ -144,42 +144,22 @@
                            </GridPane.margin>
                         </Label>
                         <Label styleClass="general-label" text="A/P" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
-                        <Button fx:id="courseSelect" mnemonicParsing="false" onAction="#clickButtonAP" prefWidth="58.0" text="Course" GridPane.columnIndex="10" GridPane.halignment="RIGHT">
+                        <Button fx:id="courseSelect" mnemonicParsing="false" prefWidth="58.0" text="Course" GridPane.columnIndex="10" GridPane.halignment="RIGHT">
                            <font>
                               <Font size="11.0" />
                            </font>
                         </Button>
-                        <Button fx:id="headingSelect" maxWidth="58.0" mnemonicParsing="false" onAction="#clickButtonAP" prefWidth="58.0" text="Heading" GridPane.columnIndex="10" GridPane.halignment="RIGHT" GridPane.rowIndex="1">
+                        <Button fx:id="headingSelect" maxWidth="58.0" mnemonicParsing="false" prefWidth="58.0" text="Heading" GridPane.columnIndex="10" GridPane.halignment="RIGHT" GridPane.rowIndex="1">
                            <font>
                               <Font size="11.0" />
                            </font>
                         </Button>
-                        <Button fx:id="levelSelect" maxWidth="58.0" mnemonicParsing="false" onAction="#clickButtonAP" prefWidth="58.0" text="Level" GridPane.columnIndex="10" GridPane.halignment="RIGHT" GridPane.rowIndex="2">
+                        <Button fx:id="levelSelect" maxWidth="58.0" mnemonicParsing="false" prefWidth="58.0" text="Level" GridPane.columnIndex="10" GridPane.halignment="RIGHT" GridPane.rowIndex="2">
                            <font>
                               <Font size="11.0" />
                            </font>
                         </Button>
-                        <TextField fx:id="course" GridPane.columnIndex="11">
-                           <GridPane.margin>
-                              <Insets left="15.0" right="15.0" />
-                           </GridPane.margin>
-                        </TextField>
-                        <TextField fx:id="heading" GridPane.columnIndex="11" GridPane.rowIndex="1">
-                           <GridPane.margin>
-                              <Insets left="15.0" right="15.0" />
-                           </GridPane.margin>
-                        </TextField>
-                        <TextField fx:id="level" GridPane.columnIndex="11" GridPane.rowIndex="2">
-                           <GridPane.margin>
-                              <Insets left="15.0" right="15.0" />
-                           </GridPane.margin>
-                        </TextField>
-                        <Button fx:id="verticalSpeedSelect" maxWidth="58.0" mnemonicParsing="false" onAction="#clickButtonAP" prefWidth="58.0" text="V/S" GridPane.columnIndex="10" GridPane.halignment="RIGHT" GridPane.rowIndex="3" />
-                        <TextField fx:id="verticalSpeed" GridPane.columnIndex="11" GridPane.rowIndex="3">
-                           <GridPane.margin>
-                              <Insets left="15.0" right="15.0" />
-                           </GridPane.margin>
-                        </TextField>
+                        <Button fx:id="verticalSpeedSelect" maxWidth="58.0" mnemonicParsing="false" prefWidth="58.0" text="V/S" GridPane.columnIndex="10" GridPane.halignment="RIGHT" GridPane.rowIndex="3" />
                      </children>
                   </GridPane>
                   <HBox prefHeight="45.0" prefWidth="640.0">
