@@ -22,9 +22,12 @@ public class UnsubscribeDatarefs {
         // fetch from database
         for (DrefData data : Main.database) {
 
-            string = "unsub " + data.getDataref();
-            sendData.send(string);
-            log.trace("unsubRefs(): Dataref (" + string + ") recalled.");
+            // only unsub datarefs, not commands
+            if (data.getIo().equals("set")) {
+                string = "unsub " + data.getDataref();
+                sendData.send(string);
+                log.trace("unsubRefs(): Dataref (" + string + ") recalled.");
+            }
         }
     }
 }

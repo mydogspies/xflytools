@@ -16,12 +16,12 @@ Can be found in the [CHANGELOG] file. Latest stable version is always the [MASTE
 #### Compatibility
 Current version has been tested with Windows 10 only. An Android version is currently development with no release date set yet.
 
-Tested ONLY for Xplane 11.41! Can NOT guarantee anything works with 11.5+ for now.
+Tested ONLY with Xplane 11.41! Can NOT guarantee anything works with 11.5+ for now.
 
 #### Current dependencies:
 Xflytools is written in Java 8. All dependencies can be found in the pom.xml file. You must have Java JRE installed on your system for it all to work - https://www.oracle.com/java/technologies/javase-jre8-downloads.html
 
 
-[CHANGELOG]: https://github.com/mydogspies/xflytools/blob/master/README.md
+[CHANGELOG]: https://github.com/mydogspies/xflytools/blob/master/CHANGELOG.md
 [MASTER]: https://github.com/mydogspies/xflytools
 [github]:https://github.com/vranki/ExtPlane/releases/

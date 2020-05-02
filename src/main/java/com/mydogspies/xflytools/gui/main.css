@@ -41,6 +41,13 @@ This is the general stylesheet for the main window
     -fx-text-fill: #B1B4B5;
 }
 
+/* IP ADDRESS FIELD */
+
+#ipaddress {
+    -fx-background-color: #31353D;
+    -fx-text-fill: #B1B4B5;
+}
+
 /* RADIO LABELS, FIELDS and BUTTON */
 
 .radio-label {
@@ -109,6 +116,12 @@ This is the general stylesheet for the main window
     -fx-text-fill: #B1B4B5;
 }
 
+/* AUTPILOT */
+
+.ap-label {
+    -fx-background-color: #323232;
+    -fx-text-fill: #7ECEFD;
+}
 
 /* CONNECT LABEL and TOGGLE BUTTON*/
 

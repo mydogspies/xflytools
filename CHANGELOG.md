@@ -6,10 +6,24 @@ The latest stable production branch will always be [MASTER] once we are out of a
 
 ### [Unreleased]
 
-- The possibility for 3rd party aircraft profiles.
-- Option to enter the IP address Xplane is listening on.
+- 3rd party aircraft profiles.
 - Autopilot functionality.
-- Setting Xplane IP address from the GUI.
+- Automatic connection to Xplane on startup
+
+### [0.3.0-alpha] - 2020-05-02
+
+#### Added
+
+- IP setting for Xplane in the GUI
+
+#### Changed
+
+- Changed the way swap buttons switch and now it seems all to work. No more issues from ExtPlane's side either.
+
+#### Known Issues
+
+- On aircraft like the Baron where there is more than one lighting switch of the same kind, Xflytools will toggle both in whatever state they are, also when one is off and the other on.
+- No A/P have yet been implemented. Only placeholders present.
 
 ### [0.2.0-alpha] - 2020-04-30
 
@@ -42,4 +56,4 @@ The latest stable production branch will always be [MASTER] once we are out of a
 [MASTER]: https://github.com/mydogspies/xflytools
 [unreleased]: https://github.com/mydogspies/xflytools/tree/develop
 [0.1.0-alpha]: https://github.com/mydogspies/xflytools/v0.1.0-alpha
-[0.1.0-alpha]: https://github.com/mydogspies/xflytools/v0.2.0-alpha
+[0.2.0-alpha]: https://github.com/mydogspies/xflytools/v0.2.0-alpha

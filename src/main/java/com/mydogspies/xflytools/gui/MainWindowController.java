@@ -1,6 +1,7 @@
 package com.mydogspies.xflytools.gui;
 
 import com.mydogspies.xflytools.data.DrefDataIO;
+import com.mydogspies.xflytools.gui.elements.AutopilotLabel;
 import com.mydogspies.xflytools.gui.elements.LightToggleButton;
 import com.mydogspies.xflytools.gui.elements.RadioTextField;
 import com.mydogspies.xflytools.gui.elements.SwapButton;
@@ -10,6 +11,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.layout.GridPane;
 import org.slf4j.Logger;
@@ -39,6 +41,8 @@ public class MainWindowController {
 
     @FXML
     private ComboBox<String> aircraftCombo;
+    @FXML
+    private TextField IPAddress;
 
     @FXML
     private GridPane radioGrid;
@@ -59,6 +63,10 @@ public class MainWindowController {
     private String com2set;
     private String nav1set;
     private String nav2set;
+    private AutopilotLabel apCourse;
+    private AutopilotLabel apHeading;
+    private AutopilotLabel apLevel;
+    private AutopilotLabel apVerticalSpeed;
 
     @FXML
     private ToggleButton toggleConnect;
@@ -83,6 +91,9 @@ public class MainWindowController {
                 "default");
         aircraftCombo.getSelectionModel().select("default");
         actProfile = getAircraftCombo();
+        // Xplane IP address
+        IPAddress.setText("127.0.0.1"); // default value
+
 
         log.debug("initialize(): Main window has been initialized.");
 
@@ -110,58 +121,29 @@ public class MainWindowController {
                     /* LIGHTING BUTTONS */
 
                 case "taxi":
-
-                    if (b.selectedProperty().getValue()) {
-                        sendToXplane("set", "taxi_light", "1");
-                        log.trace("clickButton(): Taxi lights set to ON in Xplane.");
-                    } else {
-                        sendToXplane("set", "taxi_light", "0");
-                        log.trace("clickButton(): Taxi lights set to OFF in Xplane.");
-                    }
+                    sendToXplane("cmd", "taxi_lights_flip", "");
+                    log.trace("clickButton(): Taxi lights toggled");
                     break;
 
                 case "nav":
-                    if (b.selectedProperty().getValue()) {
-                        sendToXplane("set", "nav_light", "1");
-                        log.trace("clickButton(): Navigation lights set to ON in Xplane.");
-                    } else {
-                        sendToXplane("set", "nav_light", "0");
-                        log.trace("clickButton(): Navigation lights set to OFF in Xplane.");
-                    }
+                    sendToXplane("cmd", "nav_lights_flip", "");
+                    log.trace("clickButton(): Nav lights toggled");
                     break;
 
                 case "beacon":
-                    if (b.selectedProperty().getValue()) {
-                        sendToXplane("set", "beacon_light", "1");
-                        log.trace("clickButton(): Beacon light set to ON in Xplane.");
-                    } else {
-                        sendToXplane("set", "beacon_light", "0");
-                        log.trace("clickButton(): Beacon light set to OFF in Xplane.");
-                    }
+                    sendToXplane("cmd", "beacon_lights_flip", "");
+                    log.trace("clickButton(): Beacon lights toggled");
                     break;
 
                 case "strobe":
-                    if (b.selectedProperty().getValue()) {
-                        sendToXplane("set", "strobe_light", "1");
-                        log.trace("clickButton(): Strobe lights set to ON in Xplane.");
-                    } else {
-                        sendToXplane("set", "strobe_light", "0");
-                        log.trace("clickButton(): Strobe lights set to OFF in Xplane.");
-                    }
+                    sendToXplane("cmd", "strobe_lights_flip", "");
+                    log.trace("clickButton(): Strobe lights toggled");
                     break;
 
                 case "landing":
-                    if (b.selectedProperty().getValue()) {
-                        sendToXplane("set", "landing_light", "1");
-                        log.trace("clickButton(): Landing lights set to ON in Xplane.");
-                    } else {
-                        sendToXplane("set", "landing_light", "0");
-                        log.trace("clickButton(): Landing lights set to OFF in Xplane.");
-                    }
+                    sendToXplane("cmd", "landing_lights_flip", "");
+                    log.trace("clickButton(): Landings lights toggled");
                     break;
-
-                    /* RADIOS */
-
             }
         } else {
             b.setSelected(false);
@@ -285,43 +267,23 @@ public class MainWindowController {
         switch (button_id) {
 
             case "com1swap":
-                if (com1set.equals("0")) {
-                    sendToXplane("set", "com1_selected", "1");
-                    log.trace("toggleRadio(): Right Com1 is selected.");
-                } else {
-                    sendToXplane("set", "com1_selected", "0");
-                    log.trace("toggleRadio(): Left Com1 is selected.");
-                }
-                break;
+                    sendToXplane("cmd", "com1_flip", "");
+                    log.trace("toggleRadio(): Com1 frequencies flipped.");
+                    break;
 
             case "com2swap":
-                if (com2set.equals("0")) {
-                    sendToXplane("set", "com2_selected", "1");
-                    log.trace("toggleRadio(): Right Com1 is selected.");
-                } else {
-                    sendToXplane("set", "com2_selected", "0");
-                    log.trace("toggleRadio(): Left Com2 is selected.");
-                }
+                sendToXplane("cmd", "com2_flip", "");
+                log.trace("toggleRadio(): Com1 frequencies flipped.");
                 break;
 
             case "nav1swap":
-                if (nav1set.equals("0")) {
-                    sendToXplane("set", "nav1_selected", "1");
-                    log.trace("toggleRadio(): Right Nav1 is selected.");
-                } else {
-                    sendToXplane("set", "nav1_selected", "0");
-                    log.trace("toggleRadio(): Left Nav1 is selected.");
-                }
+                sendToXplane("cmd", "nav1_flip", "");
+                log.trace("toggleRadio(): Com1 frequencies flipped.");
                 break;
 
             case "nav2swap":
-                if (nav2set.equals("0")) {
-                    sendToXplane("set", "nav2_selected", "1");
-                    log.trace("toggleRadio(): Right Nav2 is selected.");
-                } else {
-                    sendToXplane("set", "nav2_selected", "0");
-                    log.trace("toggleRadio(): Left Nav2 is selected.");
-                }
+                sendToXplane("cmd", "nav2_flip", "");
+                log.trace("toggleRadio(): Com1 frequencies flipped.");
                 break;
         }
     }
@@ -349,9 +311,13 @@ public class MainWindowController {
         String act = aircraftCombo.getValue();
         String dataref = io.getDatarefByActAndCmnd(command, act).get(0);
 
-        // action = send
-        snd.send(method + " " + dataref + " " + value);
-        log.trace("sendToXplane(): " + method + " " + dataref + " " + value);
+        if (method.equals("set")) {
+            snd.send(method + " " + dataref + " " + value);
+            log.trace("sendToXplane(): " + method + " " + dataref + " " + value);
+        } else if (method.equals("cmd")) {
+            snd.send("cmd once " + dataref);
+            log.trace("sendToXplane(): cmd once " + dataref);
+        }
     }
 
     /**
@@ -505,17 +471,27 @@ public class MainWindowController {
                         }
                         break;
 
-                    case "com1_selected": // checks if left or right com1 is selected
-                        com1set = value.get(0);
+                     /* AUTOPILOT */
 
-                    case "com2_selected":
-                        com2set = value.get(0);
+                    case "ap_heading":
+                        String raw9 = value.get(0);
+                        log.trace("getFromXplane(): [" + command + "] -> nav1 stand-by set to " + raw9);
+                        break;
 
-                    case "nav1_selected":
-                        nav1set = value.get(0);
 
-                    case "nav2_selected":
-                        nav2set = value.get(0);
+
+                        // TODO deprecated code - delete
+//                    case "com1_selected": // checks if left or right com1 is selected
+//                        com1set = value.get(0);
+//
+//                    case "com2_selected":
+//                        com2set = value.get(0);
+//
+//                    case "nav1_selected":
+//                        nav1set = value.get(0);
+//
+//                    case "nav2_selected":
+//                        nav2set = value.get(0);
                 }
             }
         });
@@ -546,9 +522,12 @@ public class MainWindowController {
 
             // instantiate a socket and attempt to connect
             SocketConnect con = new SocketConnect();
-            con.connect();
+            con.connect(IPAddress.getText());
 
             if (SocketConnect.socket.isConnected()) {
+
+                IPAddress.setDisable(true);
+                aircraftCombo.setDisable(true);
 
                 // subscribe to relevant datarefs
                 SubscribeDatarefs.subRefs();
@@ -566,6 +545,9 @@ public class MainWindowController {
                 log.error("toggleConnect(): Connection to Xplane failed!");
             }
         } else if (SocketConnect.socket.isConnected()) {
+
+            IPAddress.setDisable(false);
+            aircraftCombo.setDisable(false);
 
             // clean disconnect
             toggleAllToFalse();
@@ -780,6 +762,14 @@ public class MainWindowController {
         nav2swap.getStyleClass().add("swap-button");
         nav2swap.setOnAction(this::toggleRadio);
         radioGrid.add(nav2swap,2, 4);
+
+        /* AP LABELS & FIELDS */
+
+        apCourse = new AutopilotLabel();
+        apCourse.setId("apcourse");
+        apCourse.setText("");
+        apCourse.getStyleClass().add("ap-labels");
+        radioGrid.add(apCourse, 9, 0);
 
 
 

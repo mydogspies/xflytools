@@ -33,6 +33,8 @@ public class DataHandler {
      */
     public void processData() {
 
+        String datatype;
+
         Runnable runnable = () -> {
 
             List<String> dataList = new ArrayList<>();

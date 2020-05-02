@@ -22,9 +22,7 @@ public class SendData {
 
             try {
                 OutputStream out = SocketConnect.socket.getOutputStream();
-                System.out.println("out = " + out);
                 PrintWriter writer = new PrintWriter(out, true);
-                System.out.println("writer = " + writer);
                 writer.println(dataref);
                 log.trace("send(): String (" + dataref + ") sent via TCP to Xplane using socket: " + SocketConnect.socket);
             } catch (IOException e) {
