@@ -33,15 +33,15 @@ public class DataHandler {
      */
     public void processData() {
 
-        String datatype;
-
         Runnable runnable = () -> {
 
+            String datatype = rawString.substring(0, 2); // TODO should be implemented as part fo return map
+            String regex = "\\b[u][a-z]{1,2}\\s\\b"; // get the 2 or three first characters with datatype, eg. "ui sim/some/dataref"
             List<String> dataList = new ArrayList<>();
 
             // find out if we received more than one command string
             int counter = 0;
-            Pattern pattern = Pattern.compile("ui");
+            Pattern pattern = Pattern.compile(regex);
             Matcher m = pattern.matcher(rawString);
             while (m.find()) {
                 counter++;
@@ -51,8 +51,8 @@ public class DataHandler {
             if (counter > 1) {
 
                 // split by "ui" so that we get individual datarefs
-                String[] splitByUI = rawString.split("ui");
-                for (String split : splitByUI) {
+                String[] splitByDtype = rawString.split(regex);
+                for (String split : splitByDtype) {
                     // clean out leading and trailing whitespaces
                     split = split.trim();
                     // sanity check - do we have at least one real ascii char?
@@ -62,7 +62,7 @@ public class DataHandler {
                 }
             } else {
 
-                rawString = rawString.replace("ui", "");
+                rawString = rawString.replaceAll(regex, "");
                 rawString = rawString.trim();
                 dataList.add(rawString);
             }
@@ -73,16 +73,20 @@ public class DataHandler {
             for (String data : dataList) {
 
                 ArrayList<String> valueArray = new ArrayList<>();
+
                 // this time split by whitespace
                 String[] splitIntoStrings = data.split("\\s+");
-                // and put the values array together
 
+                // and put the values array together
                 for (int k = 1; k < splitIntoStrings.length; k++) {
                     valueArray.add(splitIntoStrings[k]);
                 }
+
                 // finally add dataref plus values array into the map
                 dataMap.put(splitIntoStrings[0], valueArray);
             }
+
+            log.trace("run(): DataHandler mapped the TCP stream to: " + dataMap);
 
             // send off the data to the receiving method of the GUI controller
             for (Map.Entry<String, ArrayList<String>> entry : dataMap.entrySet()) {

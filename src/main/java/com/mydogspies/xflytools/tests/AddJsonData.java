@@ -61,7 +61,8 @@ public class AddJsonData {
         startlist.add(data16);
         DrefData data17 = new DrefData("nav1_selected", "default", "sim/cockpit2/radios/actuators/nav1_right_is_selected", "int", "set");
         startlist.add(data17);
-
+        DrefData data18 = new DrefData("nav1_course", "default", "sim/cockpit/radios/nav1_obs_degm", "float", "set");
+        startlist.add(data18);
 
         // AP
         DrefData data30 = new DrefData("ap_heading", "default", "sim/cockpit/autopilot/heading_mag", "float", "set");
@@ -70,6 +71,11 @@ public class AddJsonData {
         startlist.add(data31);
         DrefData data32 = new DrefData("ap_vertical_speed", "default", "sim/cockpit/autopilot/vertical_velocity", "float", "set");
         startlist.add(data32);
+        DrefData data33 = new DrefData("ap_mode", "default", "sim/cockpit/autopilot/autopilot_mode", "int", "set");
+        startlist.add(data33);
+        DrefData data34 = new DrefData("ap_heading_mode_check", "default", "sim/cockpit2/autopilot/heading_mode", "int", "set");
+        startlist.add(data34);
+
 
 
         /* COMMANDS*/
@@ -95,6 +101,13 @@ public class AddJsonData {
         startlist.add(data63);
         DrefData data64 = new DrefData("landing_lights_flip", "default", "sim/lights/landing_lights_toggle", "", "cmd");
         startlist.add(data64);
+
+        // AUTOPILOT
+        DrefData data80 = new DrefData("ap_heading_mode", "default", "sim/autopilot/heading", "", "cmd");
+        startlist.add(data80);
+
+
+
 
 
 

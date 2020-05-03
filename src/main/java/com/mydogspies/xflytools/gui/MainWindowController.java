@@ -1,18 +1,13 @@
 package com.mydogspies.xflytools.gui;
 
 import com.mydogspies.xflytools.data.DrefDataIO;
-import com.mydogspies.xflytools.gui.elements.AutopilotLabel;
-import com.mydogspies.xflytools.gui.elements.LightToggleButton;
-import com.mydogspies.xflytools.gui.elements.RadioTextField;
-import com.mydogspies.xflytools.gui.elements.SwapButton;
+import com.mydogspies.xflytools.gui.elements.*;
 import com.mydogspies.xflytools.io.*;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
-import javafx.scene.control.ToggleButton;
+import javafx.geometry.HPos;
+import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -59,14 +54,24 @@ public class MainWindowController {
     private SwapButton com2swap;
     private SwapButton nav1swap;
     private SwapButton nav2swap;
-    private String com1set;
-    private String com2set;
-    private String nav1set;
-    private String nav2set;
+//    private String com1set; // TODO obsolete code - delete!
+//    private String com2set;
+//    private String nav1set;
+//    private String nav2set;
     private AutopilotLabel apCourse;
     private AutopilotLabel apHeading;
     private AutopilotLabel apLevel;
     private AutopilotLabel apVerticalSpeed;
+    private AutoPilotButton apToggleBtn;
+    private AutoPilotButton apHeadingBtn;
+    private AutoPilotButton apAltitudeBtn;
+    private AutoPilotButton apVSBtn;
+    private AutoPilotButton apApprBtn;
+    private AutoPilotButton apNavBtn;
+    private AutoPilotField apCourseField;
+    private AutoPilotField apHeadingField;
+    private AutoPilotField apAltitudeField;
+    private AutoPilotField apVSField;
 
     @FXML
     private ToggleButton toggleConnect;
@@ -144,6 +149,24 @@ public class MainWindowController {
                     sendToXplane("cmd", "landing_lights_flip", "");
                     log.trace("clickButton(): Landings lights toggled");
                     break;
+
+                    /* AUTOPILOT BUTTONS */
+
+                case "aptogglebtn":
+                    if (apToggleBtn.selectedProperty().getValue().equals(false)) {
+                        sendToXplane("set", "ap_mode", "0");
+                        log.trace("clickButton(): A/P is OFF");
+                    } else {
+                        sendToXplane("set", "ap_mode", "2");
+                        log.trace("clickButton(): A/P is ON");
+                    }
+                    break;
+
+                case "apheadingbtn":
+                    sendToXplane("cmd", "ap_heading_mode", "");
+                    log.trace("clickButton(): A/P set to Heading mode.");
+                    break;
+
             }
         } else {
             b.setSelected(false);
@@ -288,14 +311,6 @@ public class MainWindowController {
         }
     }
 
-    @FXML
-    private void clickButtonAP() {
-
-        // TODO implement menthod
-        System.out.println("AP BUTTONS CLICKED");
-
-    }
-
     /**
      * Sends a string in the format METHOD COMMAND STRING to Xplane.
      * Eg. "set sim/cockpit2/switches/taxi_light_on 1" in order to turn taxi lights on
@@ -321,7 +336,8 @@ public class MainWindowController {
     }
 
     /**
-     * Takes from the data handler the dataref and an array with values
+     * Takes from the data handler the dataref and an array with values and passes these data
+     * to the corresponding GUI elements.
      * @param dataref a single dataref string
      * @param value an array of values
      */
@@ -471,32 +487,53 @@ public class MainWindowController {
                         }
                         break;
 
-                     /* AUTOPILOT */
+                     /* AUTOPILOT and RELATED*/
 
                     case "ap_heading":
-                        String raw9 = value.get(0);
-                        log.trace("getFromXplane(): [" + command + "] -> nav1 stand-by set to " + raw9);
+                        String val = String.format("%03d", Integer.parseInt(value.get(0)));
+                        if (!apHeading.getText().equals(val)) {
+                            apHeading.setText(val + (char) 176); }
+                        log.trace("getFromXplane(): [" + command + "] -> AP set to heading " + val);
                         break;
 
+                    case "ap_altitude":
+                        String val3 = value.get(0);
+                        if (!apLevel.getText().equals(val3)) {
+                            apLevel.setText(val3 + "'"); }
+                        log.trace("getFromXplane(): [" + command + "] -> AP set to altitude " + val3);
+                        break;
 
+                    case "ap_vertical_speed":
+                        String val4 = value.get(0);
+                        if (!apVerticalSpeed.getText().equals(val4)) {
+                            apVerticalSpeed.setText(val4); }
+                        log.trace("getFromXplane(): [" + command + "] -> AP set to vertical speed " + val4);
+                        break;
 
-                        // TODO deprecated code - delete
-//                    case "com1_selected": // checks if left or right com1 is selected
-//                        com1set = value.get(0);
-//
-//                    case "com2_selected":
-//                        com2set = value.get(0);
-//
-//                    case "nav1_selected":
-//                        nav1set = value.get(0);
-//
-//                    case "nav2_selected":
-//                        nav2set = value.get(0);
+                    case "nav1_course":
+                        String val5 = String.format("%03d", Math.round(Float.parseFloat(value.get(0))));
+                        if (!apCourse.getText().equals(val5)) {
+                            apCourse.setText(val5 + (char) 176); }
+                        log.trace("getFromXplane(): [" + command + "] -> Nav 1 course (for AP) set to " + val5);
+                        break;
+
+                    case "ap_mode":
+                        String val6 = value.get(0);
+                        if (apToggleBtn.selectedProperty().getValue().equals(true) && val6.equals("0")) {
+                            apToggleBtn.selectedProperty().set(false);
+                            log.trace("getFromXplane(): [" + command + "] -> A/P set to " + val6 + ": OFF");
+                        } else if (apToggleBtn.selectedProperty().getValue().equals(false) && val6.equals("2")) {
+                            apToggleBtn.selectedProperty().set(true);
+                            log.trace("getFromXplane(): [" + command + "] -> A/P set to " + val6 + ": ON");
+                        }
+                        break;
+
+                    case "ap_heading_mode_check":
+                        System.out.println("MODE: " + value.get(0));
+                        break;
                 }
             }
         });
-
-
     }
 
     /**
@@ -583,6 +620,17 @@ public class MainWindowController {
         nav1Stby.setText("");
         nav2Stby.setText("");
         transponder.setText("");
+        /* AP */
+        apVerticalSpeed.setText("");
+        apHeading.setText("");
+        apCourse.setText("");
+        apLevel.setText("");
+        apToggleBtn.setSelected(false);
+        apHeadingBtn.setSelected(false);
+        apAltitudeBtn.setSelected(false);
+        apNavBtn.setSelected(false);
+        apApprBtn.setSelected(false);
+        apVSBtn.setSelected(false);
     }
 
 
@@ -592,7 +640,7 @@ public class MainWindowController {
 
         toggleConnect.setText("Connect");
         connectLabel.setText("Not connected");
-        connectLabel.setStyle("-fx-text-fill: #f44336");
+        connectLabel.setStyle("-fx-text-fill: #EC2F05");
     }
 
     private void setConnecting() {
@@ -659,6 +707,50 @@ public class MainWindowController {
         landingLight.getStyleClass().addAll("light-toggle-button");
         landingLight.setOnAction(this::clickButton);
         buttonGrid.add(landingLight, 5, 1);
+
+        /* AP BUTTONS */
+
+        apToggleBtn = new AutoPilotButton();
+        apToggleBtn.setId("aptogglebtn");
+        apToggleBtn.setText("A/P");
+        apToggleBtn.getStyleClass().addAll("ap-buttons");
+        apToggleBtn.setOnAction(this::clickButton);
+        buttonGrid.add(apToggleBtn,1, 2);
+
+        apHeadingBtn = new AutoPilotButton();
+        apHeadingBtn.setId("apheadingbtn");
+        apHeadingBtn.setText("Hdg");
+        apHeadingBtn.getStyleClass().addAll("ap-buttons");
+        apHeadingBtn.setOnAction(this::clickButton);
+        buttonGrid.add(apHeadingBtn, 2, 2);
+
+        apAltitudeBtn = new AutoPilotButton();
+        apAltitudeBtn.setId("apaltitudebtn");
+        apAltitudeBtn.setText("Alt");
+        apAltitudeBtn.getStyleClass().add("ap-buttons");
+        apAltitudeBtn.setOnAction(this::clickButton);
+        buttonGrid.add(apAltitudeBtn, 3, 2);
+
+        apVSBtn = new AutoPilotButton();
+        apVSBtn.setId("apvsbtn");
+        apVSBtn.setText("V/S");
+        apVSBtn.getStyleClass().add("ap-buttons");
+        apVSBtn.setOnAction(this::clickButton);
+        buttonGrid.add(apVSBtn, 6, 2);
+
+        apApprBtn = new AutoPilotButton();
+        apApprBtn.setId("apapprbtn");
+        apApprBtn.setText("Apr");
+        apApprBtn.getStyleClass().addAll("ap-buttons");
+        apApprBtn.setOnAction(this::clickButton);
+        buttonGrid.add(apApprBtn, 5, 2);
+
+        apNavBtn = new AutoPilotButton();
+        apNavBtn.setId("apnavbtn");
+        apNavBtn.setText("Nav");
+        apNavBtn.getStyleClass().addAll("ap-buttons");
+        apNavBtn.setOnAction(this::clickButton);
+        buttonGrid.add(apNavBtn, 4, 2);
     }
 
     /**
@@ -769,9 +861,53 @@ public class MainWindowController {
         apCourse.setId("apcourse");
         apCourse.setText("");
         apCourse.getStyleClass().add("ap-labels");
-        radioGrid.add(apCourse, 9, 0);
+        buttonGrid.add(apCourse, 9, 0);
 
+        apHeading = new AutopilotLabel();
+        apHeading.setId("apheading");
+        apHeading.setText("");
+        apHeading.getStyleClass().add("ap-labels");
+        buttonGrid.add(apHeading, 9, 1);
 
+        apLevel = new AutopilotLabel();
+        apLevel.setId("aplevel");
+        apLevel.setText("");
+        apLevel.getStyleClass().add("ap-labels");
+        buttonGrid.add(apLevel, 9,2);
+
+        apVerticalSpeed = new AutopilotLabel();
+        apVerticalSpeed.setId("apverticalspeed");
+        apVerticalSpeed.setText("");
+        apVerticalSpeed.getStyleClass().add("ap-labels");
+        buttonGrid.add(apVerticalSpeed, 9, 3);
+
+        apCourseField = new AutoPilotField();
+        apCourseField.setId("apcoursefield");
+        apCourseField.setText("");
+        apCourseField.getStyleClass().add("ap-fields");
+        apCourseField.setMaxWidth(60);
+        buttonGrid.add(apCourseField, 13, 0);
+
+        apHeadingField = new AutoPilotField();
+        apHeadingField.setId("apheadingfield");
+        apHeadingField.setText("");
+        apHeadingField.getStyleClass().add("ap-fields");
+        apHeadingField.setMaxWidth(60);
+        buttonGrid.add(apHeadingField, 13, 1);
+
+        apAltitudeField = new AutoPilotField();
+        apAltitudeField.setId("apaltitudefield");
+        apAltitudeField.setText("");
+        apAltitudeField.getStyleClass().add("ap-fields");
+        apAltitudeField.setMaxWidth(60);
+        buttonGrid.add(apAltitudeField, 13, 2);
+
+        apVSField = new AutoPilotField();
+        apVSField.setId("apvsfield");
+        apVSField.setText("");
+        apVSField.getStyleClass().add("ap-fields");
+        apVSField.setMaxWidth(60);
+        buttonGrid.add(apVSField, 13, 3);
 
     }
 

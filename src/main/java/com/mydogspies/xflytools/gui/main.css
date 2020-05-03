@@ -102,7 +102,7 @@ This is the general stylesheet for the main window
 
 .light-toggle-button {
     -fx-base: #424242;
-    -fx-text-fill: #B1B4B5;
+    -fx-text-fill: #FFF3D0;
     -fx-column-halignment: center;
 }
 
@@ -118,16 +118,42 @@ This is the general stylesheet for the main window
 
 /* AUTPILOT */
 
-.ap-label {
+.ap-labels {
     -fx-background-color: #323232;
     -fx-text-fill: #7ECEFD;
+    -fx-font-size: 16px;
+}
+
+.ap-buttons {
+    -fx-base: #424242;
+    -fx-text-fill: #B1EFFF;
+    -fx-column-halignment: center;
+}
+
+.ap-buttons:selected {
+    -fx-base: #62DEFF;
+    -fx-text-fill: #1C1C1C;
+}
+
+.ap-buttons:hover {
+    -fx-base: #444444;
+    -fx-text-fill: #B1B4B5;
+}
+
+#aptogglebtn {
+    -fx-font-size: 12px;
+}
+
+#aptogglebtn:selected {
+    -fx-text-fill: #900B0A;
+    -fx-font-weight: bold;
+}
+
+.ap-fields {
+    -fx-background-color: #31353D;
 }
 
 /* CONNECT LABEL and TOGGLE BUTTON*/
-
-#connect {
-    -fx-background-color: #303030;
-}
 
 #toggleConnect {
     -fx-base: #424242;

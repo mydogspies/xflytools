@@ -23,7 +23,7 @@ public class MainWindow extends Application {
     public void start(Stage primaryStage) throws Exception {
 
         // get the current Javafx css theme
-        String appTitle = "Xflytools v.0.2.0";
+        String appTitle = "Xflytools v.0.3.0";
 
         try {
             FXMLLoader loader = new FXMLLoader (getClass().getResource("mainWindow.fxml"));
