@@ -149,6 +149,24 @@ public class MainWindowController {
                     sendToXplane("cmd", "landing_lights_flip", "");
                     log.trace("clickButton(): Landings lights toggled");
                     break;
+
+                    /* AUTOPILOT BUTTONS */
+
+                case "aptogglebtn":
+                    if (apToggleBtn.selectedProperty().getValue().equals(false)) {
+                        sendToXplane("set", "ap_mode", "0");
+                        log.trace("clickButton(): A/P is OFF");
+                    } else {
+                        sendToXplane("set", "ap_mode", "2");
+                        log.trace("clickButton(): A/P is ON");
+                    }
+                    break;
+
+                case "apheadingbtn":
+                    sendToXplane("cmd", "ap_heading_mode", "");
+                    log.trace("clickButton(): A/P set to Heading mode.");
+                    break;
+
             }
         } else {
             b.setSelected(false);
@@ -469,7 +487,7 @@ public class MainWindowController {
                         }
                         break;
 
-                     /* AUTOPILOT */
+                     /* AUTOPILOT and RELATED*/
 
                     case "ap_heading":
                         String val = String.format("%03d", Integer.parseInt(value.get(0)));
@@ -497,6 +515,21 @@ public class MainWindowController {
                         if (!apCourse.getText().equals(val5)) {
                             apCourse.setText(val5 + (char) 176); }
                         log.trace("getFromXplane(): [" + command + "] -> Nav 1 course (for AP) set to " + val5);
+                        break;
+
+                    case "ap_mode":
+                        String val6 = value.get(0);
+                        if (apToggleBtn.selectedProperty().getValue().equals(true) && val6.equals("0")) {
+                            apToggleBtn.selectedProperty().set(false);
+                            log.trace("getFromXplane(): [" + command + "] -> A/P set to " + val6 + ": OFF");
+                        } else if (apToggleBtn.selectedProperty().getValue().equals(false) && val6.equals("2")) {
+                            apToggleBtn.selectedProperty().set(true);
+                            log.trace("getFromXplane(): [" + command + "] -> A/P set to " + val6 + ": ON");
+                        }
+                        break;
+
+                    case "ap_heading_mode_check":
+                        System.out.println("MODE: " + value.get(0));
                         break;
                 }
             }
