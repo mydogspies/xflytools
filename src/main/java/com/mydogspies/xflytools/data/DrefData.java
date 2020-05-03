@@ -8,6 +8,7 @@ package com.mydogspies.xflytools.data;
 public class DrefData {
 
     private String command;
+    private String typeOfCommand;
     private String aircraft;
     private String dataref;
     private String type;
@@ -16,8 +17,9 @@ public class DrefData {
     public DrefData() {
     }
 
-    public DrefData(String command, String aircraft, String dataref, String type, String io) {
+    public DrefData(String command, String typeOfCommand, String aircraft, String dataref, String type, String io) {
         this.command = command;
+        this.typeOfCommand = typeOfCommand;
         this.aircraft = aircraft;
         this.dataref = dataref;
         this.type = type;
@@ -62,5 +64,13 @@ public class DrefData {
 
     public void setIo(String io) {
         this.io = io;
+    }
+
+    public String getTypeOfCommand() {
+        return typeOfCommand;
+    }
+
+    public void setTypeOfCommand(String typeOfCommand) {
+        this.typeOfCommand = typeOfCommand;
     }
 }
