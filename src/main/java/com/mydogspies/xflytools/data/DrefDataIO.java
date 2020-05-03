@@ -89,6 +89,25 @@ public class DrefDataIO implements DrefDataDAO{
     }
 
     /**
+     * Gets the type of commands that corresponds to a certain dataref
+     * @param dataref the dataref
+     * @return the type of command that corresponds to that specific dataref
+     */
+    @Override
+    public String getCmndTypeByDataref(String dataref) {
+
+        String result = "";
+
+        for (DrefData data : database) {
+
+            if (data.getDataref().equals(dataref)) {
+                result = data.getTypeOfCommand();
+            }
+        }
+        return result;
+    }
+
+    /**
      * Reads the json file with datarefs and returns all the contents as a list of DrefData object.
      * @return a DrefData object. otherwise NULL.
      */
