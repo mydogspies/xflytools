@@ -16,12 +16,14 @@ public class SocketConnect {
 
     private static final Logger log = LoggerFactory.getLogger(SocketConnect.class);
 
-    private final String server = "192.168.178.40"; // TODO needs to go into some settings
+    private String server;
     private final int port = 51000;
     public static Socket socket;
     public static boolean receiving = false;
 
-   public void connect() {
+   public void connect(String serverIP) {
+
+       this.server = serverIP;
 
        try {
            socket = new Socket();

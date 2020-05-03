@@ -22,9 +22,13 @@ public class SubscribeDatarefs {
         // fetch from database
         for (DrefData data : Main.database) {
 
-            string = "sub " + data.getDataref();
-            sendData.send(string);
-            log.trace("subRefs(): Dataref (" + string + ") recalled.");
+            // only fetch datarefs, not commands!
+            if (data.getIo().equals("set")) {
+                string = "sub " + data.getDataref();
+                sendData.send(string);
+                log.trace("subRefs(): Dataref (" + string + ") recalled.");
+            }
+
         }
     }
 }

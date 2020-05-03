@@ -11,15 +11,17 @@ public class DrefData {
     private String aircraft;
     private String dataref;
     private String type;
+    private String io;
 
     public DrefData() {
     }
 
-    public DrefData(String command, String aircraft, String dataref, String type) {
+    public DrefData(String command, String aircraft, String dataref, String type, String io) {
         this.command = command;
         this.aircraft = aircraft;
         this.dataref = dataref;
         this.type = type;
+        this.io = io;
     }
 
     public String getCommand() {
@@ -52,5 +54,13 @@ public class DrefData {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    public String getIo() {
+        return io;
+    }
+
+    public void setIo(String io) {
+        this.io = io;
     }
 }

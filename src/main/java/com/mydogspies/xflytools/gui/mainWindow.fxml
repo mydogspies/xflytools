@@ -46,8 +46,8 @@
                               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
                            </columnConstraints>
                            <rowConstraints>
-                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="20.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="10.0" vgrow="SOMETIMES" />
                               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                               <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
@@ -55,14 +55,24 @@
                            <children>
                               <ComboBox id="aircraftCombo" fx:id="aircraftCombo" onAction="#chooseAircraft" prefWidth="150.0">
                                  <GridPane.margin>
-                                    <Insets left="70.0" />
+                                    <Insets left="70.0" top="10.0" />
                                  </GridPane.margin>
                               </ComboBox>
                               <Label styleClass="general-label" text="Aircraft">
                                  <GridPane.margin>
-                                    <Insets left="12.0" />
+                                    <Insets left="12.0" top="10.0" />
                                  </GridPane.margin>
                               </Label>
+                              <Label styleClass="general-label" text="IP address" GridPane.rowIndex="1">
+                                 <GridPane.margin>
+                                    <Insets left="8.0" />
+                                 </GridPane.margin>
+                              </Label>
+                              <TextField id="ipaddress" fx:id="IPAddress" maxWidth="100.0" prefHeight="25.0" prefWidth="181.0" GridPane.rowIndex="1">
+                                 <GridPane.margin>
+                                    <Insets left="70.0" />
+                                 </GridPane.margin>
+                              </TextField>
                            </children>
                         </GridPane>
                         <GridPane fx:id="radioGrid" GridPane.columnIndex="1">
@@ -87,9 +97,9 @@
                               <Label styleClass="general-label" text="nav 1" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
                               <Label styleClass="general-label" text="nav 2" GridPane.halignment="CENTER" GridPane.rowIndex="4" />
                               <Label styleClass="general-label" text="trans" GridPane.halignment="CENTER" GridPane.rowIndex="5" />
-                              <Label styleClass="general-label" text="Current" GridPane.columnIndex="1" GridPane.rowIndex="6">
+                              <Label styleClass="general-label" text="Active" GridPane.columnIndex="1" GridPane.rowIndex="6">
                                  <GridPane.margin>
-                                    <Insets left="17.0" top="12.0" />
+                                    <Insets top="12.0" />
                                  </GridPane.margin>
                               </Label>
                               <Label styleClass="general-label" text="Active" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.valignment="BOTTOM">
@@ -117,8 +127,10 @@
                         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="20.0" prefWidth="20.0" />
                         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="120.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="120.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="20.0" prefWidth="20.0" />
                         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="150.0" />
                     </columnConstraints>
                     <rowConstraints>
@@ -134,46 +146,22 @@
                            </GridPane.margin>
                         </Label>
                         <Label styleClass="general-label" text="A/P" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
-                        <Button fx:id="courseSelect" mnemonicParsing="false" onAction="#clickButtonAP" prefWidth="58.0" text="Course" GridPane.columnIndex="10" GridPane.halignment="RIGHT">
+                        <Button fx:id="courseSelect" mnemonicParsing="false" prefWidth="58.0" text="Course" GridPane.columnIndex="11" GridPane.halignment="CENTER">
                            <font>
                               <Font size="11.0" />
                            </font>
                         </Button>
-                        <Button fx:id="headingSelect" maxWidth="58.0" mnemonicParsing="false" onAction="#clickButtonAP" prefWidth="58.0" text="Heading" GridPane.columnIndex="10" GridPane.halignment="RIGHT" GridPane.rowIndex="1">
+                        <Button fx:id="headingSelect" maxWidth="58.0" mnemonicParsing="false" prefWidth="58.0" text="Heading" GridPane.columnIndex="11" GridPane.halignment="CENTER" GridPane.rowIndex="1">
                            <font>
                               <Font size="11.0" />
                            </font>
                         </Button>
-                        <Button fx:id="levelSelect" maxWidth="58.0" mnemonicParsing="false" onAction="#clickButtonAP" prefWidth="58.0" text="Level" GridPane.columnIndex="10" GridPane.halignment="RIGHT" GridPane.rowIndex="2">
+                        <Button fx:id="levelSelect" maxWidth="58.0" mnemonicParsing="false" prefWidth="58.0" text="Level" GridPane.columnIndex="11" GridPane.halignment="CENTER" GridPane.rowIndex="2">
                            <font>
                               <Font size="11.0" />
                            </font>
                         </Button>
-                        <TextField fx:id="course" GridPane.columnIndex="11">
-                           <GridPane.margin>
-                              <Insets left="15.0" right="15.0" />
-                           </GridPane.margin>
-                        </TextField>
-                        <TextField fx:id="heading" GridPane.columnIndex="11" GridPane.rowIndex="1">
-                           <GridPane.margin>
-                              <Insets left="15.0" right="15.0" />
-                           </GridPane.margin>
-                        </TextField>
-                        <TextField fx:id="level" GridPane.columnIndex="11" GridPane.rowIndex="2">
-                           <GridPane.margin>
-                              <Insets left="15.0" right="15.0" />
-                           </GridPane.margin>
-                        </TextField>
-                        <Label fx:id="courseText" styleClass="general-label" text="Label" GridPane.columnIndex="9" />
-                        <Label fx:id="headingText" styleClass="general-label" text="Label" GridPane.columnIndex="9" GridPane.rowIndex="1" />
-                        <Label fx:id="levelText" styleClass="general-label" text="Label" GridPane.columnIndex="9" GridPane.rowIndex="2" />
-                        <Label fx:id="verticalSpeedText" styleClass="general-label" text="Label" GridPane.columnIndex="9" GridPane.rowIndex="3" />
-                        <Button fx:id="verticalSpeedSelect" maxWidth="58.0" mnemonicParsing="false" onAction="#clickButtonAP" prefWidth="58.0" text="V/S" GridPane.columnIndex="10" GridPane.halignment="RIGHT" GridPane.rowIndex="3" />
-                        <TextField fx:id="verticalSpeed" GridPane.columnIndex="11" GridPane.rowIndex="3">
-                           <GridPane.margin>
-                              <Insets left="15.0" right="15.0" />
-                           </GridPane.margin>
-                        </TextField>
+                        <Button fx:id="verticalSpeedSelect" maxWidth="58.0" mnemonicParsing="false" prefWidth="58.0" text="V/S" GridPane.columnIndex="11" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
                      </children>
                   </GridPane>
                   <HBox prefHeight="45.0" prefWidth="640.0">
