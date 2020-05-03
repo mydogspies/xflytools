@@ -6,9 +6,23 @@ The latest stable production branch will always be [MASTER] once we are out of a
 
 ### [Unreleased]
 
-- 3rd party aircraft profiles.
-- Autopilot functionality.
-- Automatic connection to Xplane on startup
+- Future Android versions.
+
+### [0.4.0-beta] - 2020-05-05
+
+#### Added
+
+- Current and STD baro pressure settings.
+
+#### Changed
+
+- All autopilot functions now work.
+- Complete re-structuring of how to code renders the GUI making it ready for various aircraft profiles.
+- From this release Xflytools is distributed as an installer bundled with is JRE for ease of use.
+
+#### Known Issues
+
+- For now, on aircraft like the Baron where there is more than one lighting switch of the same kind, Xflytools will toggle both in whatever state they are, also when one is off and the other on.
 
 ### [0.3.0-alpha] - 2020-05-02
 
@@ -57,3 +71,5 @@ The latest stable production branch will always be [MASTER] once we are out of a
 [unreleased]: https://github.com/mydogspies/xflytools/tree/develop
 [0.1.0-alpha]: https://github.com/mydogspies/xflytools/v0.1.0-alpha
 [0.2.0-alpha]: https://github.com/mydogspies/xflytools/v0.2.0-alpha
+[0.3.0-alpha]: https://github.com/mydogspies/xflytools/v0.3.0-alpha
+[0.4.0-beta]: https://github.com/mydogspies/xflytools/v0.4.0-beta

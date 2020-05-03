@@ -10,6 +10,11 @@ import javafx.scene.layout.GridPane;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * This is the controller for the A/P buttons part of the GUI.
+ * @author Peter Mankowski
+ * @since 0.4.0
+ */
 public class DefaultAPButtons {
 
     private static final Logger log = LoggerFactory.getLogger(DefaultAPButtons.class);
@@ -30,7 +35,6 @@ public class DefaultAPButtons {
     void initialize() {
 
         initElems();
-
     }
 
     /**
@@ -114,5 +118,18 @@ public class DefaultAPButtons {
         apNavBtn.getStyleClass().addAll("ap-buttons");
         apNavBtn.setOnAction(this::clickButton);
         apButtonGrid.add(apNavBtn, 4, 0);
+    }
+
+    /**
+     * Resets all elements to their initial visual state
+     */
+    public void onReset() {
+
+        apToggleBtn.setSelected(false);
+        apHeadingBtn.setSelected(false);
+        apAltitudeBtn.setSelected(false);
+        apVSBtn.setSelected(false);
+        apApprBtn.setSelected(false);
+        apNavBtn.setSelected(false);
     }
 }

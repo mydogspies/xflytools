@@ -6,9 +6,13 @@ import javafx.fxml.FXML;
 import javafx.scene.layout.GridPane;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import java.util.ArrayList;
 
+/**
+ * This is the controller for the A/P readouts part of the GUI.
+ * @author Peter Mankowski
+ * @since 0.4.0
+ */
 public class DefaultAPReadouts {
 
     private static final Logger log = LoggerFactory.getLogger(DefaultAPReadouts.class);
@@ -31,7 +35,6 @@ public class DefaultAPReadouts {
     void initialize() {
 
         initElems();
-
     }
 
     public void updateData(String command, ArrayList<String> value) {
@@ -61,7 +64,6 @@ public class DefaultAPReadouts {
                 if (!apCourse.getText().equals(val5)) { apCourse.setText(val5 + (char) 176); }
                 log.trace("getFromXplane(): [" + command + "] -> Nav 1 course (for AP) set to " + val5);
                 break;
-
         }
     }
 
@@ -118,5 +120,20 @@ public class DefaultAPReadouts {
         apVSField.getStyleClass().add("ap-fields");
         apVSField.setMaxWidth(60);
         buttonGrid.add(apVSField, 4, 3);
+    }
+
+    /**
+     * Resets all elements to their initial visual state
+     */
+    public void onReset() {
+
+        apCourse.setText("");
+        apHeading.setText("");
+        apLevel.setText("");
+        apVerticalSpeed.setText("");
+        apCourseField.setText("");
+        apHeadingField.setText("");
+        apAltitudeField.setText("");
+        apVSField.setText("");
     }
 }

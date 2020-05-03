@@ -21,7 +21,6 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -36,6 +35,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 public class MainWindowController {
 
     private static final Logger log = LoggerFactory.getLogger(MainWindowController.class);
+
     public static String actProfile;
     public static DefaultRadios radios_controller;
     public static DefaultAPReadouts apreadouts_controller;
@@ -82,7 +82,6 @@ public class MainWindowController {
         loadModules();
 
         log.debug("initialize(): Main window has been initialized.");
-
     }
 
     /**
@@ -115,33 +114,24 @@ public class MainWindowController {
                     case "autopilot":
                         apreadouts_controller.updateData(command, value);
                         break;
-//
-//                    case "ap_mode":
-//                        String val6 = value.get(0);
-//                        if (apToggleBtn.selectedProperty().getValue().equals(true) && val6.equals("0")) {
-//                            apToggleBtn.selectedProperty().set(false);
-//                            log.trace("getFromXplane(): [" + command + "] -> A/P set to " + val6 + ": OFF");
-//                        } else if (apToggleBtn.selectedProperty().getValue().equals(false) && val6.equals("2")) {
-//                            apToggleBtn.selectedProperty().set(true);
-//                            log.trace("getFromXplane(): [" + command + "] -> A/P set to " + val6 + ": ON");
-//                        }
-//                        break;
-//
-//                    case "ap_heading_mode_check":
-//                        System.out.println("MODE: " + value.get(0));
-//                        break;
                 }
             }
         });
     }
 
+    /**
+     * This is the main method for initiating a connection to Xplane.
+     * It passes the request on to the SocketConnect class while if socket initiation,
+     * it sets calls a few necessary methods and then passes on to loading the GUI modules.
+     * In case of a disconnect it manages the necessary method calls for a clean shut-down/UI.
+     * @param event from the Connect toggle button
+     */
     @FXML
     private void toggleConnect(ActionEvent event) {
 
         log.trace("toggleConnect(): ActionEvent called: " + event);
 
         ToggleButton b = (ToggleButton) event.getSource();
-        boolean buttonState = b.selectedProperty().getValue();
 
         if (SocketConnect.socket == null) {
 
@@ -171,10 +161,12 @@ public class MainWindowController {
                 SocketConnect.socket = null; // reset the socket since it was already instantiated when trying to connect
                 log.error("toggleConnect(): Connection to Xplane failed!");
             }
+
         } else if (SocketConnect.socket.isConnected()) {
 
             ipAddress.setDisable(false);
             aircraftCombo.setDisable(false);
+            resetAllElems();
 
             // clean disconnect
             refsSubbed.set(false);
@@ -207,11 +199,15 @@ public class MainWindowController {
         }
     }
 
+    /**
+     * This method load the 5 separate modules with respective fxml/controller class corresponding to each.
+     * It also sets a global access to each controller.
+     */
     private void loadModules() {
 
         this.topBaseGrid.getChildren().clear();
 
-        // RADIOS
+        // RADIOS MODULE
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("module/defaultRadios.fxml"));
             Pane p = loader.load();
@@ -221,7 +217,7 @@ public class MainWindowController {
             e.printStackTrace();
         }
 
-        // A/P READOUTS
+        // A/P READOUTS MODULE
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("module/defaultAPReadouts.fxml"));
             Pane p = loader.load();
@@ -231,7 +227,7 @@ public class MainWindowController {
             e.printStackTrace();
         }
 
-        // LIGHT BUTTONS
+        // LIGHT BUTTONS MODULE
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("module/defaultLightButtons.fxml"));
             Pane p = loader.load();
@@ -241,7 +237,7 @@ public class MainWindowController {
             e.printStackTrace();
         }
 
-        // A/P BUTTONS
+        // A/P BUTTONS MODULE
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("module/defaultAPButtons.fxml"));
             Pane p = loader.load();
@@ -250,6 +246,9 @@ public class MainWindowController {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        // GENERAL MODULE
+        // TODO implement this module
 
     }
 
@@ -273,6 +272,15 @@ public class MainWindowController {
         connectLabel.setText("Error! Could not connect!");
         connectLabel.setStyle("-fx-text-fill: #f44336");
     }
+
+    private void resetAllElems() {
+
+        apreadouts_controller.onReset();
+        apbutton_controller.onReset();
+        radios_controller.onReset();
+        lightbutton_controller.onReset();
+    }
+
 
     /* GETTERS AND SETTERS */
 

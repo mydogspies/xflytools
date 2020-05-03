@@ -9,9 +9,13 @@ import javafx.scene.control.ToggleButton;
 import javafx.scene.layout.GridPane;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import java.util.ArrayList;
 
+/**
+ * This is the controller for the lighting buttons part of the GUI.
+ * @author Peter Mankowski
+ * @since 0.4.0
+ */
 public class DefaultLightButtons {
 
     private static final Logger log = LoggerFactory.getLogger(DefaultLightButtons.class);
@@ -134,7 +138,6 @@ public class DefaultLightButtons {
                     log.trace("getFromXplane(): [" + command + "] -> " + value + " | landing lights turned ON in app.");
                 }
                 break;
-
         }
     }
 
@@ -174,5 +177,17 @@ public class DefaultLightButtons {
         landingLight.getStyleClass().addAll("light-toggle-button");
         landingLight.setOnAction(this::clickButton);
         buttonGrid.add(landingLight, 5, 0);
+    }
+
+    /**
+     * Resets all elements to their initial visual state
+     */
+    public void onReset() {
+
+        navLight.setSelected(false);
+        beaconLight.setSelected(false);
+        taxiLight.setSelected(false);
+        strobeLight.setSelected(false);
+        landingLight.setSelected(false);
     }
 }

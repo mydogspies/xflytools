@@ -12,6 +12,11 @@ import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 
+/**
+ * This is the controller for the radio readouts part of the GUI.
+ * @author Peter Mankowski
+ * @since 0.4.0
+ */
 public class DefaultRadios {
 
     private static final Logger log = LoggerFactory.getLogger(DefaultRadios.class);
@@ -316,7 +321,7 @@ public class DefaultRadios {
 
         nav2Stby = new RadioTextField();
         nav2Stby.setId("nav2stby");
-        nav1Stby.setText("");
+        nav2Stby.setText("");
         nav2Stby.getStyleClass().addAll("radio-field");
         nav2Stby.setOnAction(this::addToField);
         radioGrid.add(nav2Stby,3, 4);
@@ -359,6 +364,19 @@ public class DefaultRadios {
         radioGrid.add(transponder, 1, 5);
     }
 
+    /**
+     * Resets all elements to their initial visual state
+     */
+    public void onReset() {
 
-
+        com1Stby.setText("");
+        com2Stby.setText("");
+        nav1Stby.setText("");
+        nav2Stby.setText("");
+        com1Text.setText("");
+        com2Text.setText("");
+        nav1Text.setText("");
+        nav2Text.setText("");
+        transponder.setText("");
+    }
 }
