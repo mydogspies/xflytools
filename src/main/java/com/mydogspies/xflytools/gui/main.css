@@ -116,7 +116,7 @@ This is the general stylesheet for the main window
     -fx-text-fill: #B1B4B5;
 }
 
-/* AUTPILOT */
+/* AUTOPILOT */
 
 .ap-labels {
     -fx-background-color: #323232;
@@ -169,3 +169,20 @@ This is the general stylesheet for the main window
     -fx-base: #689F38;
     -fx-text-fill: #1C1C1C;
 }
+
+/* BARO */
+
+.baro-field {
+    -fx-background-color: #31353D;
+    -fx-text-fill: #FFA031;
+    -fx-font-size: 15px;
+}
+
+.baro-button {
+    -fx-base: #424242;
+    -fx-text-fill: #B1EFFF;
+    -fx-max-width: 26px;
+    -fx-max-height: 20px;
+    -fx-font-size: 7px;
+}
+

@@ -32,7 +32,7 @@ public class DefaultLightButtons {
     @FXML
     void initialize() {
 
-        initElems();
+        initElements();
     }
 
     /**
@@ -141,7 +141,7 @@ public class DefaultLightButtons {
         }
     }
 
-    private void initElems() {
+    private void initElements() {
 
         navLight = new LightToggleButton();
         navLight.setId("nav");

@@ -1,0 +1,152 @@
+package com.mydogspies.xflytools.gui.module;
+
+import com.mydogspies.xflytools.gui.MainWindow;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.scene.control.Button;
+import javafx.scene.control.TextField;
+import javafx.scene.control.ToggleButton;
+import javafx.scene.layout.GridPane;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import java.util.ArrayList;
+
+public class DefaultMisc {
+
+    private static final Logger log = LoggerFactory.getLogger(DefaultMisc.class);
+
+    @FXML
+    private GridPane baroButtonGrid;
+    @FXML
+    private GridPane bottomGrid;
+
+    private ToggleButton pressType;
+    private Button pressStd;
+    private TextField baroField;
+    private boolean baroSettingInHg;
+
+    @FXML
+    void initialize() {
+
+        baroSettingInHg = true;
+        initElements();
+    }
+
+    public void updateData(String command, ArrayList<String> value) {
+
+        switch (command) {
+
+            case "baro_pilot_inhg":
+
+                if (baroSettingInHg) {
+                    String val =  String.format("%.2f",
+                            Math.round(Double.parseDouble(value.get(0))*100) / 100.00);
+                    baroField.setText(val);
+                    log.trace("getFromXplane(): [" + command + "] -> Barometer set to " + val + " inHg.");
+                } else {
+                    double mbar = Double.parseDouble(value.get(0)) / 0.029530;
+                    String val = String.valueOf(Math.round(mbar));
+                    baroField.setText(val);
+                }
+
+                break;
+        }
+    }
+
+
+    @FXML
+    private void baroStandard(ActionEvent event) {
+
+        log.debug("addToBaroField(): ActionEvent called: " + event);
+
+        Button b = (Button) event.getSource();
+        String field_id = b.getId();
+
+        switch (field_id) {
+
+            case ("barostd"):
+                MainWindow.controller.sendToXplane("set", "baro_pilot_inhg", "29.92");
+                if (baroSettingInHg) {
+                    baroField.setText("29.92");
+                    log.trace("addToField(): Baro set to STD (29.92 inHg) in Xplane.");
+                } else {
+                    baroField.setText("1013");
+                    log.trace("addToField(): Baro set to STD (1013 mb) in Xplane.");
+                }
+                break;
+        }
+    }
+
+    @FXML
+    private void baroToggle(ActionEvent event) {
+
+        log.debug("addToBaroField(): ActionEvent called: " + event);
+
+        ToggleButton b = (ToggleButton) event.getSource();
+        String field_id = b.getId();
+
+        switch (field_id) {
+
+            case ("barotype"):
+                if (baroSettingInHg) {
+                    baroSettingInHg = false;
+                    pressType.setText("mb");
+                } else {
+                    baroSettingInHg = true;
+                    pressType.setText("inHg");
+                }
+                break;
+        }
+    }
+
+    @FXML
+    private void addToBaroField(ActionEvent event) {
+
+        log.debug("addToBaroField(): ActionEvent called: " + event);
+
+        TextField b = (TextField) event.getSource();
+        String field_id = b.getId();
+
+        System.out.println("field_id = " + field_id);
+
+        switch (field_id) {
+
+            case "barofield":
+                String val = baroField.getText();
+                if (val.matches("[2-3][0-9]\\.[0-9]{2}")) {
+                    MainWindow.controller.sendToXplane("set", "baro_pilot_inhg", val);
+                    log.trace("addToField(): Baro set to " + val + " in Xplane.");
+                }
+                //
+                break;
+        }
+    }
+
+    private void initElements() {
+
+        /* BUTTONS */
+
+        pressType = new ToggleButton();
+        pressType.setId("barotype");
+        pressType.setText("inHg");
+        pressType.setOnAction(this::baroToggle);
+        pressType.getStyleClass().add("baro-button");
+        baroButtonGrid.add(pressType, 0, 0);
+
+        pressStd = new Button();
+        pressStd.setId("barostd");
+        pressStd.setText("STD");
+        pressStd.setOnAction(this::baroStandard);
+        pressStd.getStyleClass().add("baro-button");
+        baroButtonGrid.add(pressStd, 0, 1);
+
+        /* FIELDS */
+
+        baroField = new TextField();
+        baroField.setId("barofield");
+        baroField.setText("");
+        baroField.setOnAction(this::addToBaroField);
+        baroField.getStyleClass().add("baro-field");
+        bottomGrid.add(baroField, 1, 0);
+    }
+}

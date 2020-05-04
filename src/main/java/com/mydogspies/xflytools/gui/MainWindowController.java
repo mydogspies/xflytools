@@ -1,10 +1,7 @@
 package com.mydogspies.xflytools.gui;
 
 import com.mydogspies.xflytools.data.DrefDataIO;
-import com.mydogspies.xflytools.gui.module.DefaultAPButtons;
-import com.mydogspies.xflytools.gui.module.DefaultAPReadouts;
-import com.mydogspies.xflytools.gui.module.DefaultLightButtons;
-import com.mydogspies.xflytools.gui.module.DefaultRadios;
+import com.mydogspies.xflytools.gui.module.*;
 import com.mydogspies.xflytools.io.DisconnectAll;
 import com.mydogspies.xflytools.io.SendData;
 import com.mydogspies.xflytools.io.SocketConnect;
@@ -21,6 +18,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -41,6 +39,7 @@ public class MainWindowController {
     public static DefaultAPReadouts apreadouts_controller;
     public static DefaultLightButtons lightbutton_controller;
     public static DefaultAPButtons apbutton_controller;
+    public static DefaultMisc misc_controller;
 
     /* FXML vars */
 
@@ -87,8 +86,9 @@ public class MainWindowController {
     /**
      * Takes from the data handler the dataref and an array with values and passes these data
      * to the corresponding GUI elements.
+     *
      * @param dataref a single dataref string
-     * @param value an array of values
+     * @param value   an array of values
      */
     public void receiveFromXplane(String dataref, ArrayList<String> value) {
 
@@ -114,6 +114,10 @@ public class MainWindowController {
                     case "autopilot":
                         apreadouts_controller.updateData(command, value);
                         break;
+
+                    case "misc":
+                        misc_controller.updateData(command, value);
+                        break;
                 }
             }
         });
@@ -124,6 +128,7 @@ public class MainWindowController {
      * It passes the request on to the SocketConnect class while if socket initiation,
      * it sets calls a few necessary methods and then passes on to loading the GUI modules.
      * In case of a disconnect it manages the necessary method calls for a clean shut-down/UI.
+     *
      * @param event from the Connect toggle button
      */
     @FXML
@@ -166,7 +171,7 @@ public class MainWindowController {
 
             ipAddress.setDisable(false);
             aircraftCombo.setDisable(false);
-            resetAllElems();
+            resetAllElements();
 
             // clean disconnect
             refsSubbed.set(false);
@@ -247,8 +252,15 @@ public class MainWindowController {
             e.printStackTrace();
         }
 
-        // GENERAL MODULE
-        // TODO implement this module
+        // MISC MODULE
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("module/defaultMisc.fxml"));
+            Pane p = loader.load();
+            misc_controller = loader.getController();
+            topBaseGrid.add(p, 0, 0);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
     }
 
@@ -273,7 +285,7 @@ public class MainWindowController {
         connectLabel.setStyle("-fx-text-fill: #f44336");
     }
 
-    private void resetAllElems() {
+    private void resetAllElements() {
 
         apreadouts_controller.onReset();
         apbutton_controller.onReset();

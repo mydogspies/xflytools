@@ -76,6 +76,10 @@ public class AddDrefJsonData {
         DrefData data18 = new DrefData("nav1_course", "autopilot","default", "sim/cockpit/radios/nav1_obs_degm", "float", "set");
         startlist.add(data18);
 
+        // MISC
+        DrefData data40 = new DrefData("baro_pilot_inhg", "misc","default", "sim/cockpit2/gauges/actuators/barometer_setting_in_hg_pilot", "float", "set");
+        startlist.add(data40);
+
 
         /* COMMANDS*/
 

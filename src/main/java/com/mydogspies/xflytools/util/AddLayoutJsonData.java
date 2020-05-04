@@ -21,7 +21,7 @@ public class AddLayoutJsonData {
         // structure of the LayoutData pojo
         // aircraftProfile, windowGen, windowLights, windowRadios, windowAPButtons, windowAPReadouts
 
-        LayoutData data1 = new LayoutData("default", "defaultMain.fxml", "defaultLightButtons.fxml", "defaultRadios.fxml", "defaultAPButtons", "defaultAPReadouts.fxml");
+        LayoutData data1 = new LayoutData("default", "defaultMisc.fxml", "defaultLightButtons.fxml", "defaultRadios.fxml", "defaultAPButtons", "defaultAPReadouts.fxml");
         startlist.add(data1);
 
 
