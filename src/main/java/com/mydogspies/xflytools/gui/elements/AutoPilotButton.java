@@ -1,5 +1,6 @@
 package com.mydogspies.xflytools.gui.elements;
 
+import javafx.event.ActionEvent;
 import javafx.scene.control.ToggleButton;
 
 /**
@@ -10,7 +11,31 @@ import javafx.scene.control.ToggleButton;
  */
 public class AutoPilotButton extends ToggleButton {
 
+    public boolean toggleable;
+
     public AutoPilotButton() {
+
         super();
+        this.toggleable = false;
     }
+
+    @Override
+    public void fire() {
+
+        // if flag set then button can not be toggled back to inselected
+        if (!isDisabled() && !toggleable) {
+
+            if (!isSelected()) {
+                setSelected(true);
+            }
+            fireEvent(new ActionEvent());
+
+            // otherwise the standard behaviour
+        } else if (!isDisabled()) {
+
+            setSelected(!isSelected());
+            fireEvent(new ActionEvent());
+        }
+    }
+
 }

@@ -107,6 +107,9 @@ This is the general stylesheet for the main window
 
 /* AUTOPILOT */
 
+/* Note that the style for the GPSS variant of Nav is hard
+coded in the DefaultAPButtons class, in the updateData method */
+
 .ap-labels {
     -fx-background-color: #323232;
     -fx-text-fill: #7ECEFD;
@@ -115,6 +118,7 @@ This is the general stylesheet for the main window
 
 .ap-fields {
     -fx-background-color: #31353D;
+    -fx-text-fill: #7ECEFD;
     -fx-max-width: 60px;
 }
 
