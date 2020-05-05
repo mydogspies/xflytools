@@ -3,6 +3,7 @@ package com.mydogspies.xflytools.gui.module;
 import com.mydogspies.xflytools.gui.elements.AutoPilotField;
 import com.mydogspies.xflytools.gui.elements.AutopilotLabel;
 import javafx.fxml.FXML;
+import javafx.geometry.Pos;
 import javafx.scene.layout.GridPane;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -97,29 +98,25 @@ public class DefaultAPReadouts {
         apCourseField.setId("apcoursefield");
         apCourseField.setText("");
         apCourseField.getStyleClass().add("ap-fields");
-        apCourseField.setMaxWidth(60);
-        buttonGrid.add(apCourseField, 4, 0);
+        buttonGrid.add(apCourseField, 2, 0);
 
         apHeadingField = new AutoPilotField();
         apHeadingField.setId("apheadingfield");
         apHeadingField.setText("");
         apHeadingField.getStyleClass().add("ap-fields");
-        apHeadingField.setMaxWidth(60);
-        buttonGrid.add(apHeadingField, 4, 1);
+        buttonGrid.add(apHeadingField, 2, 1);
 
         apAltitudeField = new AutoPilotField();
         apAltitudeField.setId("apaltitudefield");
         apAltitudeField.setText("");
         apAltitudeField.getStyleClass().add("ap-fields");
-        apAltitudeField.setMaxWidth(60);
-        buttonGrid.add(apAltitudeField, 4, 2);
+        buttonGrid.add(apAltitudeField, 2, 2);
 
         apVSField = new AutoPilotField();
         apVSField.setId("apvsfield");
         apVSField.setText("");
         apVSField.getStyleClass().add("ap-fields");
-        apVSField.setMaxWidth(60);
-        buttonGrid.add(apVSField, 4, 3);
+        buttonGrid.add(apVSField, 2, 3);
     }
 
     /**

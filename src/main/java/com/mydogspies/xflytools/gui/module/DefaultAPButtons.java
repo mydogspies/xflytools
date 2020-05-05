@@ -10,8 +10,11 @@ import javafx.scene.layout.GridPane;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.ArrayList;
+
 /**
  * This is the controller for the A/P buttons part of the GUI.
+ *
  * @author Peter Mankowski
  * @since 0.4.0
  */
@@ -65,13 +68,68 @@ public class DefaultAPButtons {
                     break;
 
                 case "apheadingbtn":
-                    MainWindow.controller.sendToXplane("cmd", "ap_heading_mode", "");
-                    log.trace("clickButton(): A/P set to Heading mode.");
+                        MainWindow.controller.sendToXplane("cmd", "ap_heading_mode", "");
+                        log.trace("clickButton(): A/P set to Heading mode.");
                     break;
 
+                case "apnavbtn":
+                        MainWindow.controller.sendToXplane("cmd", "ap_nav_mode", "");
+                        log.trace("clickButton(): A/P set to Nav mode.");
+                    break;
+
+                case "apapprbtn":
+                        MainWindow.controller.sendToXplane("cmd", "ap_appr_set", "");
+                    try {
+                        Thread.sleep(500);
+                        // MainWindow.controller.sendToXplane("cmd", "ap_appr_set", "");
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    log.trace("clickButton(): A/P set to Apr mode.");
             }
         } else {
             b.setSelected(false);
+        }
+    }
+
+    public void updateData(String command, ArrayList<String> value) {
+
+        switch (command) {
+
+            case "ap_mode":
+                if (apToggleBtn.selectedProperty().getValue().equals(true) && value.get(0).equals("0")) {
+                    apToggleBtn.setSelected(false);
+                    log.trace("getFromXplane(): [" + command + "] -> " + value + " | A/P turned OFF in app.");
+                } else if (apToggleBtn.selectedProperty().getValue().equals(false) && value.get(0).equals("2")) {
+                    apToggleBtn.setSelected(true);
+                    log.trace("getFromXplane(): [" + command + "] -> " + value + " | A/P turned ON in app.");
+                }
+                break;
+
+            case "ap_heading_mode_check":
+                if (value.get(0).equals("2")) { // Nav mode
+                    apNavBtn.setSelected(true);
+                    apNavBtn.setText("Nav");
+                    apHeadingBtn.setSelected(false);
+                    log.trace("getFromXplane(): [" + command + "] -> " + value + " | A/P in Nav mode.");
+                } else if (value.get(0).equals("1")) { // Heading mode
+                    apNavBtn.setSelected(false);
+                    apHeadingBtn.setSelected(true);
+                    log.trace("getFromXplane(): [" + command + "] -> " + value + " | A/P in Heading app.");
+                } else if (value.get(0).equals("13")) { // GPSS mode
+                    apNavBtn.setSelected(true);
+                    apNavBtn.setText("GPS");
+                    apHeadingBtn.setSelected(false);
+                }
+                break;
+
+            case "ap_hnav_mode":
+                if (value.get(0).equals("1")) {
+                    apApprBtn.setSelected(true);
+                    log.trace("getFromXplane(): [" + command + "] -> " + value + " | A/P in Apr mode.");
+                } else if (value.get(0).equals("0")) {
+                    apApprBtn.setSelected(false);
+                }
         }
     }
 
@@ -80,14 +138,14 @@ public class DefaultAPButtons {
         apToggleBtn = new AutoPilotButton();
         apToggleBtn.setId("aptogglebtn");
         apToggleBtn.setText("A/P");
-        apToggleBtn.getStyleClass().addAll("ap-buttons");
+        apToggleBtn.getStyleClass().add("ap-buttons");
         apToggleBtn.setOnAction(this::clickButton);
-        apButtonGrid.add(apToggleBtn,1, 0);
+        apButtonGrid.add(apToggleBtn, 1, 0);
 
         apHeadingBtn = new AutoPilotButton();
         apHeadingBtn.setId("apheadingbtn");
         apHeadingBtn.setText("Hdg");
-        apHeadingBtn.getStyleClass().addAll("ap-buttons");
+        apHeadingBtn.getStyleClass().add("ap-buttons");
         apHeadingBtn.setOnAction(this::clickButton);
         apButtonGrid.add(apHeadingBtn, 2, 0);
 
@@ -108,14 +166,14 @@ public class DefaultAPButtons {
         apApprBtn = new AutoPilotButton();
         apApprBtn.setId("apapprbtn");
         apApprBtn.setText("Apr");
-        apApprBtn.getStyleClass().addAll("ap-buttons");
+        apApprBtn.getStyleClass().add("ap-buttons");
         apApprBtn.setOnAction(this::clickButton);
         apButtonGrid.add(apApprBtn, 5, 0);
 
         apNavBtn = new AutoPilotButton();
         apNavBtn.setId("apnavbtn");
         apNavBtn.setText("Nav");
-        apNavBtn.getStyleClass().addAll("ap-buttons");
+        apNavBtn.getStyleClass().add("ap-buttons");
         apNavBtn.setOnAction(this::clickButton);
         apButtonGrid.add(apNavBtn, 4, 0);
     }

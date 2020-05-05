@@ -111,8 +111,12 @@ public class MainWindowController {
                         radios_controller.updateData(command, value);
                         break;
 
-                    case "autopilot":
+                    case "autopilot_readout":
                         apreadouts_controller.updateData(command, value);
+                        break;
+
+                    case "autopilot_switch":
+                        apbutton_controller.updateData(command, value);
                         break;
 
                     case "misc":
@@ -193,7 +197,7 @@ public class MainWindowController {
         SendData snd = new SendData();
         DrefDataIO io = new DrefDataIO();
         String act = aircraftCombo.getValue();
-        String dataref = io.getDatarefByActAndCmnd(command, act).get(0);
+        String dataref = io.getDatarefByActAndCmnd(command, act);
 
         if (method.equals("set")) {
             snd.send(method + " " + dataref + " " + value);
@@ -291,6 +295,7 @@ public class MainWindowController {
         apbutton_controller.onReset();
         radios_controller.onReset();
         lightbutton_controller.onReset();
+        misc_controller.onReset();
     }
 
 

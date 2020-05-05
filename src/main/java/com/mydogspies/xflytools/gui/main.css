@@ -13,31 +13,19 @@ This is the general stylesheet for the main window
     -fx-border-insets: 0;
 }
 
+.button {
+    -fx-background-insets: 0;
+}
+
+.toggle-button {
+    -fx-background-insets: 0;
+}
+
 #background {
     -fx-background-color: #323232;
 }
 
 .general-label {
-    -fx-text-fill: #B1B4B5;
-}
-
-/* GENERAL BUTTONS */
-
-.button {
-    -fx-background-color:
-            linear-gradient(from 0% 93% to 0% 100%, #444444 0%, #505050 100%),
-            #444444,
-            #505050,
-            radial-gradient(center 50% 50%, radius 100%, #444444, #505050);
-    -fx-text-fill: #B1B4B5;
-}
-
-.button:hover {
-    -fx-background-color:
-            linear-gradient(from 0% 93% to 0% 100%, #666666 0%, #707070 100%),
-            #666666,
-            #707070,
-            radial-gradient(center 50% 50%, radius 100%, #666666, #707070);
     -fx-text-fill: #B1B4B5;
 }
 
@@ -104,6 +92,7 @@ This is the general stylesheet for the main window
     -fx-base: #424242;
     -fx-text-fill: #FFF3D0;
     -fx-column-halignment: center;
+    -fx-background-radius: 8px;
 }
 
 .light-toggle-button:selected {
@@ -124,10 +113,20 @@ This is the general stylesheet for the main window
     -fx-font-size: 16px;
 }
 
+.ap-fields {
+    -fx-background-color: #31353D;
+    -fx-max-width: 60px;
+}
+
+.ap-field-button {
+    -fx-base: #424242;
+    -fx-text-fill: #B1EFFF;
+}
 .ap-buttons {
     -fx-base: #424242;
     -fx-text-fill: #B1EFFF;
     -fx-column-halignment: center;
+    -fx-background-radius: 8px;
 }
 
 .ap-buttons:selected {
@@ -147,10 +146,6 @@ This is the general stylesheet for the main window
 #aptogglebtn:selected {
     -fx-text-fill: #900B0A;
     -fx-font-weight: bold;
-}
-
-.ap-fields {
-    -fx-background-color: #31353D;
 }
 
 /* CONNECT LABEL and TOGGLE BUTTON*/

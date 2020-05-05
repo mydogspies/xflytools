@@ -25,23 +25,16 @@ public class DrefDataIO implements DrefDataDAO{
     private static final Logger log = LoggerFactory.getLogger(DrefDataIO.class);
     private final String jsonfile = readFileAsStream("com/mydogspies/xflytools/data/drefData.json");
 
-    /**
-     * Takes aircraft type and command and looks for the corresponding values in the datarefs database.
-     * NOTE: The Value field must be base64 decoded into a byte array!
-     * @param command the name of the datarefs command
-     * @param aircraft type of aircraft
-     * @return an array of datarefs values in order -> {aircraft, command, header, value, path}
-     */
-    @Override
-    public List<String> getDatarefByActAndCmnd(String command, String aircraft) {
 
-        List<String> result = new ArrayList<>();
+    @Override
+    public String getDatarefByActAndCmnd(String command, String aircraft) {
+
+        String result = "";
 
         for (DrefData data : database) {
 
             if (data.getAircraft().equals(aircraft) && data.getCommand().equals(command)) {
-                result.add(data.getDataref());
-                result.add(data.getType());
+                result = data.getDataref();
             }
         }
         log.trace("getDatarefByActAndCmnd(): Result returned: " + result);

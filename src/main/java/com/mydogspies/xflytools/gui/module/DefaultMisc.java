@@ -39,20 +39,56 @@ public class DefaultMisc {
             case "baro_pilot_inhg":
 
                 if (baroSettingInHg) {
-                    String val =  String.format("%.2f",
-                            Math.round(Double.parseDouble(value.get(0))*100) / 100.00);
-                    baroField.setText(val);
+                    String val = value.get(0);
+                    baroField.setText(formatToInHG(val));
                     log.trace("getFromXplane(): [" + command + "] -> Barometer set to " + val + " inHg.");
                 } else {
-                    double mbar = Double.parseDouble(value.get(0)) / 0.029530;
-                    String val = String.valueOf(Math.round(mbar));
-                    baroField.setText(val);
+                    baroField.setText(convertToMillibar(value.get(0)));
                 }
 
                 break;
         }
     }
 
+    private String formatToInHG(String raw_inhg) {
+
+        return String.format("%.2f", Math.round(Double.parseDouble(raw_inhg)*100) / 100.00);
+    }
+
+    private String convertToMillibar(String inhg) {
+
+        double mbar = Double.parseDouble(inhg) / 0.029530;
+        return String.valueOf(Math.round(mbar));
+    }
+
+    private String convertToInchesHG(String mbar) {
+
+        return String.valueOf(Integer.parseInt(mbar) * 0.029530);
+    }
+
+    @FXML
+    private void baroToggle(ActionEvent event) {
+
+        log.debug("addToBaroField(): ActionEvent called: " + event);
+
+        ToggleButton b = (ToggleButton) event.getSource();
+        String field_id = b.getId();
+
+        switch (field_id) {
+
+            case ("barotype"):
+                if (baroSettingInHg) {
+                    baroSettingInHg = false;
+                    pressType.setText("mb");
+                    baroField.setText(convertToMillibar(baroField.getText()));
+                } else {
+                    baroSettingInHg = true;
+                    pressType.setText("inHg");
+                    baroField.setText(formatToInHG(convertToInchesHG(baroField.getText())));
+                }
+                break;
+        }
+    }
 
     @FXML
     private void baroStandard(ActionEvent event) {
@@ -72,28 +108,6 @@ public class DefaultMisc {
                 } else {
                     baroField.setText("1013");
                     log.trace("addToField(): Baro set to STD (1013 mb) in Xplane.");
-                }
-                break;
-        }
-    }
-
-    @FXML
-    private void baroToggle(ActionEvent event) {
-
-        log.debug("addToBaroField(): ActionEvent called: " + event);
-
-        ToggleButton b = (ToggleButton) event.getSource();
-        String field_id = b.getId();
-
-        switch (field_id) {
-
-            case ("barotype"):
-                if (baroSettingInHg) {
-                    baroSettingInHg = false;
-                    pressType.setText("mb");
-                } else {
-                    baroSettingInHg = true;
-                    pressType.setText("inHg");
                 }
                 break;
         }
@@ -148,5 +162,13 @@ public class DefaultMisc {
         baroField.setOnAction(this::addToBaroField);
         baroField.getStyleClass().add("baro-field");
         bottomGrid.add(baroField, 1, 0);
+    }
+
+    /**
+     * Resets all elements to their initial visual state
+     */
+    public void onReset() {
+
+        baroField.setText("");
     }
 }

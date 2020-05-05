@@ -63,18 +63,22 @@ public class AddDrefJsonData {
         startlist.add(data17);
 
         // AP
-        DrefData data30 = new DrefData("ap_heading", "autopilot","default", "sim/cockpit/autopilot/heading_mag", "float", "set");
+        DrefData data30 = new DrefData("ap_heading", "autopilot_readout","default", "sim/cockpit/autopilot/heading_mag", "float", "set");
         startlist.add(data30);
-        DrefData data31 = new DrefData("ap_altitude", "autopilot","default", "sim/cockpit/autopilot/altitude", "float", "set");
+        DrefData data31 = new DrefData("ap_altitude", "autopilot_readout","default", "sim/cockpit/autopilot/altitude", "float", "set");
         startlist.add(data31);
-        DrefData data32 = new DrefData("ap_vertical_speed", "autopilot","default", "sim/cockpit/autopilot/vertical_velocity", "float", "set");
+        DrefData data32 = new DrefData("ap_vertical_speed", "autopilot_readout","default", "sim/cockpit/autopilot/vertical_velocity", "float", "set");
         startlist.add(data32);
-        DrefData data33 = new DrefData("ap_mode", "autopilot", "default","sim/cockpit/autopilot/autopilot_mode", "int", "set");
+        DrefData data33 = new DrefData("ap_mode", "autopilot_switch", "default","sim/cockpit/autopilot/autopilot_mode", "int", "set");
         startlist.add(data33);
-        DrefData data34 = new DrefData("ap_heading_mode_check", "autopilot","default", "sim/cockpit2/autopilot/heading_mode", "int", "set");
+        DrefData data34 = new DrefData("ap_heading_mode_check", "autopilot_switch","default", "sim/cockpit2/autopilot/heading_mode", "enum", "set");
         startlist.add(data34);
-        DrefData data18 = new DrefData("nav1_course", "autopilot","default", "sim/cockpit/radios/nav1_obs_degm", "float", "set");
+        DrefData data18 = new DrefData("nav1_course", "autopilot_readout","default", "sim/cockpit/radios/nav1_obs_degm", "float", "set");
         startlist.add(data18);
+        DrefData data35 = new DrefData("ap_hnav_mode", "autopilot_switch","default", "sim/cockpit2/autopilot/hnav_armed", "int", "set");
+        startlist.add(data35);
+
+
 
         // MISC
         DrefData data40 = new DrefData("baro_pilot_inhg", "misc","default", "sim/cockpit2/gauges/actuators/barometer_setting_in_hg_pilot", "float", "set");
@@ -106,8 +110,18 @@ public class AddDrefJsonData {
         startlist.add(data64);
 
         // AUTOPILOT
-        DrefData data80 = new DrefData("ap_heading_mode", "autopilot","default", "sim/autopilot/heading", "", "cmd");
+        DrefData data80 = new DrefData("ap_heading_mode", "autopilot_switch","default", "sim/autopilot/heading", "", "cmd");
         startlist.add(data80);
+        DrefData data81 = new DrefData("ap_nav_mode", "autopilot_switch","default", "sim/autopilot/NAV", "", "cmd");
+        startlist.add(data81);
+        DrefData data82 = new DrefData("ap_appr_set", "autopilot_switch","default", "sim/autopilot/hdg_nav", "", "cmd");
+        startlist.add(data82);
+
+
+
+
+
+
 
 
 
