@@ -71,13 +71,16 @@ public class AddDrefJsonData {
         startlist.add(data32);
         DrefData data33 = new DrefData("ap_mode", "autopilot_switch", "default","sim/cockpit/autopilot/autopilot_mode", "int", "set");
         startlist.add(data33);
-        DrefData data34 = new DrefData("ap_heading_mode_check", "autopilot_switch","default", "sim/cockpit2/autopilot/heading_mode", "enum", "set");
-        startlist.add(data34);
         DrefData data18 = new DrefData("nav1_course", "autopilot_readout","default", "sim/cockpit/radios/nav1_obs_degm", "float", "set");
         startlist.add(data18);
-        DrefData data35 = new DrefData("ap_hnav_mode", "autopilot_switch","default", "sim/cockpit2/autopilot/hnav_armed", "int", "set");
+        DrefData data34 = new DrefData("ap_heading_mode", "autopilot_switch","default", "sim/cockpit2/autopilot/heading_mode", "int", "set");
+        startlist.add(data34);
+        DrefData data35 = new DrefData("ap_altitude_mode", "autopilot_switch","default", "sim/cockpit2/autopilot/altitude_mode", "int", "set");
         startlist.add(data35);
-
+        DrefData data36 = new DrefData("ap_backcourse", "autopilot_switch","default", "sim/cockpit/autopilot/backcourse_on", "int", "set");
+        startlist.add(data36);
+        DrefData data37 = new DrefData("ap_appr_status", "autopilot_switch","default", "sim/cockpit2/autopilot/approach_status", "enum", "set");
+        startlist.add(data37);
 
 
         // MISC
@@ -110,25 +113,18 @@ public class AddDrefJsonData {
         startlist.add(data64);
 
         // AUTOPILOT
-        DrefData data80 = new DrefData("ap_heading_mode", "autopilot_switch","default", "sim/autopilot/heading", "", "cmd");
+        DrefData data80 = new DrefData("ap_heading_toggle", "autopilot_switch","default", "sim/autopilot/heading", "", "cmd");
         startlist.add(data80);
-        DrefData data81 = new DrefData("ap_nav_mode", "autopilot_switch","default", "sim/autopilot/NAV", "", "cmd");
+        DrefData data81 = new DrefData("ap_nav_toggle", "autopilot_switch","default", "sim/autopilot/NAV", "", "cmd");
         startlist.add(data81);
-        DrefData data82 = new DrefData("ap_appr_set", "autopilot_switch","default", "sim/autopilot/hdg_nav", "", "cmd");
+        DrefData data82 = new DrefData("ap_vs_toggle", "autopilot_switch","default", "sim/autopilot/vertical_speed", "", "cmd");
         startlist.add(data82);
-
-
-
-
-
-
-
-
-
-
-
-
-
+        DrefData data83 = new DrefData("ap_altitude_toggle", "autopilot_switch","default", "sim/autopilot/altitude_hold", "", "cmd");
+        startlist.add(data83);
+        DrefData data84 = new DrefData("ap_rev_toggle", "autopilot_switch","default", "sim/autopilot/back_course", "", "cmd");
+        startlist.add(data84);
+        DrefData data85 = new DrefData("ap_appr_toggle", "autopilot_switch","default", "sim/autopilot/approach", "", "cmd");
+        startlist.add(data85);
 
 
         // add all to container

@@ -8,15 +8,16 @@ The latest stable production branch will always be [MASTER] once we are out of a
 
 - Future Android versions.
 
-### [0.4.0-beta] - 2020-05-05
+### [0.4.0-beta] - 2020-05-06
 
 #### Added
 
-- Current and STD baro pressure settings.
+- Current and STD baro pressure settings plus a toggle between mb and inHG.
+- Autopilot buttons with full functionality.
 
 #### Changed
 
-- All autopilot functions now work.
+- Almost all autopilot functions implemented.
 - Complete re-structuring of how to code renders the GUI making it ready for various aircraft profiles.
 - From this release Xflytools is distributed as an installer bundled with is JRE for ease of use.
 

@@ -36,7 +36,7 @@ public class DefaultLightButtons {
     }
 
     /**
-     * This FXML method listens to all Lighting and A/P buttons and calls corresponding execution code.
+     * This FXML method listens to all lighting buttons and calls corresponding execution code.
      *
      * @param event An event sent by the button when clicked.
      */

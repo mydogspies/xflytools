@@ -151,7 +151,6 @@ public class DefaultRadios {
                     MainWindow.controller.sendToXplane("set", "com1_freq", val.replace(".", ""));
                     log.trace("addToField(): Com1 active set to " + val + " in Xplane.");
                 }
-                //
                 break;
 
             case "com1stby":
@@ -160,7 +159,6 @@ public class DefaultRadios {
                     MainWindow.controller.sendToXplane("set", "com1_stdby_freq", val2.replace(".", ""));
                     log.trace("addToField(): Com1 standby set to " + val2 + " in Xplane.");
                 }
-                //
                 break;
 
             case "com2text":
@@ -169,7 +167,6 @@ public class DefaultRadios {
                     MainWindow.controller.sendToXplane("set", "com2_freq", val3.replace(".", ""));
                     log.trace("addToField(): Com2 active set to " + val3 + " in Xplane.");
                 }
-                //
                 break;
 
             case "com2stby":
@@ -178,7 +175,6 @@ public class DefaultRadios {
                     MainWindow.controller.sendToXplane("set", "com2_stdby_freq", val4.replace(".", ""));
                     log.trace("addToField(): Com2 standby set to " + val4 + " in Xplane.");
                 }
-                //
                 break;
 
             case "nav1text":
@@ -187,7 +183,6 @@ public class DefaultRadios {
                     MainWindow.controller.sendToXplane("set", "nav1_freq", val5.replace(".", ""));
                     log.trace("addToField(): Nav1 active set to " + val5 + " in Xplane.");
                 }
-                //
                 break;
 
             case "nav1stby":
@@ -196,7 +191,6 @@ public class DefaultRadios {
                     MainWindow.controller.sendToXplane("set", "nav1_stdby_freq", val6.replace(".", ""));
                     log.trace("addToField(): Nav1 standby set to " + val6 + " in Xplane.");
                 }
-                //
                 break;
 
             case "nav2text":
@@ -205,7 +199,6 @@ public class DefaultRadios {
                     MainWindow.controller.sendToXplane("set", "nav2_freq", val7.replace(".", ""));
                     log.trace("addToField(): Nav2 active set to " + val7 + " in Xplane.");
                 }
-                //
                 break;
 
             case "nav2stby":
@@ -214,7 +207,6 @@ public class DefaultRadios {
                     MainWindow.controller.sendToXplane("set", "nav2_stdby_freq", val8.replace(".", ""));
                     log.trace("addToField(): Nav2 standby set to " + val8 + " in Xplane.");
                 }
-                //
                 break;
 
             case "transponderCode":
@@ -223,7 +215,6 @@ public class DefaultRadios {
                     MainWindow.controller.sendToXplane("set", "transponder_code", val9);
                     log.trace("addToField(): Transponder set to " + val9 + " in Xplane.");
                 }
-                //
                 break;
         }
     }

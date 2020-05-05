@@ -22,22 +22,22 @@
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Button fx:id="courseSelect" mnemonicParsing="false" prefWidth="58.0" styleClass="ap-field-button" text="Crs" GridPane.columnIndex="1" GridPane.halignment="CENTER">
+            <Button fx:id="courseSelect" mnemonicParsing="false" onAction="#addToField" prefWidth="58.0" styleClass="ap-field-button" text="Crs" GridPane.columnIndex="1" GridPane.halignment="CENTER">
                <font>
                   <Font size="11.0" />
                </font>
             </Button>
-            <Button fx:id="headingSelect" maxWidth="58.0" mnemonicParsing="false" prefWidth="58.0" styleClass="ap-field-button" text="Hdg" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1">
+            <Button fx:id="headingSelect" maxWidth="58.0" mnemonicParsing="false" onAction="#addToField" prefWidth="58.0" styleClass="ap-field-button" text="Hdg" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1">
                <font>
                   <Font size="11.0" />
                </font>
             </Button>
-            <Button fx:id="levelSelect" maxWidth="58.0" mnemonicParsing="false" prefWidth="58.0" styleClass="ap-field-button" text="Lvl" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2">
+            <Button fx:id="levelSelect" maxWidth="58.0" mnemonicParsing="false" onAction="#addToField" prefWidth="58.0" styleClass="ap-field-button" text="Lvl" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2">
                <font>
                   <Font size="11.0" />
                </font>
             </Button>
-            <Button fx:id="verticalSpeedSelect" maxWidth="58.0" mnemonicParsing="false" prefWidth="58.0" styleClass="ap-field-button" text="V/S" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
+            <Button fx:id="verticalSpeedSelect" maxWidth="58.0" mnemonicParsing="false" onAction="#addToField" prefWidth="58.0" styleClass="ap-field-button" text="V/S" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
          </children>
       </GridPane>
    </children>

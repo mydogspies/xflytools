@@ -31,6 +31,7 @@ public class DefaultAPButtons {
     private AutoPilotButton apVSBtn;
     private AutoPilotButton apApprBtn;
     private AutoPilotButton apNavBtn;
+    private AutoPilotButton apRevBtn;
 
     /* INIT */
 
@@ -41,7 +42,7 @@ public class DefaultAPButtons {
     }
 
     /**
-     * This FXML method listens to all Lighting and A/P buttons and calls corresponding execution code.
+     * This FXML method listens to all A/P buttons and calls corresponding execution code.
      *
      * @param event An event sent by the button when clicked.
      */
@@ -68,24 +69,39 @@ public class DefaultAPButtons {
                     break;
 
                 case "apheadingbtn":
-                        MainWindow.controller.sendToXplane("cmd", "ap_heading_mode", "");
-                        log.trace("clickButton(): A/P set to Heading mode.");
+                    MainWindow.controller.sendToXplane("cmd", "ap_heading_toggle", "");
+                    log.trace("clickButton(): A/P set to Heading mode.");
                     break;
 
                 case "apnavbtn":
-                        MainWindow.controller.sendToXplane("cmd", "ap_nav_mode", "");
-                        log.trace("clickButton(): A/P set to Nav mode.");
+                    if (apRevBtn.selectedProperty().getValue().equals(true)) {
+                        apNavBtn.setSelected(true);
+                    }
+                    MainWindow.controller.sendToXplane("cmd", "ap_nav_toggle", "");
+                    log.trace("clickButton(): A/P set to Nav mode.");
+                    break;
+
+                case "apvsbtn":
+                    MainWindow.controller.sendToXplane("cmd", "ap_vs_toggle", "");
+                    log.trace("clickButton(): A/P set to Vertical Speed mode.");
+                    break;
+
+                case "apaltitudebtn":
+                    MainWindow.controller.sendToXplane("cmd", "ap_altitude_toggle", "");
+                    log.trace("clickButton(): A/P set to Altitude mode.");
+                    break;
+
+                case "aprevbtn":
+                    MainWindow.controller.sendToXplane("cmd", "ap_rev_toggle", "");
+                    log.trace("clickButton(): A/P set to REV mode.");
                     break;
 
                 case "apapprbtn":
-                        MainWindow.controller.sendToXplane("cmd", "ap_appr_set", "");
-                    try {
-                        Thread.sleep(500);
-                        // MainWindow.controller.sendToXplane("cmd", "ap_appr_set", "");
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                    log.trace("clickButton(): A/P set to Apr mode.");
+                    MainWindow.controller.sendToXplane("cmd", "ap_appr_toggle", "");
+                    log.trace("clickButton(): A/P set to APR mode.");
+                    break;
+
+
             }
         } else {
             b.setSelected(false);
@@ -99,37 +115,60 @@ public class DefaultAPButtons {
             case "ap_mode":
                 if (apToggleBtn.selectedProperty().getValue().equals(true) && value.get(0).equals("0")) {
                     apToggleBtn.setSelected(false);
-                    log.trace("getFromXplane(): [" + command + "] -> " + value + " | A/P turned OFF in app.");
+                    log.trace("updateData(): [" + command + "] -> " + value + " | A/P turned OFF in app.");
                 } else if (apToggleBtn.selectedProperty().getValue().equals(false) && value.get(0).equals("2")) {
                     apToggleBtn.setSelected(true);
-                    log.trace("getFromXplane(): [" + command + "] -> " + value + " | A/P turned ON in app.");
+                    log.trace("updateData(): [" + command + "] -> " + value + " | A/P turned ON in app.");
                 }
                 break;
 
-            case "ap_heading_mode_check":
-                if (value.get(0).equals("2")) { // Nav mode
+            case "ap_heading_mode":
+                if (value.get(0).equals("1")) {
+                    apHeadingBtn.setSelected(true);
+                    apNavBtn.setSelected(false);
+                    apNavBtn.setText("Nav");
+                } else if (value.get(0).equals("2")) {
+                    apHeadingBtn.setSelected(false);
                     apNavBtn.setSelected(true);
                     apNavBtn.setText("Nav");
-                    apHeadingBtn.setSelected(false);
-                    log.trace("getFromXplane(): [" + command + "] -> " + value + " | A/P in Nav mode.");
-                } else if (value.get(0).equals("1")) { // Heading mode
-                    apNavBtn.setSelected(false);
-                    apHeadingBtn.setSelected(true);
-                    log.trace("getFromXplane(): [" + command + "] -> " + value + " | A/P in Heading app.");
-                } else if (value.get(0).equals("13")) { // GPSS mode
-                    apNavBtn.setSelected(true);
-                    apNavBtn.setText("GPS");
-                    apHeadingBtn.setSelected(false);
+                } else if (value.get(0).equals("13")) {
+                    apNavBtn.setText("GPSS");
                 }
                 break;
 
-            case "ap_hnav_mode":
+            case "ap_altitude_mode":
+                if (value.get(0).equals("6")) {
+                    apAltitudeBtn.setSelected(true);
+                    apVSBtn.setSelected(false);
+                } else if (value.get(0).equals("4")) {
+                    apAltitudeBtn.setSelected(false);
+                    apVSBtn.setSelected(true);
+                }
+                break;
+
+            case "ap_backcourse":
                 if (value.get(0).equals("1")) {
-                    apApprBtn.setSelected(true);
-                    log.trace("getFromXplane(): [" + command + "] -> " + value + " | A/P in Apr mode.");
+                    apRevBtn.setSelected(true);
                 } else if (value.get(0).equals("0")) {
+                    apRevBtn.setSelected(false);
                     apApprBtn.setSelected(false);
                 }
+                break;
+
+            case "ap_appr_status":
+                if (value.get(0).equals("1")) {
+                    apApprBtn.setSelected(true);
+                    apNavBtn.setSelected(true);
+                } else if (value.get(0).equals("0")) {
+                    apApprBtn.setSelected(false);
+                    if (apHeadingBtn.selectedProperty().getValue().equals(true)) {
+                        apNavBtn.setSelected(false);
+                    }
+                } else if (value.get(0).equals("2")) {
+                    apApprBtn.setSelected(true);
+                }
+                break;
+
         }
     }
 
@@ -141,6 +180,7 @@ public class DefaultAPButtons {
         apToggleBtn.getStyleClass().add("ap-buttons");
         apToggleBtn.setOnAction(this::clickButton);
         apButtonGrid.add(apToggleBtn, 1, 0);
+        apToggleBtn.toggleable = true;
 
         apHeadingBtn = new AutoPilotButton();
         apHeadingBtn.setId("apheadingbtn");
@@ -154,28 +194,37 @@ public class DefaultAPButtons {
         apAltitudeBtn.setText("Alt");
         apAltitudeBtn.getStyleClass().add("ap-buttons");
         apAltitudeBtn.setOnAction(this::clickButton);
-        apButtonGrid.add(apAltitudeBtn, 3, 0);
+        apButtonGrid.add(apAltitudeBtn, 6, 0);
 
         apVSBtn = new AutoPilotButton();
         apVSBtn.setId("apvsbtn");
         apVSBtn.setText("V/S");
         apVSBtn.getStyleClass().add("ap-buttons");
         apVSBtn.setOnAction(this::clickButton);
-        apButtonGrid.add(apVSBtn, 6, 0);
+        apButtonGrid.add(apVSBtn, 7, 0);
 
         apApprBtn = new AutoPilotButton();
         apApprBtn.setId("apapprbtn");
         apApprBtn.setText("Apr");
         apApprBtn.getStyleClass().add("ap-buttons");
         apApprBtn.setOnAction(this::clickButton);
-        apButtonGrid.add(apApprBtn, 5, 0);
+        apButtonGrid.add(apApprBtn, 4, 0);
+        apApprBtn.toggleable = true; // as per override -> this one acts like a standard toggle button
 
         apNavBtn = new AutoPilotButton();
         apNavBtn.setId("apnavbtn");
         apNavBtn.setText("Nav");
         apNavBtn.getStyleClass().add("ap-buttons");
         apNavBtn.setOnAction(this::clickButton);
-        apButtonGrid.add(apNavBtn, 4, 0);
+        apButtonGrid.add(apNavBtn, 3, 0);
+
+        apRevBtn = new AutoPilotButton();
+        apRevBtn.setId("aprevbtn");
+        apRevBtn.setText("Rev");
+        apRevBtn.getStyleClass().add("ap-buttons");
+        apRevBtn.setOnAction(this::clickButton);
+        apButtonGrid.add(apRevBtn, 5, 0);
+        apRevBtn.toggleable = true; // as per override -> this one acts like a standard toggle button
     }
 
     /**
@@ -189,5 +238,6 @@ public class DefaultAPButtons {
         apVSBtn.setSelected(false);
         apApprBtn.setSelected(false);
         apNavBtn.setSelected(false);
+        apRevBtn.setSelected(false);
     }
 }
