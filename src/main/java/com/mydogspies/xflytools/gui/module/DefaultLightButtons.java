@@ -92,50 +92,50 @@ public class DefaultLightButtons {
             case "taxi_light":
                 if (taxiLight.selectedProperty().getValue().equals(true) && value.get(0).equals("0")) {
                     taxiLight.setSelected(false);
-                    log.trace("getFromXplane(): [" + command + "] -> " + value + " | taxi light turned OFF in app.");
+                    log.trace("updateData(): [" + command + "] -> " + value + " | taxi light turned OFF in app.");
                 } else if (taxiLight.selectedProperty().getValue().equals(false) && value.get(0).equals("1")) {
                     taxiLight.setSelected(true);
-                    log.trace("getFromXplane(): [" + command + "] -> " + value + " | taxi light turned ON in app.");
+                    log.trace("updateData(): [" + command + "] -> " + value + " | taxi light turned ON in app.");
                 }
                 break;
 
             case "nav_light":
                 if (navLight.selectedProperty().getValue().equals(true) && value.get(0).equals("0")) {
                     navLight.setSelected(false);
-                    log.trace("getFromXplane(): [" + command + "] -> " + value + " | navigation lights turned OFF in app.");
+                    log.trace("updateData(): [" + command + "] -> " + value + " | navigation lights turned OFF in app.");
                 } else if (navLight.selectedProperty().getValue().equals(false) && value.get(0).equals("1")) {
                     navLight.setSelected(true);
-                    log.trace("getFromXplane(): [" + command + "] -> " + value + " | navigation lights turned ON in app.");
+                    log.trace("updateData(): [" + command + "] -> " + value + " | navigation lights turned ON in app.");
                 }
                 break;
 
             case "beacon_light":
                 if (beaconLight.selectedProperty().getValue().equals(true) && value.get(0).equals("0")) {
                     beaconLight.setSelected(false);
-                    log.trace("getFromXplane(): [" + command + "] -> " + value + " | beacon light turned OFF in app.");
+                    log.trace("updateData(): [" + command + "] -> " + value + " | beacon light turned OFF in app.");
                 } else if (beaconLight.selectedProperty().getValue().equals(false) && value.get(0).equals("1")) {
                     beaconLight.setSelected(true);
-                    log.trace("getFromXplane(): [" + command + "] -> " + value + " | beacon light turned ON in app.");
+                    log.trace("updateData(): [" + command + "] -> " + value + " | beacon light turned ON in app.");
                 }
                 break;
 
             case "strobe_light":
                 if (strobeLight.selectedProperty().getValue().equals(true) && value.get(0).equals("0")) {
                     strobeLight.setSelected(false);
-                    log.trace("getFromXplane(): [" + command + "] -> " + value + " | strobe lights turned OFF in app.");
+                    log.trace("updateData(): [" + command + "] -> " + value + " | strobe lights turned OFF in app.");
                 } else if (strobeLight.selectedProperty().getValue().equals(false) && value.get(0).equals("1")) {
                     strobeLight.setSelected(true);
-                    log.trace("getFromXplane(): [" + command + "] -> " + value + " | strobe lights turned ON in app.");
+                    log.trace("updateData(): [" + command + "] -> " + value + " | strobe lights turned ON in app.");
                 }
                 break;
 
             case "landing_light":
                 if (landingLight.selectedProperty().getValue().equals(true) && value.get(0).equals("0")) {
                     landingLight.setSelected(false);
-                    log.trace("getFromXplane(): [" + command + "] -> " + value + " | landing lights turned OFF in app.");
+                    log.trace("updateData(): [" + command + "] -> " + value + " | landing lights turned OFF in app.");
                 } else if (landingLight.selectedProperty().getValue().equals(false) && value.get(0).equals("1")) {
                     landingLight.setSelected(true);
-                    log.trace("getFromXplane(): [" + command + "] -> " + value + " | landing lights turned ON in app.");
+                    log.trace("updateData(): [" + command + "] -> " + value + " | landing lights turned ON in app.");
                 }
                 break;
         }

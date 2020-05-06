@@ -23,7 +23,7 @@ public class Main {
     public static void main(String[] args) {
 
         // set log level
-        Initialize.logReportLevel("trace");
+        Initialize.logReportLevel("info");
         log.trace("main(): Log level initialised.");
 
         // load database

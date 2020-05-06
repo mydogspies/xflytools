@@ -112,7 +112,7 @@ public class DrefDataIO implements DrefDataDAO{
         try {
             DrefDataContainer dreflist = Initialize.mapper.readValue(jsonfile, DrefDataContainer.class);
             data = dreflist.getDrefdata();
-            log.info("getJsonData(): Data object has been successfully read from json file: " + data);
+            log.debug("getJsonData(): Data object has been successfully read from json file: " + data);
         } catch (JsonParseException e) {
             log.error("getJsonData(): Json parse (Jackson) failed.");
         } catch (JsonMappingException e) {

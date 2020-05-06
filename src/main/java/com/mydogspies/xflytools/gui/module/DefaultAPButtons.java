@@ -60,9 +60,11 @@ public class DefaultAPButtons {
 
                 case "aptogglebtn":
                     if (apToggleBtn.selectedProperty().getValue().equals(false)) {
+                        disableAll(true);
                         MainWindow.controller.sendToXplane("set", "ap_mode", "0");
                         log.trace("clickButton(): A/P is OFF");
                     } else {
+                        disableAll(false);
                         MainWindow.controller.sendToXplane("set", "ap_mode", "2");
                         log.trace("clickButton(): A/P is ON");
                     }
@@ -115,9 +117,11 @@ public class DefaultAPButtons {
             case "ap_mode":
                 if (apToggleBtn.selectedProperty().getValue().equals(true) && value.get(0).equals("0")) {
                     apToggleBtn.setSelected(false);
+                    disableAll(true);
                     log.trace("updateData(): [" + command + "] -> " + value + " | A/P turned OFF in app.");
                 } else if (apToggleBtn.selectedProperty().getValue().equals(false) && value.get(0).equals("2")) {
                     apToggleBtn.setSelected(true);
+                    disableAll(false);
                     log.trace("updateData(): [" + command + "] -> " + value + " | A/P turned ON in app.");
                 }
                 break;
@@ -225,6 +229,20 @@ public class DefaultAPButtons {
         apRevBtn.setOnAction(this::clickButton);
         apButtonGrid.add(apRevBtn, 5, 0);
         apRevBtn.toggleable = true; // as per override -> this one acts like a standard toggle button
+
+        // in the initial state our AP button is off thus all disabled
+        disableAll(true);
+    }
+
+    private void disableAll(boolean state) {
+
+        apHeadingBtn.setDisable(state);
+        apAltitudeBtn.setDisable(state);
+        apVSBtn.setDisable(state);
+        apApprBtn.setDisable(state);
+        apNavBtn.setDisable(state);
+        apRevBtn.setDisable(state);
+
     }
 
     /**
@@ -239,5 +257,6 @@ public class DefaultAPButtons {
         apApprBtn.setSelected(false);
         apNavBtn.setSelected(false);
         apRevBtn.setSelected(false);
+        disableAll(true);
     }
 }

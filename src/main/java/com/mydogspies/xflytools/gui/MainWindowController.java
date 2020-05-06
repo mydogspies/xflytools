@@ -1,6 +1,7 @@
 package com.mydogspies.xflytools.gui;
 
 import com.mydogspies.xflytools.data.DrefDataIO;
+import com.mydogspies.xflytools.gui.elements.RadioTextField;
 import com.mydogspies.xflytools.gui.module.*;
 import com.mydogspies.xflytools.io.DisconnectAll;
 import com.mydogspies.xflytools.io.SendData;
@@ -10,6 +11,7 @@ import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -57,30 +59,103 @@ public class MainWindowController {
     private ComboBox<String> aircraftCombo;
     @FXML
     private GridPane toggleButtonGrid;
+    @FXML
+    private GridPane bottomUtilGrid;
 
     /* Internal vars */
 
     private AtomicBoolean refsSubbed;
+    private ToggleButton flashLight;
+    private AtomicBoolean hdrStatus;
 
     /* INIT */
     @FXML
     void initialize() {
 
         // aircraft combo box
-        aircraftCombo.getItems().addAll(
-                "default");
+        aircraftCombo.getItems().addAll("default");
         aircraftCombo.getSelectionModel().select("default");
         actProfile = getAircraftCombo();
+
+        flashLight = new ToggleButton();
+        flashLight.setId("flashlight");
+        flashLight.setText("Flash");
+        flashLight.getStyleClass().add("flash-light");
+        flashLight.setOnAction(this::miscActions);
+        bottomUtilGrid.add(flashLight, 1, 0);
 
         // Xplane IP address
         ipAddress.setText("127.0.0.1"); // default value
 
         // init some states
+        hdrStatus = new AtomicBoolean();
         refsSubbed = new AtomicBoolean(false);
         setNotConnected();
         loadModules();
 
         log.debug("initialize(): Main window has been initialized.");
+    }
+
+    /**
+     * All other misc buttons and events than can fire from the MainWindow.
+     *
+     * @param event
+     */
+    @FXML
+    private void miscActions(ActionEvent event) {
+
+        log.trace("miscActions(): ActionEvent called: " + event);
+
+        Node b = (Node) event.getSource();
+        String field_id = b.getId();
+
+        if (SocketConnect.socket != null) {
+
+            switch (field_id) {
+
+                case "flashlight":
+                    MainWindow.controller.sendToXplane("cmd", "flashlight_toggle", "");
+                    log.trace("addToField(): White Flash Light has been toggled.");
+                    break;
+            }
+        } else {
+            flashLight.setSelected(false);
+        }
+    }
+
+    public void updateData(String command, ArrayList<String> value) {
+
+        switch (command) {
+
+            case "hdr_status":
+                String val = value.get(0);
+
+                if (val.equals("1")) {
+                    hdrStatus.set(true);
+                    flashLight.setDisable(false);
+                    log.trace("updateData(): [" + command + "] -> HDR status is " + val + " [ON]");
+                } else {
+                    hdrStatus.set(false);
+                    flashLight.setDisable(true);
+                    log.trace("updateData(): [" + command + "] -> HDR status is " + val + " [OFF]");
+                    log.trace("updateData(): [" + command + "] -> Flashlight is DISABLED in Xplane due to HDR not being on.");
+                }
+                break;
+
+            case "flashlight_status":
+                String val2 = value.get(0);
+
+                if (value.get(0).equals("1")) {
+
+                    flashLight.setSelected(true);
+                    log.trace("updateData(): [" + command + "] -> Flashlight is ON in Xplane.");
+                } else if (value.get(0).equals("0")) {
+
+                    flashLight.setSelected(false);
+                    log.trace("updateData(): [" + command + "] -> Flashlight is OFF in Xplane.");
+                }
+                break;
+        }
     }
 
     /**
@@ -122,6 +197,10 @@ public class MainWindowController {
                     case "misc":
                         misc_controller.updateData(command, value);
                         break;
+
+                    case "main":
+                        updateData(command, value);
+                        break;
                 }
             }
         });
@@ -155,13 +234,15 @@ public class MainWindowController {
                 ipAddress.setDisable(true);
                 aircraftCombo.setDisable(true);
 
+                log.info("toggleConnect(): Using profile: " + aircraftCombo.getValue());
+
                 // subscribe to relevant datarefs
                 SubscribeDatarefs.subRefs();
                 refsSubbed.set(true);
 
                 // set toggle button state to connected
                 setConnected();
-                log.info("toggleConnect(): Connection to Xplane established on: " + SocketConnect.socket.getLocalAddress());
+                log.info("toggleConnect(): Connection to ExtPlane plugin established on: " + SocketConnect.socket.getPort());
 
             } else {
 
@@ -241,7 +322,7 @@ public class MainWindowController {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("module/defaultLightButtons.fxml"));
             Pane p = loader.load();
             lightbutton_controller = loader.getController();
-            toggleButtonGrid.add(p, 0, 0);
+            toggleButtonGrid.add(p, 0, 1);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -251,7 +332,7 @@ public class MainWindowController {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("module/defaultAPButtons.fxml"));
             Pane p = loader.load();
             apbutton_controller = loader.getController();
-            toggleButtonGrid.add(p, 0, 1);
+            toggleButtonGrid.add(p, 0, 2);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -296,8 +377,13 @@ public class MainWindowController {
         radios_controller.onReset();
         lightbutton_controller.onReset();
         misc_controller.onReset();
+        this.onReset();
     }
 
+    private void onReset() {
+
+        flashLight.setSelected(false);
+    }
 
     /* GETTERS AND SETTERS */
 

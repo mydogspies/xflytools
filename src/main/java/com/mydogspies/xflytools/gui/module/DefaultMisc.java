@@ -1,6 +1,7 @@
 package com.mydogspies.xflytools.gui.module;
 
 import com.mydogspies.xflytools.gui.MainWindow;
+import com.mydogspies.xflytools.io.SocketConnect;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -41,7 +42,7 @@ public class DefaultMisc {
                 if (baroSettingInHg) {
                     String val = value.get(0);
                     baroField.setText(formatToInHG(val));
-                    log.trace("getFromXplane(): [" + command + "] -> Barometer set to " + val + " inHg.");
+                    log.trace("updateData(): [" + command + "] -> Barometer set to " + val + " inHg.");
                 } else {
                     baroField.setText(convertToMillibar(value.get(0)));
                 }
@@ -71,22 +72,25 @@ public class DefaultMisc {
 
         log.debug("addToBaroField(): ActionEvent called: " + event);
 
-        ToggleButton b = (ToggleButton) event.getSource();
-        String field_id = b.getId();
+        if (SocketConnect.socket != null) {
 
-        switch (field_id) {
+            ToggleButton b = (ToggleButton) event.getSource();
+            String field_id = b.getId();
 
-            case ("barotype"):
-                if (baroSettingInHg) {
-                    baroSettingInHg = false;
-                    pressType.setText("mb");
-                    baroField.setText(convertToMillibar(baroField.getText()));
-                } else {
-                    baroSettingInHg = true;
-                    pressType.setText("inHg");
-                    baroField.setText(formatToInHG(convertToInchesHG(baroField.getText())));
-                }
-                break;
+            switch (field_id) {
+
+                case ("barotype"):
+                    if (baroSettingInHg) {
+                        baroSettingInHg = false;
+                        pressType.setText("mb");
+                        baroField.setText(convertToMillibar(baroField.getText()));
+                    } else {
+                        baroSettingInHg = true;
+                        pressType.setText("inHg");
+                        baroField.setText(formatToInHG(convertToInchesHG(baroField.getText())));
+                    }
+                    break;
+            }
         }
     }
 
@@ -95,21 +99,24 @@ public class DefaultMisc {
 
         log.debug("addToBaroField(): ActionEvent called: " + event);
 
-        Button b = (Button) event.getSource();
-        String field_id = b.getId();
+        if (SocketConnect.socket != null){
 
-        switch (field_id) {
+            Button b = (Button) event.getSource();
+            String field_id = b.getId();
 
-            case ("barostd"):
-                MainWindow.controller.sendToXplane("set", "baro_pilot_inhg", "29.92");
-                if (baroSettingInHg) {
-                    baroField.setText("29.92");
-                    log.trace("addToField(): Baro set to STD (29.92 inHg) in Xplane.");
-                } else {
-                    baroField.setText("1013");
-                    log.trace("addToField(): Baro set to STD (1013 mb) in Xplane.");
-                }
-                break;
+            switch (field_id) {
+
+                case ("barostd"):
+                    MainWindow.controller.sendToXplane("set", "baro_pilot_inhg", "29.92");
+                    if (baroSettingInHg) {
+                        baroField.setText("29.92");
+                        log.trace("addToField(): Baro set to STD (29.92 inHg) in Xplane.");
+                    } else {
+                        baroField.setText("1013");
+                        log.trace("addToField(): Baro set to STD (1013 mb) in Xplane.");
+                    }
+                    break;
+            }
         }
     }
 
@@ -118,21 +125,28 @@ public class DefaultMisc {
 
         log.debug("addToBaroField(): ActionEvent called: " + event);
 
-        TextField b = (TextField) event.getSource();
-        String field_id = b.getId();
+        if (SocketConnect.socket != null) {
 
-        System.out.println("field_id = " + field_id);
+            TextField b = (TextField) event.getSource();
+            String field_id = b.getId();
 
-        switch (field_id) {
+            System.out.println("field_id = " + field_id);
 
-            case "barofield":
-                String val = baroField.getText();
-                if (val.matches("[2-3][0-9]\\.[0-9]{2}")) {
-                    MainWindow.controller.sendToXplane("set", "baro_pilot_inhg", val);
-                    log.trace("addToField(): Baro set to " + val + " in Xplane.");
-                }
-                //
-                break;
+            switch (field_id) {
+
+                case "barofield":
+                    String val = baroField.getText();
+                    if (val.matches("[2-3][0-9]\\.[0-9]{2}")) {
+                        MainWindow.controller.sendToXplane("set", "baro_pilot_inhg", val);
+                        log.trace("addToField(): Baro set to " + val + " in Xplane.");
+                    } else if (val.matches("[1][0][0-9]{2}")) {
+                        val = convertToInchesHG(val);
+                        MainWindow.controller.sendToXplane("set", "baro_pilot_inhg", val);
+                        log.trace("addToField(): Baro set to " + val + " in Xplane.");
+                    }
+                    //
+                    break;
+            }
         }
     }
 
@@ -145,14 +159,14 @@ public class DefaultMisc {
         pressType.setText("inHg");
         pressType.setOnAction(this::baroToggle);
         pressType.getStyleClass().add("baro-button");
-        baroButtonGrid.add(pressType, 0, 0);
+        baroButtonGrid.add(pressType, 0, 1);
 
         pressStd = new Button();
         pressStd.setId("barostd");
         pressStd.setText("STD");
         pressStd.setOnAction(this::baroStandard);
         pressStd.getStyleClass().add("baro-button");
-        baroButtonGrid.add(pressStd, 0, 1);
+        baroButtonGrid.add(pressStd, 0, 2);
 
         /* FIELDS */
 

@@ -7,15 +7,15 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-
-<Pane fx:id="RadioPane" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mydogspies.xflytools.gui.module.DefaultRadios">
+<Pane fx:id="RadioPane" maxWidth="300.0" minWidth="240.0" prefHeight="240.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mydogspies.xflytools.gui.module.DefaultRadios">
    <children>
-      <GridPane fx:id="radioGrid">
+      <GridPane fx:id="radioGrid" maxWidth="300.0" prefHeight="240.0">
         <columnConstraints>
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="85.0" minWidth="10.0" prefWidth="79.0" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="90.0" minWidth="10.0" prefWidth="90.0" />
-          <ColumnConstraints hgrow="SOMETIMES" maxWidth="75.0" minWidth="10.0" prefWidth="45.0" />
-          <ColumnConstraints hgrow="SOMETIMES" maxWidth="115.0" minWidth="10.0" prefWidth="115.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="60.0" minWidth="10.0" prefWidth="60.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="40.0" minWidth="10.0" prefWidth="40.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="70.0" minWidth="10.0" prefWidth="70.0" />
+          <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="50.0" minWidth="10.0" prefWidth="50.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="70.0" minWidth="10.0" prefWidth="70.0" />
         </columnConstraints>
         <rowConstraints>
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -27,17 +27,17 @@
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Label styleClass="general-label" text="com 1" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
-            <Label styleClass="general-label" text="com 2" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
-            <Label styleClass="general-label" text="nav 1" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
-            <Label styleClass="general-label" text="nav 2" GridPane.halignment="CENTER" GridPane.rowIndex="4" />
-            <Label styleClass="general-label" text="trans" GridPane.halignment="CENTER" GridPane.rowIndex="5" />
-            <Label styleClass="general-label" text="Active" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.valignment="BOTTOM">
+            <Label styleClass="general-label" text="com 1" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
+            <Label styleClass="general-label" text="com 2" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
+            <Label styleClass="general-label" text="nav 1" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
+            <Label styleClass="general-label" text="nav 2" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="4" />
+            <Label styleClass="general-label" text="trans" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="5" />
+            <Label styleClass="general-label" text="Active" GridPane.columnIndex="2" GridPane.halignment="LEFT" GridPane.valignment="BOTTOM">
                <GridPane.margin>
                   <Insets left="11.0" />
                </GridPane.margin>
             </Label>
-            <Label styleClass="general-label" text="Standby" GridPane.columnIndex="3" GridPane.halignment="LEFT" GridPane.valignment="BOTTOM">
+            <Label styleClass="general-label" text="Standby" GridPane.columnIndex="4" GridPane.halignment="LEFT" GridPane.valignment="BOTTOM">
                <GridPane.margin>
                   <Insets left="11.0" />
                </GridPane.margin>

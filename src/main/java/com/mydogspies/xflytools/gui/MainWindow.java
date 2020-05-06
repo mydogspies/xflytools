@@ -10,8 +10,6 @@ import javafx.stage.Stage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.IOException;
-
 /**
  * The main javafx window that opens on start
  *
@@ -39,6 +37,7 @@ public class MainWindow extends Application {
 
             primaryStage.setTitle(appTitle);
             primaryStage.setScene(scene);
+            primaryStage.setResizable(false);
             primaryStage.show();
 
             log.info("start(): All parts of the main scene successfully instantiated!");

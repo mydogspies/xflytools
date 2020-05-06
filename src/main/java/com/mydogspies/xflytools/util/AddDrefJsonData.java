@@ -86,6 +86,10 @@ public class AddDrefJsonData {
         // MISC
         DrefData data40 = new DrefData("baro_pilot_inhg", "misc","default", "sim/cockpit2/gauges/actuators/barometer_setting_in_hg_pilot", "float", "set");
         startlist.add(data40);
+        DrefData data41 = new DrefData("flashlight_status", "main","default", "sim/graphics/misc/white_flashlight_on", "enum", "set");
+        startlist.add(data41);
+        DrefData data42 = new DrefData("hdr_status", "main","default", "sim/graphics/settings/HDR_on", "int", "set");
+        startlist.add(data42);
 
 
         /* COMMANDS*/
@@ -125,6 +129,11 @@ public class AddDrefJsonData {
         startlist.add(data84);
         DrefData data85 = new DrefData("ap_appr_toggle", "autopilot_switch","default", "sim/autopilot/approach", "", "cmd");
         startlist.add(data85);
+
+        // MISC
+        DrefData data110 = new DrefData("flashlight_toggle", "main","default", "sim/view/flashlight_wht", "", "cmd");
+        startlist.add(data110);
+
 
 
         // add all to container
