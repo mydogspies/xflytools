@@ -61,6 +61,11 @@ public class AddDrefJsonData {
         startlist.add(data16);
         DrefData data17 = new DrefData("nav1_selected", "radios","default", "sim/cockpit2/radios/actuators/nav1_right_is_selected", "int", "set");
         startlist.add(data17);
+        DrefData data20 = new DrefData("adf1_freq", "radios","default", "sim/cockpit/radios/adf1_freq_hz", "int", "set");
+        startlist.add(data20);
+        DrefData data19 = new DrefData("adf1_stdby_freq", "radios","default", "sim/cockpit/radios/adf1_stdby_freq_hz", "int", "set");
+        startlist.add(data19);
+
 
         // AP
         DrefData data30 = new DrefData("ap_heading", "autopilot_readout","default", "sim/cockpit/autopilot/heading_mag", "float", "set");
@@ -103,6 +108,10 @@ public class AddDrefJsonData {
         startlist.add(data52);
         DrefData data53 = new DrefData("nav2_flip", "radios","default", "sim/radios/nav2_standy_flip", "", "cmd");
         startlist.add(data53);
+        DrefData data54 = new DrefData("adf1_flip", "radios","default", "sim/radios/adf1_standy_flip", "", "cmd");
+        startlist.add(data54);
+
+
 
         // LIGHTS
         DrefData data60 = new DrefData("nav_lights_flip", "lights","default", "sim/lights/nav_lights_toggle", "", "cmd");

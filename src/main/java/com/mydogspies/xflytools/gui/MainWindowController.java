@@ -1,7 +1,7 @@
 package com.mydogspies.xflytools.gui;
 
 import com.mydogspies.xflytools.data.DrefDataIO;
-import com.mydogspies.xflytools.gui.elements.RadioTextField;
+import com.mydogspies.xflytools.data.LayoutDataIO;
 import com.mydogspies.xflytools.gui.module.*;
 import com.mydogspies.xflytools.io.DisconnectAll;
 import com.mydogspies.xflytools.io.SendData;
@@ -23,6 +23,7 @@ import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
@@ -72,34 +73,24 @@ public class MainWindowController {
     @FXML
     void initialize() {
 
-        // aircraft combo box
-        aircraftCombo.getItems().addAll("default");
-        aircraftCombo.getSelectionModel().select("default");
-        actProfile = getAircraftCombo();
-
-        flashLight = new ToggleButton();
-        flashLight.setId("flashlight");
-        flashLight.setText("Flash");
-        flashLight.getStyleClass().add("flash-light");
-        flashLight.setOnAction(this::miscActions);
-        bottomUtilGrid.add(flashLight, 1, 0);
-
         // Xplane IP address
         ipAddress.setText("127.0.0.1"); // default value
 
         // init some states
+        initProfileCombobox();
+        initFlashLight();
         hdrStatus = new AtomicBoolean();
         refsSubbed = new AtomicBoolean(false);
-        setNotConnected();
-        loadModules();
+        setNoProfile();
 
         log.debug("initialize(): Main window has been initialized.");
     }
 
     /**
-     * All other misc buttons and events than can fire from the MainWindow.
+     * All other misc buttons and events actions that come from MainWindow itself.
+     * Note that all events from the modules within are handled directly by each module respectively.
      *
-     * @param event
+     * @param event an event fired from an element that resides in MainWindow.
      */
     @FXML
     private void miscActions(ActionEvent event) {
@@ -123,6 +114,12 @@ public class MainWindowController {
         }
     }
 
+    /**
+     * Updates various local elements with fresh data from Xplane.
+     *
+     * @param command the internal xflytools command that corresponds to a given dataref
+     * @param value   the current value of the dataref
+     */
     public void updateData(String command, ArrayList<String> value) {
 
         switch (command) {
@@ -293,13 +290,17 @@ public class MainWindowController {
      * This method load the 5 separate modules with respective fxml/controller class corresponding to each.
      * It also sets a global access to each controller.
      */
-    private void loadModules() {
+    @FXML
+    private void loadModules(ActionEvent event) {
+
+        LayoutDataIO lio = new LayoutDataIO();
+        List<String> paths = lio.getLayout(aircraftCombo.getValue());
 
         this.topBaseGrid.getChildren().clear();
 
         // RADIOS MODULE
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("module/defaultRadios.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("module/" + paths.get(2)));
             Pane p = loader.load();
             radios_controller = loader.getController();
             topBaseGrid.add(p, 1, 0);
@@ -309,7 +310,7 @@ public class MainWindowController {
 
         // A/P READOUTS MODULE
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("module/defaultAPReadouts.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("module/" + paths.get(4)));
             Pane p = loader.load();
             apreadouts_controller = loader.getController();
             bottomBaseGrid.add(p, 1, 0);
@@ -319,7 +320,7 @@ public class MainWindowController {
 
         // LIGHT BUTTONS MODULE
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("module/defaultLightButtons.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("module/" + paths.get(1)));
             Pane p = loader.load();
             lightbutton_controller = loader.getController();
             toggleButtonGrid.add(p, 0, 1);
@@ -329,7 +330,7 @@ public class MainWindowController {
 
         // A/P BUTTONS MODULE
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("module/defaultAPButtons.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("module/" + paths.get(3)));
             Pane p = loader.load();
             apbutton_controller = loader.getController();
             toggleButtonGrid.add(p, 0, 2);
@@ -339,7 +340,7 @@ public class MainWindowController {
 
         // MISC MODULE
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("module/defaultMisc.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("module/" + paths.get(0)));
             Pane p = loader.load();
             misc_controller = loader.getController();
             topBaseGrid.add(p, 0, 0);
@@ -347,10 +348,53 @@ public class MainWindowController {
             e.printStackTrace();
         }
 
+        setNotConnected();
+    }
+
+    /**
+     * Initiates the drop down menu with aircraft profiles
+     */
+    private void initProfileCombobox() {
+
+        LayoutDataIO lio = new LayoutDataIO();
+        List<String> nameList = lio.getAllProfileNames();
+
+        for (String name : nameList) {
+            aircraftCombo.getItems().add(name);
+        }
+
+        aircraftCombo.getSelectionModel().select("");
+        actProfile = "";
+        aircraftCombo.setOnAction(this::loadModules);
+    }
+
+    /**
+     * Initiates the flash light function.
+     * Note: This is only available if the option HDR is set in the graphics settings of Xplane.
+     */
+    private void initFlashLight() {
+
+        flashLight = new ToggleButton();
+        flashLight.setId("flashlight");
+        flashLight.setText("Flash");
+        flashLight.getStyleClass().add("flash-light");
+        flashLight.setOnAction(this::miscActions);
+        bottomUtilGrid.add(flashLight, 1, 0);
+    }
+
+    /* VARIOUS ELEMENT STATES */
+
+    private void setNoProfile() {
+
+        toggleConnect.setDisable(true);
+        toggleConnect.setText("Connect");
+        connectLabel.setText("Choose aircraft profile");
+        connectLabel.setStyle("-fx-text-fill: #EC2F05");
     }
 
     private void setNotConnected() {
 
+        toggleConnect.setDisable(false);
         toggleConnect.setText("Connect");
         connectLabel.setText("Not connected");
         connectLabel.setStyle("-fx-text-fill: #EC2F05");
@@ -383,13 +427,5 @@ public class MainWindowController {
     private void onReset() {
 
         flashLight.setSelected(false);
-    }
-
-    /* GETTERS AND SETTERS */
-
-    // get current aircraft profile
-    public String getAircraftCombo() {
-
-        return aircraftCombo.getValue();
     }
 }

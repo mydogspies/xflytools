@@ -1,8 +1,8 @@
 package com.mydogspies.xflytools.util;
 
 import com.mydogspies.xflytools.Initialize;
-import com.mydogspies.xflytools.gui.LayoutData;
-import com.mydogspies.xflytools.gui.LayoutDataContainer;
+import com.mydogspies.xflytools.data.LayoutData;
+import com.mydogspies.xflytools.data.LayoutDataContainer;
 
 import java.io.File;
 import java.io.IOException;
@@ -14,15 +14,19 @@ public class AddLayoutJsonData {
 
     public static void main(String[] args) throws IOException {
 
-        File jsonfile = readFile("src/main/java/com/mydogspies/xflytools/gui/layout.json");
+        File jsonfile = readFile("src/main/java/com/mydogspies/xflytools/data/layout.json");
         LayoutDataContainer datalist = new LayoutDataContainer();
         List<LayoutData> startlist = new ArrayList<>();
 
         // structure of the LayoutData pojo
         // aircraftProfile, windowGen, windowLights, windowRadios, windowAPButtons, windowAPReadouts
 
-        LayoutData data1 = new LayoutData("default", "defaultMisc.fxml", "defaultLightButtons.fxml", "defaultRadios.fxml", "defaultAPButtons", "defaultAPReadouts.fxml");
+        LayoutData data1 = new LayoutData("default", "", "defaultMisc.fxml", "defaultLightButtons.fxml", "defaultRadios.fxml", "defaultAPButtons.fxml", "defaultAPReadouts.fxml");
         startlist.add(data1);
+        LayoutData data2 = new LayoutData("Laminar_Cessna172", "lamcessna172","defaultMisc.fxml", "defaultLightButtons.fxml", "defaultRadios.fxml", "defaultAPButtons.fxml", "defaultAPReadouts.fxml");
+        startlist.add(data2);
+        LayoutData data3 = new LayoutData("Laminar_Baron58", "lambaron58", "defaultMisc.fxml", "defaultLightButtons.fxml", "defaultRadios.fxml", "defaultAPButtons.fxml", "defaultAPReadouts.fxml");
+        startlist.add(data3);
 
 
         // add all to container

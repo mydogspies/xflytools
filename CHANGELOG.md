@@ -12,6 +12,7 @@ The latest stable production branch will always be [MASTER] once we are out of a
 
 #### Added
 
+- Profiles for the default aircraft in Xplane.
 - Current and STD baro pressure settings plus a toggle between mb and inHG.
 - Autopilot buttons with full functionality.
 
@@ -20,10 +21,6 @@ The latest stable production branch will always be [MASTER] once we are out of a
 - Almost all autopilot functions implemented.
 - Complete re-structuring of how to code renders the GUI making it ready for various aircraft profiles.
 - From this release Xflytools is distributed as an installer bundled with is JRE for ease of use.
-
-#### Known Issues
-
-- For now, on aircraft like the Baron where there is more than one lighting switch of the same kind, Xflytools will toggle both in whatever state they are, also when one is off and the other on.
 
 ### [0.3.0-alpha] - 2020-05-02
 

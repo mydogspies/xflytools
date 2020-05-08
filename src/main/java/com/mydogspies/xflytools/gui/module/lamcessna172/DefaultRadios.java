@@ -1,4 +1,4 @@
-package com.mydogspies.xflytools.gui.module;
+package com.mydogspies.xflytools.gui.module.lamcessna172;
 
 import com.mydogspies.xflytools.gui.MainWindow;
 import com.mydogspies.xflytools.gui.elements.RadioTextField;
@@ -9,6 +9,7 @@ import javafx.fxml.FXML;
 import javafx.scene.layout.GridPane;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import java.util.ArrayList;
 
 /**

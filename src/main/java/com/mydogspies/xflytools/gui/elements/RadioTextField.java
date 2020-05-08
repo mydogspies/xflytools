@@ -1,5 +1,7 @@
 package com.mydogspies.xflytools.gui.elements;
 
+import javafx.event.Event;
+import javafx.event.EventHandler;
 import javafx.scene.control.TextField;
 
 /**
@@ -11,6 +13,7 @@ import javafx.scene.control.TextField;
 public class RadioTextField extends TextField {
 
     public RadioTextField() {
+
         super();
     }
 

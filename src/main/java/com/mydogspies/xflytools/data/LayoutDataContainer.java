@@ -1,4 +1,6 @@
-package com.mydogspies.xflytools.gui;
+package com.mydogspies.xflytools.data;
+
+import com.mydogspies.xflytools.data.LayoutData;
 
 import java.util.List;
 

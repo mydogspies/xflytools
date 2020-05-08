@@ -1,4 +1,4 @@
-package com.mydogspies.xflytools.gui;
+package com.mydogspies.xflytools.data;
 
 /**
  * The data pojo for the json database that defines the window layout.
@@ -8,7 +8,8 @@ package com.mydogspies.xflytools.gui;
 public class LayoutData {
 
     private String actProfile;
-    private String windowGeneral;
+    private String path;
+    private String windowMisc;
     private String windowLightButtons;
     private String windowRadios;
     private String windowAPButtons;
@@ -16,9 +17,10 @@ public class LayoutData {
 
     public LayoutData () {}
 
-    public LayoutData(String actProfile, String windowGeneral, String windowLightButtons, String windowRadios, String windowAPButtons, String windowAPReadouts) {
+    public LayoutData(String actProfile, String path, String windowMisc, String windowLightButtons, String windowRadios, String windowAPButtons, String windowAPReadouts) {
         this.actProfile = actProfile;
-        this.windowGeneral = windowGeneral;
+        this.path = path;
+        this.windowMisc = windowMisc;
         this.windowLightButtons = windowLightButtons;
         this.windowRadios = windowRadios;
         this.windowAPButtons = windowAPButtons;
@@ -33,12 +35,20 @@ public class LayoutData {
         this.actProfile = actProfile;
     }
 
-    public String getWindowGeneral() {
-        return windowGeneral;
+    public String getPath() {
+        return path;
     }
 
-    public void setWindowGeneral(String windowGeneral) {
-        this.windowGeneral = windowGeneral;
+    public void setPath(String path) {
+        this.path = path;
+    }
+
+    public String getWindowMisc() {
+        return windowMisc;
+    }
+
+    public void setWindowMisc(String windowMisc) {
+        this.windowMisc = windowMisc;
     }
 
     public String getWindowLightButtons() {
