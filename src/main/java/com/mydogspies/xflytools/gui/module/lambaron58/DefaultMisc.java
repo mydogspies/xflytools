@@ -1,4 +1,4 @@
-package com.mydogspies.xflytools.gui.module;
+package com.mydogspies.xflytools.gui.module.lambaron58;
 
 import com.mydogspies.xflytools.gui.MainWindow;
 import com.mydogspies.xflytools.io.SocketConnect;

@@ -1,4 +1,4 @@
-package com.mydogspies.xflytools.gui.module;
+package com.mydogspies.xflytools.gui.module.lamboeing747;
 
 import com.mydogspies.xflytools.gui.MainWindow;
 import com.mydogspies.xflytools.gui.elements.RadioTextField;
