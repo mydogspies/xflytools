@@ -1,5 +1,6 @@
-package com.mydogspies.xflytools.gui.module.lamcessna172;
+package com.mydogspies.xflytools.gui.module.lamcessna1721000;
 
+import com.mydogspies.xflytools.gui.ControllerCo;
 import com.mydogspies.xflytools.gui.MainWindow;
 import com.mydogspies.xflytools.gui.elements.AutoPilotButton;
 import com.mydogspies.xflytools.io.SocketConnect;
@@ -18,9 +19,9 @@ import java.util.ArrayList;
  * @author Peter Mankowski
  * @since 0.4.0
  */
-public class DefaultAPButtons {
+public class APButtons implements ControllerCo {
 
-    private static final Logger log = LoggerFactory.getLogger(DefaultAPButtons.class);
+    private static final Logger log = LoggerFactory.getLogger(APButtons.class);
 
     @FXML
     private GridPane apButtonGrid;
@@ -35,10 +36,11 @@ public class DefaultAPButtons {
 
     /* INIT */
 
-    @FXML
-    void initialize() {
 
-        initElems();
+    @Override
+    public void initialize() {
+
+        initElements();
     }
 
     /**
@@ -46,8 +48,9 @@ public class DefaultAPButtons {
      *
      * @param event An event sent by the button when clicked.
      */
+    @Override
     @FXML
-    private void clickButton(ActionEvent event) {
+    public void clickButton(ActionEvent event) {
 
         log.debug("clickButton(): ActionEvent called: " + event);
 
@@ -110,6 +113,12 @@ public class DefaultAPButtons {
         }
     }
 
+    @Override
+    public void addToField(ActionEvent event) {
+
+    }
+
+    @Override
     public void updateData(String command, ArrayList<String> value) {
 
         switch (command) {
@@ -176,7 +185,8 @@ public class DefaultAPButtons {
         }
     }
 
-    private void initElems() {
+    @Override
+    public void initElements() {
 
         apToggleBtn = new AutoPilotButton();
         apToggleBtn.setId("aptogglebtn");
@@ -234,7 +244,8 @@ public class DefaultAPButtons {
         disableAll(true);
     }
 
-    private void disableAll(boolean state) {
+    @Override
+    public void disableAll(boolean state) {
 
         apHeadingBtn.setDisable(state);
         apAltitudeBtn.setDisable(state);
@@ -248,6 +259,7 @@ public class DefaultAPButtons {
     /**
      * Resets all elements to their initial visual state
      */
+    @Override
     public void onReset() {
 
         apToggleBtn.setSelected(false);

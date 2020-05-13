@@ -110,7 +110,7 @@ This is the general stylesheet for the main window
 /* AUTOPILOT */
 
 /* Note that the style for the GPSS variant of Nav is hard
-coded in the DefaultAPButtons class, in the updateData method */
+coded in the APButtons class, in the updateData method */
 
 .ap-labels {
     -fx-background-color: #323232;

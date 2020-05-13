@@ -1,5 +1,6 @@
-package com.mydogspies.xflytools.gui.module.lamboeing747;
+package com.mydogspies.xflytools.gui.module.lamcessna172;
 
+import com.mydogspies.xflytools.gui.ControllerCo;
 import com.mydogspies.xflytools.gui.MainWindow;
 import com.mydogspies.xflytools.gui.elements.RadioTextField;
 import com.mydogspies.xflytools.gui.elements.SwapButton;
@@ -17,9 +18,9 @@ import java.util.ArrayList;
  * @author Peter Mankowski
  * @since 0.4.0
  */
-public class DefaultRadios {
+public class Radios implements ControllerCo {
 
-    private static final Logger log = LoggerFactory.getLogger(DefaultRadios.class);
+    private static final Logger log = LoggerFactory.getLogger(Radios.class);
 
     @FXML
     private GridPane radioGrid;
@@ -44,10 +45,15 @@ public class DefaultRadios {
 
     /* INIT */
 
+    @Override
     @FXML
-    void initialize() {
+    public void initialize() {
+        initElements();
+    }
 
-        initElems();
+    @Override
+    public void clickButton(ActionEvent event) {
+
     }
 
     /**
@@ -55,6 +61,7 @@ public class DefaultRadios {
      * @param command the specific dataref concerned
      * @param value the incoming value of the dataref
      */
+    @Override
     public void updateData(String command, ArrayList<String> value) {
 
         switch (command) {
@@ -157,12 +164,20 @@ public class DefaultRadios {
         }
     }
 
+
+
+    @Override
+    public void disableAll(boolean state) {
+
+    }
+
     /**
      * Triggers when enter is pressed within a radio text field
      * @param event the trigger from the specific tect field
      */
+    @Override
     @FXML
-    private void addToField(ActionEvent event) {
+    public void addToField(ActionEvent event) {
 
         log.debug("addToField(): ActionEvent called: " + event);
 
@@ -380,7 +395,8 @@ public class DefaultRadios {
         }
     }
 
-    private void initElems() {
+    @Override
+    public void initElements() {
 
         /* SWAP BUTTONS */
 
@@ -504,6 +520,7 @@ public class DefaultRadios {
     /**
      * Resets all elements to their initial visual state
      */
+    @Override
     public void onReset() {
 
         com1Stby.setText("");

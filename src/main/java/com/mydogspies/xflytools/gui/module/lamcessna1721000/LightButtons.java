@@ -1,5 +1,6 @@
-package com.mydogspies.xflytools.gui.module.lamboeing747;
+package com.mydogspies.xflytools.gui.module.lamcessna1721000;
 
+import com.mydogspies.xflytools.gui.ControllerCo;
 import com.mydogspies.xflytools.gui.MainWindow;
 import com.mydogspies.xflytools.gui.elements.LightToggleButton;
 import com.mydogspies.xflytools.io.SocketConnect;
@@ -17,9 +18,9 @@ import java.util.ArrayList;
  * @author Peter Mankowski
  * @since 0.4.0
  */
-public class DefaultLightButtons {
+public class LightButtons implements ControllerCo {
 
-    private static final Logger log = LoggerFactory.getLogger(DefaultLightButtons.class);
+    private static final Logger log = LoggerFactory.getLogger(LightButtons.class);
 
     @FXML
     private GridPane buttonGrid;
@@ -30,9 +31,10 @@ public class DefaultLightButtons {
     private LightToggleButton strobeLight;
     private LightToggleButton landingLight;
 
-    @FXML
-    void initialize() {
 
+    @Override
+    @FXML
+    public void initialize() {
         initElements();
     }
 
@@ -41,8 +43,9 @@ public class DefaultLightButtons {
      *
      * @param event An event sent by the button when clicked.
      */
+    @Override
     @FXML
-    private void clickButton(ActionEvent event) {
+    public void clickButton(ActionEvent event) {
 
         log.debug("clickButton(): ActionEvent called: " + event);
 
@@ -86,6 +89,12 @@ public class DefaultLightButtons {
         }
     }
 
+    @Override
+    public void addToField(ActionEvent event) {
+
+    }
+
+    @Override
     public void updateData(String command, ArrayList<String> value) {
 
         switch (command) {
@@ -142,7 +151,8 @@ public class DefaultLightButtons {
         }
     }
 
-    private void initElements() {
+    @Override
+    public void initElements() {
 
         navLight = new LightToggleButton();
         navLight.setId("nav");
@@ -180,9 +190,15 @@ public class DefaultLightButtons {
         buttonGrid.add(landingLight, 5, 0);
     }
 
+    @Override
+    public void disableAll(boolean state) {
+
+    }
+
     /**
      * Resets all elements to their initial visual state
      */
+    @Override
     public void onReset() {
 
         navLight.setSelected(false);

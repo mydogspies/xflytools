@@ -26,21 +26,17 @@ public class LayoutDataIO implements LayoutDataDAO {
     private final String jsonfile = readFileAsStream("com/mydogspies/xflytools/data/layout.json");
 
     @Override
-    public List<String> getLayout(String profile) {
+    public String getLayout(String profile) {
 
-        List<String> layout = new ArrayList<>();
+        String result = "";
 
         for (LayoutData data : Main.layout) {
             if (data.getActProfile().equals(profile)) {
-                layout.add(data.getWindowMisc());
-                layout.add(data.getWindowLightButtons());
-                layout.add(data.getWindowRadios());
-                layout.add(data.getWindowAPButtons());
-                layout.add(data.getWindowAPReadouts());
+                result = data.getPath();
             }
         }
 
-        return layout;
+        return result;
     }
 
     @Override

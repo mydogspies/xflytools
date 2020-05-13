@@ -9,7 +9,6 @@ public class DrefData {
 
     private String command;
     private String typeOfCommand;
-    private String aircraft;
     private String dataref;
     private String type;
     private String io;
@@ -17,10 +16,9 @@ public class DrefData {
     public DrefData() {
     }
 
-    public DrefData(String command, String typeOfCommand, String aircraft, String dataref, String type, String io) {
+    public DrefData(String command, String typeOfCommand, String dataref, String type, String io) {
         this.command = command;
         this.typeOfCommand = typeOfCommand;
-        this.aircraft = aircraft;
         this.dataref = dataref;
         this.type = type;
         this.io = io;
@@ -32,14 +30,6 @@ public class DrefData {
 
     public void setCommand(String command) {
         this.command = command;
-    }
-
-    public String getAircraft() {
-        return aircraft;
-    }
-
-    public void setAircraft(String aircraft) {
-        this.aircraft = aircraft;
     }
 
     public String getDataref() {

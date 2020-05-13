@@ -1,5 +1,6 @@
 package com.mydogspies.xflytools.gui.module.lamcessna172;
 
+import com.mydogspies.xflytools.gui.ControllerCo;
 import com.mydogspies.xflytools.gui.MainWindow;
 import com.mydogspies.xflytools.io.SocketConnect;
 import javafx.event.ActionEvent;
@@ -10,12 +11,11 @@ import javafx.scene.control.ToggleButton;
 import javafx.scene.layout.GridPane;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import java.util.ArrayList;
 
-public class DefaultMisc {
+public class Misc implements ControllerCo {
 
-    private static final Logger log = LoggerFactory.getLogger(DefaultMisc.class);
+    private static final Logger log = LoggerFactory.getLogger(Misc.class);
 
     @FXML
     private GridPane baroButtonGrid;
@@ -27,13 +27,24 @@ public class DefaultMisc {
     private TextField baroField;
     private boolean baroSettingInHg;
 
+    @Override
     @FXML
-    void initialize() {
-
+    public void initialize() {
         baroSettingInHg = true;
         initElements();
     }
 
+    @Override
+    public void clickButton(ActionEvent event) {
+
+    }
+
+    @Override
+    public void addToField(ActionEvent event) {
+
+    }
+
+    @Override
     public void updateData(String command, ArrayList<String> value) {
 
         switch (command) {
@@ -151,7 +162,8 @@ public class DefaultMisc {
         }
     }
 
-    private void initElements() {
+    @Override
+    public void initElements() {
 
         /* BUTTONS */
 
@@ -179,9 +191,15 @@ public class DefaultMisc {
         bottomGrid.add(baroField, 1, 0);
     }
 
+    @Override
+    public void disableAll(boolean state) {
+
+    }
+
     /**
      * Resets all elements to their initial visual state
      */
+    @Override
     public void onReset() {
 
         baroField.setText("");
