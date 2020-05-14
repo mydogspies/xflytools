@@ -21,10 +21,12 @@ public class AddLayoutJsonData {
         // structure of the LayoutData pojo
         // aircraftProfile, windowGen, windowLights, windowRadios, windowAPButtons, windowAPReadouts
 
-        LayoutData data2 = new LayoutData("Laminar_Cessna172", "lamcessna172","defaultMisc.fxml", "defaultLightButtons.fxml", "defaultRadios.fxml", "defaultAPButtons.fxml", "defaultAPReadouts.fxml");
+        LayoutData data2 = new LayoutData("Laminar_Cessna172", "lamcessna172","default");
         startlist.add(data2);
-        LayoutData data3 = new LayoutData("Laminar_Baron58", "lambaron58", "defaultMisc.fxml", "defaultLightButtons.fxml", "defaultRadios.fxml", "defaultAPButtons.fxml", "defaultAPReadouts.fxml");
+        LayoutData data3 = new LayoutData("Laminar_Baron58", "lambaron58", "default");
         startlist.add(data3);
+        LayoutData data4 = new LayoutData("Laminar_Cessna172_G1000", "lamcessna1721000", "default");
+        startlist.add(data4);
 
 
         // add all to container

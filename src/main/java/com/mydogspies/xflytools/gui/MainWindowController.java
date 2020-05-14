@@ -2,7 +2,6 @@ package com.mydogspies.xflytools.gui;
 
 import com.mydogspies.xflytools.data.DrefDataIO;
 import com.mydogspies.xflytools.data.LayoutDataIO;
-import com.mydogspies.xflytools.gui.module.*;
 import com.mydogspies.xflytools.io.DisconnectAll;
 import com.mydogspies.xflytools.io.SendData;
 import com.mydogspies.xflytools.io.SocketConnect;
@@ -38,11 +37,11 @@ public class MainWindowController {
     private static final Logger log = LoggerFactory.getLogger(MainWindowController.class);
 
     public static String actProfile;
-    public static DefaultRadios radios_controller;
-    public static DefaultAPReadouts apreadouts_controller;
-    public static DefaultLightButtons lightbutton_controller;
-    public static DefaultAPButtons apbutton_controller;
-    public static DefaultMisc misc_controller;
+    public static ControllerCo radios_controller;
+    public static ControllerCo apreadouts_controller;
+    public static ControllerCo lightbutton_controller;
+    public static ControllerCo apbutton_controller;
+    public static ControllerCo misc_controller;
 
     /* FXML vars */
 
@@ -84,6 +83,10 @@ public class MainWindowController {
         setNoProfile();
 
         log.debug("initialize(): Main window has been initialized.");
+    }
+
+    private void initGuiProfile() {
+
     }
 
     /**
@@ -275,7 +278,7 @@ public class MainWindowController {
         SendData snd = new SendData();
         DrefDataIO io = new DrefDataIO();
         String act = aircraftCombo.getValue();
-        String dataref = io.getDatarefByActAndCmnd(command, act);
+        String dataref = io.getDatarefByCmnd(command);
 
         if (method.equals("set")) {
             snd.send(method + " " + dataref + " " + value);
@@ -294,13 +297,13 @@ public class MainWindowController {
     private void loadModules(ActionEvent event) {
 
         LayoutDataIO lio = new LayoutDataIO();
-        List<String> paths = lio.getLayout(aircraftCombo.getValue());
+        String path = lio.getLayout(aircraftCombo.getValue());
 
         this.topBaseGrid.getChildren().clear();
 
         // RADIOS MODULE
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("module/" + paths.get(2)));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("module/" + path + "/radios.fxml"));
             Pane p = loader.load();
             radios_controller = loader.getController();
             topBaseGrid.add(p, 1, 0);
@@ -310,7 +313,7 @@ public class MainWindowController {
 
         // A/P READOUTS MODULE
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("module/" + paths.get(4)));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("module/" + path + "/APReadouts.fxml"));
             Pane p = loader.load();
             apreadouts_controller = loader.getController();
             bottomBaseGrid.add(p, 1, 0);
@@ -320,7 +323,7 @@ public class MainWindowController {
 
         // LIGHT BUTTONS MODULE
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("module/" + paths.get(1)));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("module/" + path + "/lightButtons.fxml"));
             Pane p = loader.load();
             lightbutton_controller = loader.getController();
             toggleButtonGrid.add(p, 0, 1);
@@ -330,7 +333,7 @@ public class MainWindowController {
 
         // A/P BUTTONS MODULE
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("module/" + paths.get(3)));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("module/" + path + "/APButtons.fxml"));
             Pane p = loader.load();
             apbutton_controller = loader.getController();
             toggleButtonGrid.add(p, 0, 2);
@@ -340,7 +343,7 @@ public class MainWindowController {
 
         // MISC MODULE
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("module/" + paths.get(0)));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("module/" + path + "/misc.fxml"));
             Pane p = loader.load();
             misc_controller = loader.getController();
             topBaseGrid.add(p, 0, 0);

@@ -9,7 +9,7 @@ import java.util.List;
  */
 public interface LayoutDataDAO {
 
-    public List<String> getLayout(String profile);
+    public String getLayout(String profile);
     public List<LayoutData> loadLayoutDatabase();
     public List<String> getAllProfileNames();
 

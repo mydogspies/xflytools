@@ -1,5 +1,6 @@
-package com.mydogspies.xflytools.gui.module.lambaron58;
+package com.mydogspies.xflytools.gui.module.lamcessna172;
 
+import com.mydogspies.xflytools.gui.ControllerCo;
 import com.mydogspies.xflytools.gui.MainWindow;
 import com.mydogspies.xflytools.gui.elements.AutoPilotField;
 import com.mydogspies.xflytools.gui.elements.AutopilotLabel;
@@ -19,9 +20,9 @@ import java.util.ArrayList;
  * @author Peter Mankowski
  * @since 0.4.0
  */
-public class DefaultAPReadouts {
+public class APReadouts implements ControllerCo {
 
-    private static final Logger log = LoggerFactory.getLogger(DefaultAPReadouts.class);
+    private static final Logger log = LoggerFactory.getLogger(APReadouts.class);
 
     @FXML
     private GridPane buttonGrid;
@@ -37,14 +38,22 @@ public class DefaultAPReadouts {
 
     /* INIT */
 
-    @FXML
-    void initialize() {
 
-        initElems();
+    @Override
+    @FXML
+    public void initialize() {
+
+        initElements();
     }
 
+    @Override
+    public void clickButton(ActionEvent event) {
+
+    }
+
+    @Override
     @FXML
-    private void addToField(ActionEvent event) {
+    public void addToField(ActionEvent event) {
 
         log.debug("addToField(): ActionEvent called: " + event);
 
@@ -94,7 +103,7 @@ public class DefaultAPReadouts {
         }
     }
 
-
+    @Override
     public void updateData(String command, ArrayList<String> value) {
 
         switch (command) {
@@ -133,7 +142,8 @@ public class DefaultAPReadouts {
         }
     }
 
-    private void initElems() {
+    @Override
+    public void initElements() {
 
         apCourse = new AutopilotLabel();
         apCourse.setId("apcourse");
@@ -188,9 +198,15 @@ public class DefaultAPReadouts {
         buttonGrid.add(apVSField, 2, 3);
     }
 
+    @Override
+    public void disableAll(boolean state) {
+
+    }
+
     /**
      * Resets all elements to their initial visual state
      */
+    @Override
     public void onReset() {
 
         apCourse.setText("");
