@@ -9,14 +9,12 @@ public class LayoutData {
 
     private String actProfile;
     private String path;
-    private String dataset;
 
     public LayoutData () {}
 
-    public LayoutData(String actProfile, String path, String dataset) {
+    public LayoutData(String actProfile, String path) {
         this.actProfile = actProfile;
         this.path = path;
-        this.dataset = dataset;
     }
 
     public String getActProfile() {
@@ -27,7 +25,4 @@ public class LayoutData {
         return path;
     }
 
-    public String getDataset() {
-        return dataset;
-    }
 }

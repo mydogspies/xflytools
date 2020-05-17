@@ -21,11 +21,11 @@ public class AddLayoutJsonData {
         // structure of the LayoutData pojo
         // aircraftProfile, windowGen, windowLights, windowRadios, windowAPButtons, windowAPReadouts
 
-        LayoutData data2 = new LayoutData("Laminar_Cessna172", "lamcessna172","default");
+        LayoutData data2 = new LayoutData("Laminar_Cessna172", "lamcessna172");
         startlist.add(data2);
-        LayoutData data3 = new LayoutData("Laminar_Baron58", "lambaron58", "default");
+        LayoutData data3 = new LayoutData("Laminar_Baron58", "lambaron58");
         startlist.add(data3);
-        LayoutData data4 = new LayoutData("Laminar_Cessna172_G1000", "lamcessna1721000", "default");
+        LayoutData data4 = new LayoutData("Laminar_Cessna172_G1000", "lamcessna1721000");
         startlist.add(data4);
 
 

@@ -271,7 +271,7 @@ public class Radios implements ControllerCo {
                 case "adf1text":
                     String val10 = adf1Text.getText();
                     if (matchesFreqFormat(val10, 0)) {
-                        val8 = formatFreqToSend(val10, 0);
+                        val10 = formatFreqToSend(val10, 0);
                         MainWindow.controller.sendToXplane("set", "adf1_freq", val10);
                         log.trace("addToField(): Adf1 set to " + val10 + " in Xplane.");
                     }
@@ -280,7 +280,7 @@ public class Radios implements ControllerCo {
                 case "adf1stby":
                     String val11 = adf1Stby.getText();
                     if (matchesFreqFormat(val11, 0)) {
-                        val8 = formatFreqToSend(val11, 0);
+                        val11 = formatFreqToSend(val11, 0);
                         MainWindow.controller.sendToXplane("set", "adf1_stdby_freq", val11);
                         log.trace("addToField(): Adf1 stand-by set to " + val11 + " in Xplane.");
                     }
