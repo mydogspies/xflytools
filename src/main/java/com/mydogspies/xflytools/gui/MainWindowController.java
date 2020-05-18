@@ -2,10 +2,7 @@ package com.mydogspies.xflytools.gui;
 
 import com.mydogspies.xflytools.data.DrefDataIO;
 import com.mydogspies.xflytools.data.LayoutDataIO;
-import com.mydogspies.xflytools.io.DisconnectAll;
-import com.mydogspies.xflytools.io.SendData;
-import com.mydogspies.xflytools.io.SocketConnect;
-import com.mydogspies.xflytools.io.SubscribeDatarefs;
+import com.mydogspies.xflytools.io.*;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -32,9 +29,10 @@ import java.util.concurrent.atomic.AtomicBoolean;
  * @author Peter Mankowski
  * @since 0.4.0
  */
-public class MainWindowController {
+public class MainWindowController implements DataObserverIO {
 
     private static final Logger log = LoggerFactory.getLogger(MainWindowController.class);
+    private DataHandler dataHandler = DataHandlerSingleton.getInstance().getHandler();
 
     public static String actProfile;
     public static ControllerCo radios_controller;
@@ -72,6 +70,8 @@ public class MainWindowController {
     @FXML
     void initialize() {
 
+        dataHandler.addObserver(this);
+
         // Xplane IP address
         ipAddress.setText("127.0.0.1"); // default value
 
@@ -83,10 +83,6 @@ public class MainWindowController {
         setNoProfile();
 
         log.debug("initialize(): Main window has been initialized.");
-    }
-
-    private void initGuiProfile() {
-
     }
 
     /**
@@ -105,12 +101,10 @@ public class MainWindowController {
 
         if (SocketConnect.socket != null) {
 
-            switch (field_id) {
+            if (field_id.equals("flashlight")) {
 
-                case "flashlight":
-                    MainWindow.controller.sendToXplane("cmd", "flashlight_toggle", "");
-                    log.trace("addToField(): White Flash Light has been toggled.");
-                    break;
+                sendToXplane("cmd", "flashlight_toggle", "");
+                log.trace("addToField(): White Flash Light has been toggled.");
             }
         } else {
             flashLight.setSelected(false);
@@ -138,7 +132,7 @@ public class MainWindowController {
                     hdrStatus.set(false);
                     flashLight.setDisable(true);
                     log.trace("updateData(): [" + command + "] -> HDR status is " + val + " [OFF]");
-                    log.trace("updateData(): [" + command + "] -> Flashlight is DISABLED in Xplane due to HDR not being on.");
+                    log.trace("updateData(): [" + command + "] -> Flashlight is DISABLED in Xplane due to the HDR option not being on.");
                 }
                 break;
 
@@ -158,6 +152,13 @@ public class MainWindowController {
         }
     }
 
+    @Override
+    public void update(DataObserverPacket packet) {
+
+        // TODO implement properly this method
+        receiveFromXplane(packet.getDref(), packet.getValues());
+    }
+
     /**
      * Takes from the data handler the dataref and an array with values and passes these data
      * to the corresponding GUI elements.
@@ -167,41 +168,37 @@ public class MainWindowController {
      */
     public void receiveFromXplane(String dataref, ArrayList<String> value) {
 
-        Platform.runLater(new Runnable() {
+        Platform.runLater(() -> {
 
-            @Override
-            public void run() {
+            DrefDataIO io = new DrefDataIO();
+            String command = io.getCmndByDataref(dataref);
+            String type = io.getCmndTypeByDataref(dataref);
 
-                DrefDataIO io = new DrefDataIO();
-                String command = io.getCmndByDataref(dataref);
-                String type = io.getCmndTypeByDataref(dataref);
+            switch (type) {
 
-                switch (type) {
+                case "lights":
+                    lightbutton_controller.updateData(command, value);
+                    break;
 
-                    case "lights":
-                        lightbutton_controller.updateData(command, value);
-                        break;
+                case "radios":
+                    radios_controller.updateData(command, value);
+                    break;
 
-                    case "radios":
-                        radios_controller.updateData(command, value);
-                        break;
+                case "autopilot_readout":
+                    apreadouts_controller.updateData(command, value);
+                    break;
 
-                    case "autopilot_readout":
-                        apreadouts_controller.updateData(command, value);
-                        break;
+                case "autopilot_switch":
+                    apbutton_controller.updateData(command, value);
+                    break;
 
-                    case "autopilot_switch":
-                        apbutton_controller.updateData(command, value);
-                        break;
+                case "misc":
+                    misc_controller.updateData(command, value);
+                    break;
 
-                    case "misc":
-                        misc_controller.updateData(command, value);
-                        break;
-
-                    case "main":
-                        updateData(command, value);
-                        break;
-                }
+                case "main":
+                    updateData(command, value);
+                    break;
             }
         });
     }
@@ -431,4 +428,6 @@ public class MainWindowController {
 
         flashLight.setSelected(false);
     }
+
+
 }

@@ -1,13 +1,12 @@
 package com.mydogspies.xflytools.gui;
 
+import com.mydogspies.xflytools.gui.MainWindowControllerSingleton;
 import com.mydogspies.xflytools.system.ExitApp;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -32,7 +31,10 @@ public class MainWindow extends Application {
 
             FXMLLoader loader = new FXMLLoader(getClass().getResource("mainWindow.fxml"));
             Parent root = loader.load();
-            controller = loader.getController();
+
+            // instantiate the singleton that will contain the reference to our main controller
+            MainWindowControllerSingleton singleton = MainWindowControllerSingleton.getInstance();
+            singleton.setController(loader.getController());
 
             Scene scene = new Scene(root);
             scene.getStylesheets().add(getClass().getResource("main.css").toExternalForm());

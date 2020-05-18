@@ -1,6 +1,5 @@
 package com.mydogspies.xflytools.io;
 
-import com.mydogspies.xflytools.gui.MainWindow;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import java.util.ArrayList;
@@ -22,7 +21,18 @@ public class DataHandler {
 
     private String rawString;
 
-    public DataHandler(String rawString) {
+    // see the methods on the bottom for this class to become observable
+    private List<DataObserverIO> observers = new ArrayList<>();
+
+    public DataHandler() {
+
+        log.debug("DataHandler(): New DataHandler object instantiated: " + this);
+    }
+
+    // TODO integrate this after testing
+    // This is simply the entry method for now
+    public void processWithDataHandler(String rawString) {
+
         this.rawString = rawString;
         processData();
     }
@@ -91,14 +101,31 @@ public class DataHandler {
             // send off the data to the receiving method of the GUI controller
             for (Map.Entry<String, ArrayList<String>> entry : dataMap.entrySet()) {
 
-                MainWindow.controller.receiveFromXplane(entry.getKey(), entry.getValue());
+                // send off to our observers
+                setData(entry.getKey(), entry.getValue());
             }
         };
 
         Thread thread = new Thread(runnable);
         thread.start();
-        log.trace("run(): DataHandler invoked in thread [" + thread + "] with raw string: [" + rawString + "]");
+        log.trace("run(): DataHandler [" + this + "] invoked in thread [" + thread + "] with raw string: [" + rawString + "]");
     }
 
 
+    /* The observable methods */
+
+    public void addObserver(DataObserverIO dataio) {
+        this.observers.add(dataio);
+    }
+
+    public void removeObserver(DataObserverIO dataio) {
+        this.observers.remove(dataio);
+    }
+
+    public void setData(String dref, ArrayList<String> value) {
+        DataObserverPacket packet = new DataObserverPacket(dref, value);
+        for (DataObserverIO dataio : this.observers) {
+            dataio.update(packet);
+        }
+    }
 }

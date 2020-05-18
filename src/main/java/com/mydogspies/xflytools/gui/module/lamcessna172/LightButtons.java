@@ -1,9 +1,10 @@
 package com.mydogspies.xflytools.gui.module.lamcessna172;
 
 import com.mydogspies.xflytools.gui.ControllerCo;
-import com.mydogspies.xflytools.gui.MainWindow;
+import com.mydogspies.xflytools.gui.MainWindowController;
+import com.mydogspies.xflytools.gui.MainWindowControllerSingleton;
 import com.mydogspies.xflytools.gui.elements.LightToggleButton;
-import com.mydogspies.xflytools.io.SocketConnect;
+import com.mydogspies.xflytools.io.*;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.ToggleButton;
@@ -18,9 +19,11 @@ import java.util.ArrayList;
  * @author Peter Mankowski
  * @since 0.4.0
  */
-public class LightButtons implements ControllerCo {
+public class LightButtons implements ControllerCo, DataObserverIO {
 
     private static final Logger log = LoggerFactory.getLogger(LightButtons.class);
+    private MainWindowController main_controller = MainWindowControllerSingleton.getInstance().getController();
+    private DataHandler dataHandler = DataHandlerSingleton.getInstance().getHandler();
 
     @FXML
     private GridPane buttonGrid;
@@ -59,27 +62,27 @@ public class LightButtons implements ControllerCo {
                 /* LIGHTING BUTTONS */
 
                 case "taxi":
-                    MainWindow.controller.sendToXplane("cmd", "taxi_lights_flip", "");
+                    main_controller.sendToXplane("cmd", "taxi_lights_flip", "");
                     log.trace("clickButton(): Taxi lights toggled");
                     break;
 
                 case "nav":
-                    MainWindow.controller.sendToXplane("cmd", "nav_lights_flip", "");
+                    main_controller.sendToXplane("cmd", "nav_lights_flip", "");
                     log.trace("clickButton(): Nav lights toggled");
                     break;
 
                 case "beacon":
-                    MainWindow.controller.sendToXplane("cmd", "beacon_lights_flip", "");
+                    main_controller.sendToXplane("cmd", "beacon_lights_flip", "");
                     log.trace("clickButton(): Beacon lights toggled");
                     break;
 
                 case "strobe":
-                    MainWindow.controller.sendToXplane("cmd", "strobe_lights_flip", "");
+                    main_controller.sendToXplane("cmd", "strobe_lights_flip", "");
                     log.trace("clickButton(): Strobe lights toggled");
                     break;
 
                 case "landing":
-                    MainWindow.controller.sendToXplane("cmd", "landing_lights_flip", "");
+                    main_controller.sendToXplane("cmd", "landing_lights_flip", "");
                     log.trace("clickButton(): Landings lights toggled");
                     break;
 
@@ -91,6 +94,13 @@ public class LightButtons implements ControllerCo {
 
     @Override
     public void addToField(ActionEvent event) {
+
+    }
+
+    @Override
+    public void update(DataObserverPacket packet) {
+
+        // TODO implement new data update method
 
     }
 
@@ -207,4 +217,6 @@ public class LightButtons implements ControllerCo {
         strobeLight.setSelected(false);
         landingLight.setSelected(false);
     }
+
+
 }

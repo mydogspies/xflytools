@@ -1,10 +1,11 @@
 package com.mydogspies.xflytools.gui.module.lamcessna172;
 
 import com.mydogspies.xflytools.gui.ControllerCo;
-import com.mydogspies.xflytools.gui.MainWindow;
+import com.mydogspies.xflytools.gui.MainWindowController;
+import com.mydogspies.xflytools.gui.MainWindowControllerSingleton;
 import com.mydogspies.xflytools.gui.elements.AutoPilotField;
 import com.mydogspies.xflytools.gui.elements.AutopilotLabel;
-import com.mydogspies.xflytools.io.SocketConnect;
+import com.mydogspies.xflytools.io.*;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
@@ -20,9 +21,11 @@ import java.util.ArrayList;
  * @author Peter Mankowski
  * @since 0.4.0
  */
-public class APReadouts implements ControllerCo {
+public class APReadouts implements ControllerCo, DataObserverIO {
 
     private static final Logger log = LoggerFactory.getLogger(APReadouts.class);
+    private MainWindowController main_controller = MainWindowControllerSingleton.getInstance().getController();
+    private DataHandler dataHandler = DataHandlerSingleton.getInstance().getHandler();
 
     @FXML
     private GridPane buttonGrid;
@@ -43,6 +46,7 @@ public class APReadouts implements ControllerCo {
     @FXML
     public void initialize() {
 
+        dataHandler.addObserver(this);
         initElements();
     }
 
@@ -68,7 +72,7 @@ public class APReadouts implements ControllerCo {
                 case "courseSelect":
                     String val1 = apCourseField.getText();
                     if (val1.matches("[0-9]{3}")) {
-                        MainWindow.controller.sendToXplane("set", "nav1_course", val1);
+                        main_controller.sendToXplane("set", "nav1_course", val1);
                         log.trace("addToField(): Nav1 course set to " + val1 + " in Xplane.");
                     }
                     break;
@@ -77,7 +81,7 @@ public class APReadouts implements ControllerCo {
                 case "headingSelect":
                     String val2 = apHeadingField.getText();
                     if (val2.matches("[0-9]{3}")) {
-                        MainWindow.controller.sendToXplane("set", "ap_heading", val2);
+                        main_controller.sendToXplane("set", "ap_heading", val2);
                         log.trace("addToField(): A/P Heading course set to " + val2 + " in Xplane.");
                     }
                     break;
@@ -86,7 +90,7 @@ public class APReadouts implements ControllerCo {
                 case "levelSelect":
                     String val3 = apAltitudeField.getText();
                     if (val3.matches("[0-9]{3,5}")) {
-                        MainWindow.controller.sendToXplane("set", "ap_altitude", val3);
+                        main_controller.sendToXplane("set", "ap_altitude", val3);
                         log.trace("addToField(): A/P Altitude set to " + val3 + " in Xplane.");
                     }
                     break;
@@ -95,12 +99,18 @@ public class APReadouts implements ControllerCo {
                 case "verticalSpeedSelect":
                     String val4 = apVSField.getText();
                     if (val4.matches("[0-9]{3,4}")) {
-                        MainWindow.controller.sendToXplane("set", "ap_vertical_speed", val4);
+                        main_controller.sendToXplane("set", "ap_vertical_speed", val4);
                         log.trace("addToField(): A/P vertical speed set to " + val4 + " in Xplane.");
                     }
                     break;
             }
         }
+    }
+
+    @Override
+    public void update(DataObserverPacket packet) {
+
+        // TODO implement new data update method
     }
 
     @Override
@@ -218,4 +228,6 @@ public class APReadouts implements ControllerCo {
         apAltitudeField.setText("");
         apVSField.setText("");
     }
+
+
 }

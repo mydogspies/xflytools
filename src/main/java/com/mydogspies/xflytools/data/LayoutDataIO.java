@@ -3,7 +3,6 @@ package com.mydogspies.xflytools.data;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.mydogspies.xflytools.Initialize;
-import com.mydogspies.xflytools.Main;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -24,13 +23,14 @@ public class LayoutDataIO implements LayoutDataDAO {
 
     private static final Logger log = LoggerFactory.getLogger(LayoutDataIO.class);
     private final String jsonfile = readFileAsStream("com/mydogspies/xflytools/data/layout.json");
+    List<LayoutData> layoutDatabase = LayoutDatabase.getInstance().getDatabase();
 
     @Override
     public String getLayout(String profile) {
 
         String result = "";
 
-        for (LayoutData data : Main.layout) {
+        for (LayoutData data : layoutDatabase) {
             if (data.getActProfile().equals(profile)) {
                 result = data.getPath();
             }
@@ -44,7 +44,7 @@ public class LayoutDataIO implements LayoutDataDAO {
 
         List<String> nameList = new ArrayList<>();
 
-        for (LayoutData data : Main.layout) {
+        for (LayoutData data : layoutDatabase) {
             nameList.add(data.getActProfile());
         }
 

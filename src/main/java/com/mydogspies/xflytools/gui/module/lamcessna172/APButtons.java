@@ -1,9 +1,10 @@
 package com.mydogspies.xflytools.gui.module.lamcessna172;
 
 import com.mydogspies.xflytools.gui.ControllerCo;
-import com.mydogspies.xflytools.gui.MainWindow;
+import com.mydogspies.xflytools.gui.MainWindowController;
+import com.mydogspies.xflytools.gui.MainWindowControllerSingleton;
 import com.mydogspies.xflytools.gui.elements.AutoPilotButton;
-import com.mydogspies.xflytools.io.SocketConnect;
+import com.mydogspies.xflytools.io.*;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.ToggleButton;
@@ -19,9 +20,11 @@ import java.util.ArrayList;
  * @author Peter Mankowski
  * @since 0.4.0
  */
-public class APButtons implements ControllerCo {
+public class APButtons implements ControllerCo, DataObserverIO {
 
     private static final Logger log = LoggerFactory.getLogger(APButtons.class);
+    private MainWindowController main_controller = MainWindowControllerSingleton.getInstance().getController();
+    private DataHandler dataHandler = DataHandlerSingleton.getInstance().getHandler();
 
     @FXML
     private GridPane apButtonGrid;
@@ -40,6 +43,7 @@ public class APButtons implements ControllerCo {
     @Override
     public void initialize() {
 
+        dataHandler.addObserver(this);
         initElements();
     }
 
@@ -64,17 +68,17 @@ public class APButtons implements ControllerCo {
                 case "aptogglebtn":
                     if (apToggleBtn.selectedProperty().getValue().equals(false)) {
                         disableAll(true);
-                        MainWindow.controller.sendToXplane("set", "ap_mode", "0");
+                        main_controller.sendToXplane("set", "ap_mode", "0");
                         log.trace("clickButton(): A/P is OFF");
                     } else {
                         disableAll(false);
-                        MainWindow.controller.sendToXplane("set", "ap_mode", "2");
+                        main_controller.sendToXplane("set", "ap_mode", "2");
                         log.trace("clickButton(): A/P is ON");
                     }
                     break;
 
                 case "apheadingbtn":
-                    MainWindow.controller.sendToXplane("cmd", "ap_heading_toggle", "");
+                    main_controller.sendToXplane("cmd", "ap_heading_toggle", "");
                     log.trace("clickButton(): A/P set to Heading mode.");
                     break;
 
@@ -82,27 +86,27 @@ public class APButtons implements ControllerCo {
                     if (apRevBtn.selectedProperty().getValue().equals(true)) {
                         apNavBtn.setSelected(true);
                     }
-                    MainWindow.controller.sendToXplane("cmd", "ap_nav_toggle", "");
+                    main_controller.sendToXplane("cmd", "ap_nav_toggle", "");
                     log.trace("clickButton(): A/P set to Nav mode.");
                     break;
 
                 case "apvsbtn":
-                    MainWindow.controller.sendToXplane("cmd", "ap_vs_toggle", "");
+                    main_controller.sendToXplane("cmd", "ap_vs_toggle", "");
                     log.trace("clickButton(): A/P set to Vertical Speed mode.");
                     break;
 
                 case "apaltitudebtn":
-                    MainWindow.controller.sendToXplane("cmd", "ap_altitude_toggle", "");
+                    main_controller.sendToXplane("cmd", "ap_altitude_toggle", "");
                     log.trace("clickButton(): A/P set to Altitude mode.");
                     break;
 
                 case "aprevbtn":
-                    MainWindow.controller.sendToXplane("cmd", "ap_rev_toggle", "");
+                    main_controller.sendToXplane("cmd", "ap_rev_toggle", "");
                     log.trace("clickButton(): A/P set to REV mode.");
                     break;
 
                 case "apapprbtn":
-                    MainWindow.controller.sendToXplane("cmd", "ap_appr_toggle", "");
+                    main_controller.sendToXplane("cmd", "ap_appr_toggle", "");
                     log.trace("clickButton(): A/P set to APR mode.");
                     break;
 
@@ -116,6 +120,12 @@ public class APButtons implements ControllerCo {
     @Override
     public void addToField(ActionEvent event) {
 
+    }
+
+    @Override
+    public void update(DataObserverPacket packet) {
+
+        // TODO implement new data update method
     }
 
     @Override
@@ -271,4 +281,6 @@ public class APButtons implements ControllerCo {
         apRevBtn.setSelected(false);
         disableAll(true);
     }
+
+
 }

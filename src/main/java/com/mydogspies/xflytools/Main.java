@@ -1,17 +1,17 @@
 package com.mydogspies.xflytools;
 
-import com.mydogspies.xflytools.data.DrefData;
-import com.mydogspies.xflytools.data.DrefDataIO;
-import com.mydogspies.xflytools.data.LayoutData;
-import com.mydogspies.xflytools.data.LayoutDataIO;
+import com.mydogspies.xflytools.data.DrefDatabase;
+import com.mydogspies.xflytools.data.*;
 import com.mydogspies.xflytools.gui.MainWindow;
+import com.mydogspies.xflytools.io.DataHandler;
+import com.mydogspies.xflytools.io.DataHandlerSingleton;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import java.util.List;
 
 /**
  * Default startup class Main
- * Initializes a number of things and in the end calls the MainWindow class to open the main application window
+ * Initializes a few things and in the end calls the MainWindow class to open the main application window.
+ *
  * @author Peter Mankowski
  * @since 0.1.0
  * @see com.mydogspies.xflytools.gui.MainWindow
@@ -19,8 +19,6 @@ import java.util.List;
 public class Main {
 
     private static final Logger log = LoggerFactory.getLogger(Main.class);
-    public static List<DrefData> database;
-    public static List<LayoutData> layout;
 
     public static void main(String[] args) {
 
@@ -28,12 +26,21 @@ public class Main {
         Initialize.logReportLevel("trace");
         log.trace("main(): Log level initialised.");
 
-        // load databases
+        // pre-loading databases
         DrefDataIO io = new DrefDataIO();
+        DrefDatabase db = DrefDatabase.getInstance();
+        db.setDatabase(io.loadDatabase());
+
         LayoutDataIO lio = new LayoutDataIO();
-        database = io.loadDatabase();
-        layout = lio.loadLayoutDatabase();
+        LayoutDatabase ldb = LayoutDatabase.getInstance();
+        ldb.setDatabase(lio.loadLayoutDatabase());
         log.trace("main(): Databases called and loaded.");
+
+        // instantiate data handler now cause we will need it early on
+        DataHandler handler = new DataHandler();
+        DataHandlerSingleton singleton = DataHandlerSingleton.getInstance();
+        singleton.setHandler(handler);
+        log.trace("main(): DataHandler object instantiated: " + handler);
 
         // open main window
         MainWindow.main(args);

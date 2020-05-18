@@ -1,10 +1,11 @@
 package com.mydogspies.xflytools.gui.module.lamcessna172;
 
 import com.mydogspies.xflytools.gui.ControllerCo;
-import com.mydogspies.xflytools.gui.MainWindow;
+import com.mydogspies.xflytools.gui.MainWindowController;
+import com.mydogspies.xflytools.gui.MainWindowControllerSingleton;
 import com.mydogspies.xflytools.gui.elements.RadioTextField;
 import com.mydogspies.xflytools.gui.elements.SwapButton;
-import com.mydogspies.xflytools.io.SocketConnect;
+import com.mydogspies.xflytools.io.*;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.layout.GridPane;
@@ -18,9 +19,11 @@ import java.util.ArrayList;
  * @author Peter Mankowski
  * @since 0.4.0
  */
-public class Radios implements ControllerCo {
+public class Radios implements ControllerCo, DataObserverIO {
 
     private static final Logger log = LoggerFactory.getLogger(Radios.class);
+    private MainWindowController main_controller = MainWindowControllerSingleton.getInstance().getController();
+    private DataHandler dataHandler = DataHandlerSingleton.getInstance().getHandler();
 
     @FXML
     private GridPane radioGrid;
@@ -48,12 +51,20 @@ public class Radios implements ControllerCo {
     @Override
     @FXML
     public void initialize() {
+
+        dataHandler.addObserver(this);
         initElements();
     }
 
     @Override
     public void clickButton(ActionEvent event) {
 
+    }
+
+    @Override
+    public void update(DataObserverPacket packet) {
+
+        // TODO the new data update method
     }
 
     /**
@@ -192,7 +203,7 @@ public class Radios implements ControllerCo {
                     String val = com1Text.getText();
                     if (matchesFreqFormat(val, 3)) {
                         val = formatFreqToSend(val, 3);
-                        MainWindow.controller.sendToXplane("set", "com1_freq", val);
+                        main_controller.sendToXplane("set", "com1_freq", val);
                         log.trace("addToField(): Com1 active set to " + val + " in Xplane.");
                     }
                     break;
@@ -201,7 +212,7 @@ public class Radios implements ControllerCo {
                     String val2 = com1Stby.getText();
                     if (matchesFreqFormat(val2, 3)) {
                         val2 = formatFreqToSend(val2, 3);
-                        MainWindow.controller.sendToXplane("set", "com1_stdby_freq", val2);
+                        main_controller.sendToXplane("set", "com1_stdby_freq", val2);
                         log.trace("addToField(): Com1 standby set to " + val2 + " in Xplane.");
                     }
                     break;
@@ -210,7 +221,7 @@ public class Radios implements ControllerCo {
                     String val3 = com2Text.getText();
                     if (matchesFreqFormat(val3, 3)) {
                         val3 = formatFreqToSend(val3, 3);
-                        MainWindow.controller.sendToXplane("set", "com2_freq", val3);
+                        main_controller.sendToXplane("set", "com2_freq", val3);
                         log.trace("addToField(): Com2 active set to " + val3 + " in Xplane.");
                     }
                     break;
@@ -219,7 +230,7 @@ public class Radios implements ControllerCo {
                     String val4 = com2Stby.getText();
                     if (matchesFreqFormat(val4, 3)) {
                         val4 = formatFreqToSend(val4, 3);
-                        MainWindow.controller.sendToXplane("set", "com2_stdby_freq", val4);
+                        main_controller.sendToXplane("set", "com2_stdby_freq", val4);
                         log.trace("addToField(): Com2 standby set to " + val4 + " in Xplane.");
                     }
                     break;
@@ -228,7 +239,7 @@ public class Radios implements ControllerCo {
                     String val5 = nav1Text.getText();
                     if (matchesFreqFormat(val5, 2)) {
                         val5 = formatFreqToSend(val5, 2);
-                        MainWindow.controller.sendToXplane("set", "nav1_freq", val5);
+                        main_controller.sendToXplane("set", "nav1_freq", val5);
                         log.trace("addToField(): Nav1 active set to " + val5 + " in Xplane.");
                     }
                     break;
@@ -237,7 +248,7 @@ public class Radios implements ControllerCo {
                     String val6 = nav1Stby.getText();
                     if (matchesFreqFormat(val6, 2)) {
                         val6 = formatFreqToSend(val6, 2);
-                        MainWindow.controller.sendToXplane("set", "nav1_stdby_freq", val6);
+                        main_controller.sendToXplane("set", "nav1_stdby_freq", val6);
                         log.trace("addToField(): Nav1 standby set to " + val6 + " in Xplane.");
                     }
                     break;
@@ -246,7 +257,7 @@ public class Radios implements ControllerCo {
                     String val7 = nav2Text.getText();
                     if (matchesFreqFormat(val7, 2)) {
                         val7 = formatFreqToSend(val7, 2);
-                        MainWindow.controller.sendToXplane("set", "nav2_freq", val7);
+                        main_controller.sendToXplane("set", "nav2_freq", val7);
                         log.trace("addToField(): Nav2 active set to " + val7 + " in Xplane.");
                     }
                     break;
@@ -255,7 +266,7 @@ public class Radios implements ControllerCo {
                     String val8 = nav2Stby.getText();
                     if (matchesFreqFormat(val8, 2)) {
                         val8 = formatFreqToSend(val8, 2);
-                        MainWindow.controller.sendToXplane("set", "nav2_stdby_freq", val8);
+                        main_controller.sendToXplane("set", "nav2_stdby_freq", val8);
                         log.trace("addToField(): Nav2 standby set to " + val8 + " in Xplane.");
                     }
                     break;
@@ -263,7 +274,7 @@ public class Radios implements ControllerCo {
                 case "transponderCode":
                     String val9 = transponder.getText();
                     if (val9.matches("[0-9]{4}")) {
-                        MainWindow.controller.sendToXplane("set", "transponder_code", val9);
+                        main_controller.sendToXplane("set", "transponder_code", val9);
                         log.trace("addToField(): Transponder set to " + val9 + " in Xplane.");
                     }
                     break;
@@ -272,7 +283,7 @@ public class Radios implements ControllerCo {
                     String val10 = adf1Text.getText();
                     if (matchesFreqFormat(val10, 0)) {
                         val10 = formatFreqToSend(val10, 0);
-                        MainWindow.controller.sendToXplane("set", "adf1_freq", val10);
+                        main_controller.sendToXplane("set", "adf1_freq", val10);
                         log.trace("addToField(): Adf1 set to " + val10 + " in Xplane.");
                     }
                     break;
@@ -281,7 +292,7 @@ public class Radios implements ControllerCo {
                     String val11 = adf1Stby.getText();
                     if (matchesFreqFormat(val11, 0)) {
                         val11 = formatFreqToSend(val11, 0);
-                        MainWindow.controller.sendToXplane("set", "adf1_stdby_freq", val11);
+                        main_controller.sendToXplane("set", "adf1_stdby_freq", val11);
                         log.trace("addToField(): Adf1 stand-by set to " + val11 + " in Xplane.");
                     }
                     break;
@@ -368,27 +379,27 @@ public class Radios implements ControllerCo {
             switch (button_id) {
 
                 case "com1swap":
-                    MainWindow.controller.sendToXplane("cmd", "com1_flip", "");
+                    main_controller.sendToXplane("cmd", "com1_flip", "");
                     log.trace("toggleRadio(): Com1 frequencies flipped.");
                     break;
 
                 case "com2swap":
-                    MainWindow.controller.sendToXplane("cmd", "com2_flip", "");
+                    main_controller.sendToXplane("cmd", "com2_flip", "");
                     log.trace("toggleRadio(): Com1 frequencies flipped.");
                     break;
 
                 case "nav1swap":
-                    MainWindow.controller.sendToXplane("cmd", "nav1_flip", "");
+                    main_controller.sendToXplane("cmd", "nav1_flip", "");
                     log.trace("toggleRadio(): Com1 frequencies flipped.");
                     break;
 
                 case "nav2swap":
-                    MainWindow.controller.sendToXplane("cmd", "nav2_flip", "");
+                    main_controller.sendToXplane("cmd", "nav2_flip", "");
                     log.trace("toggleRadio(): Com1 frequencies flipped.");
                     break;
 
                 case "adf1swap":
-                    MainWindow.controller.sendToXplane("cmd", "adf1_flip", "");
+                    main_controller.sendToXplane("cmd", "adf1_flip", "");
                     log.trace("toggleRadio(): Adf1 frequencies flipped.");
                     break;
             }
@@ -535,4 +546,6 @@ public class Radios implements ControllerCo {
         adf1Stby.setText("");
         adf1Text.setText("");
     }
+
+
 }

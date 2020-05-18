@@ -1,8 +1,9 @@
 package com.mydogspies.xflytools.gui.module.lamcessna172;
 
 import com.mydogspies.xflytools.gui.ControllerCo;
-import com.mydogspies.xflytools.gui.MainWindow;
-import com.mydogspies.xflytools.io.SocketConnect;
+import com.mydogspies.xflytools.gui.MainWindowController;
+import com.mydogspies.xflytools.gui.MainWindowControllerSingleton;
+import com.mydogspies.xflytools.io.*;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -13,9 +14,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import java.util.ArrayList;
 
-public class Misc implements ControllerCo {
+public class Misc implements ControllerCo, DataObserverIO {
 
     private static final Logger log = LoggerFactory.getLogger(Misc.class);
+    private MainWindowController main_controller = MainWindowControllerSingleton.getInstance().getController();
+    private DataHandler dataHandler = DataHandlerSingleton.getInstance().getHandler();
 
     @FXML
     private GridPane baroButtonGrid;
@@ -30,6 +33,8 @@ public class Misc implements ControllerCo {
     @Override
     @FXML
     public void initialize() {
+
+        dataHandler.addObserver(this);
         baroSettingInHg = true;
         initElements();
     }
@@ -42,6 +47,12 @@ public class Misc implements ControllerCo {
     @Override
     public void addToField(ActionEvent event) {
 
+    }
+
+    @Override
+    public void update(DataObserverPacket packet) {
+
+        // TODO implement new data update
     }
 
     @Override
@@ -119,7 +130,7 @@ public class Misc implements ControllerCo {
             switch (field_id) {
 
                 case ("barostd"):
-                    MainWindow.controller.sendToXplane("set", "baro_pilot_inhg", "29.92");
+                    main_controller.sendToXplane("set", "baro_pilot_inhg", "29.92");
                     if (baroSettingInHg) {
                         baroField.setText("29.92");
                         log.trace("addToField(): Baro set to STD (29.92 inHg) in Xplane.");
@@ -149,11 +160,11 @@ public class Misc implements ControllerCo {
                 case "barofield":
                     String val = baroField.getText();
                     if (val.matches("[2-3][0-9]\\.[0-9]{2}")) {
-                        MainWindow.controller.sendToXplane("set", "baro_pilot_inhg", val);
+                        main_controller.sendToXplane("set", "baro_pilot_inhg", val);
                         log.trace("addToField(): Baro set to " + val + " in Xplane.");
                     } else if (val.matches("[1][0][0-9]{2}")) {
                         val = convertToInchesHG(val);
-                        MainWindow.controller.sendToXplane("set", "baro_pilot_inhg", val);
+                        main_controller.sendToXplane("set", "baro_pilot_inhg", val);
                         log.trace("addToField(): Baro set to " + val + " in Xplane.");
                     }
                     //
@@ -204,4 +215,6 @@ public class Misc implements ControllerCo {
 
         baroField.setText("");
     }
+
+
 }

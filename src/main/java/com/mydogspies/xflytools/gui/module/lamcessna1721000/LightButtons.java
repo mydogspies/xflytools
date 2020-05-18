@@ -2,6 +2,8 @@ package com.mydogspies.xflytools.gui.module.lamcessna1721000;
 
 import com.mydogspies.xflytools.gui.ControllerCo;
 import com.mydogspies.xflytools.gui.MainWindow;
+import com.mydogspies.xflytools.gui.MainWindowController;
+import com.mydogspies.xflytools.gui.MainWindowControllerSingleton;
 import com.mydogspies.xflytools.gui.elements.LightToggleButton;
 import com.mydogspies.xflytools.io.SocketConnect;
 import javafx.event.ActionEvent;
@@ -21,6 +23,7 @@ import java.util.ArrayList;
 public class LightButtons implements ControllerCo {
 
     private static final Logger log = LoggerFactory.getLogger(LightButtons.class);
+    private MainWindowController main_controller = MainWindowControllerSingleton.getInstance().getController();
 
     @FXML
     private GridPane buttonGrid;
@@ -59,27 +62,27 @@ public class LightButtons implements ControllerCo {
                 /* LIGHTING BUTTONS */
 
                 case "taxi":
-                    MainWindow.controller.sendToXplane("cmd", "taxi_lights_flip", "");
+                    main_controller.sendToXplane("cmd", "taxi_lights_flip", "");
                     log.trace("clickButton(): Taxi lights toggled");
                     break;
 
                 case "nav":
-                    MainWindow.controller.sendToXplane("cmd", "nav_lights_flip", "");
+                    main_controller.sendToXplane("cmd", "nav_lights_flip", "");
                     log.trace("clickButton(): Nav lights toggled");
                     break;
 
                 case "beacon":
-                    MainWindow.controller.sendToXplane("cmd", "beacon_lights_flip", "");
+                    main_controller.sendToXplane("cmd", "beacon_lights_flip", "");
                     log.trace("clickButton(): Beacon lights toggled");
                     break;
 
                 case "strobe":
-                    MainWindow.controller.sendToXplane("cmd", "strobe_lights_flip", "");
+                    main_controller.sendToXplane("cmd", "strobe_lights_flip", "");
                     log.trace("clickButton(): Strobe lights toggled");
                     break;
 
                 case "landing":
-                    MainWindow.controller.sendToXplane("cmd", "landing_lights_flip", "");
+                    main_controller.sendToXplane("cmd", "landing_lights_flip", "");
                     log.trace("clickButton(): Landings lights toggled");
                     break;
 

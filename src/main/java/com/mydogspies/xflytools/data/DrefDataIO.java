@@ -10,12 +10,8 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
-
-import static com.mydogspies.xflytools.Main.database;
-import static com.mydogspies.xflytools.Main.layout;
 
 /**
  * This class contains all the necessary methods to manipulate the json file with our datarefs
@@ -27,22 +23,25 @@ public class DrefDataIO implements DrefDataDAO {
 
     private static final Logger log = LoggerFactory.getLogger(DrefDataIO.class);
     private final String jsonfile = readFileAsStream("com/mydogspies/xflytools/data/drefData.json");
+    List<DrefData> drefDatabase = DrefDatabase.getInstance().getDatabase();
 
+    public DrefDataIO() {
+    }
 
     @Override
     public String getDatarefByCmnd(String command) {
 
         String result = "";
+        int counter = 0;
 
-        for (DrefData drefs : database) {
-
+        for (DrefData drefs : drefDatabase) {
             if (drefs.getCommand().equals(command)) {
-                result = drefs.getDataref();
+                log.trace("getDatarefByActAndCmnd(): In " + counter + " entries -> Result returned: " + result);
+                return drefs.getDataref();
             }
+            counter++;
         }
-
-        log.trace("getDatarefByActAndCmnd(): Result returned: " + result);
-        return result;
+        return null;
     }
 
     /**
@@ -56,7 +55,7 @@ public class DrefDataIO implements DrefDataDAO {
 
         String result = "";
 
-        for (DrefData data : database) {
+        for (DrefData data : drefDatabase) {
 
             if (data.getDataref().equals(dataref)) {
                 result = data.getCommand();
@@ -76,7 +75,7 @@ public class DrefDataIO implements DrefDataDAO {
 
         String result = "";
 
-        for (DrefData data : database) {
+        for (DrefData data : drefDatabase) {
 
             if (data.getDataref().equals(dataref)) {
                 result = data.getTypeOfCommand();
@@ -124,3 +123,4 @@ public class DrefDataIO implements DrefDataDAO {
         return new BufferedReader(new InputStreamReader(in)).lines().collect(Collectors.joining());
     }
 }
+
