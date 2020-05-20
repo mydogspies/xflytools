@@ -23,10 +23,10 @@ public class AddLayoutJsonData {
 
         LayoutData data2 = new LayoutData("Laminar_Cessna172", "lamcessna172");
         startlist.add(data2);
-        LayoutData data3 = new LayoutData("Laminar_Baron58", "lambaron58");
+        /*LayoutData data3 = new LayoutData("Laminar_Baron58", "lambaron58");
         startlist.add(data3);
         LayoutData data4 = new LayoutData("Laminar_Cessna172_G1000", "lamcessna1721000");
-        startlist.add(data4);
+        startlist.add(data4);*/
 
 
         // add all to container

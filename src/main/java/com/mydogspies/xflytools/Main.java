@@ -2,9 +2,10 @@ package com.mydogspies.xflytools;
 
 import com.mydogspies.xflytools.data.DrefDatabase;
 import com.mydogspies.xflytools.data.*;
-import com.mydogspies.xflytools.gui.MainWindow;
+import com.mydogspies.xflytools.controller.MainWindow;
 import com.mydogspies.xflytools.io.DataHandler;
 import com.mydogspies.xflytools.io.DataHandlerSingleton;
+import com.mydogspies.xflytools.controller.AddCommandMapData;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -14,7 +15,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Peter Mankowski
  * @since 0.1.0
- * @see com.mydogspies.xflytools.gui.MainWindow
+ * @see com.mydogspies.xflytools.controller.MainWindow
  */
 public class Main {
 
@@ -41,6 +42,10 @@ public class Main {
         DataHandlerSingleton singleton = DataHandlerSingleton.getInstance();
         singleton.setHandler(handler);
         log.trace("main(): DataHandler object instantiated: " + handler);
+
+        // initiate command map
+        AddCommandMapData cmdmap = new AddCommandMapData();
+        cmdmap.initiateCommandMap();
 
         // open main window
         MainWindow.main(args);

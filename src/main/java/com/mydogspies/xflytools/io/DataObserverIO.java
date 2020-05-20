@@ -2,5 +2,5 @@ package com.mydogspies.xflytools.io;
 
 public interface DataObserverIO {
 
-    void update(DataObserverPacket packet);
+    void updateFromXplane(DataObserverPacket packet);
 }
