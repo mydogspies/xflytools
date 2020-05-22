@@ -1,7 +1,7 @@
 package com.mydogspies.xflytools.controller.module.lamcessna172;
 
+import com.mydogspies.xflytools.controller.RadiosController;
 import com.mydogspies.xflytools.data.DrefDataIO;
-import com.mydogspies.xflytools.controller.ControllerCo;
 import com.mydogspies.xflytools.controller.MainWindowController;
 import com.mydogspies.xflytools.controller.MainWindowControllerSingleton;
 import com.mydogspies.xflytools.controller.elements.RadioTextField;
@@ -20,11 +20,10 @@ import java.util.ArrayList;
  * @author Peter Mankowski
  * @since 0.4.0
  */
-public class Radios implements ControllerCo, DataObserverIO {
+public class Radios implements RadiosController, DataObserverIO {
 
     private static final Logger log = LoggerFactory.getLogger(Radios.class);
     private final MainWindowController main_controller = MainWindowControllerSingleton.getInstance().getController();
-    private final DataHandler dataHandler = DataHandlerSingleton.getInstance().getHandler();
 
     @FXML
     private GridPane radioGrid;
@@ -541,5 +540,69 @@ public class Radios implements ControllerCo, DataObserverIO {
         adf1Text.setText("");
     }
 
+    /* GETTERS and SETTERS */
 
+    public RadioTextField getTransponder() {
+        return transponder;
+    }
+
+    public RadioTextField getCom1Text() {
+        return com1Text;
+    }
+
+    public RadioTextField getCom2Text() {
+        return com2Text;
+    }
+
+    public RadioTextField getNav1Text() {
+        return nav1Text;
+    }
+
+    public RadioTextField getNav2Text() {
+        return nav2Text;
+    }
+
+    public RadioTextField getAdf1Text() {
+        return adf1Text;
+    }
+
+    public RadioTextField getCom1Stby() {
+        return com1Stby;
+    }
+
+    public RadioTextField getCom2Stby() {
+        return com2Stby;
+    }
+
+    public RadioTextField getNav1Stby() {
+        return nav1Stby;
+    }
+
+    public RadioTextField getNav2Stby() {
+        return nav2Stby;
+    }
+
+    public RadioTextField getAdf1Stby() {
+        return adf1Stby;
+    }
+
+    public SwapButton getCom1swap() {
+        return com1swap;
+    }
+
+    public SwapButton getCom2swap() {
+        return com2swap;
+    }
+
+    public SwapButton getNav1swap() {
+        return nav1swap;
+    }
+
+    public SwapButton getNav2swap() {
+        return nav2swap;
+    }
+
+    public SwapButton getAdf1swap() {
+        return adf1swap;
+    }
 }

@@ -1,0 +1,11 @@
+com.mydogspies.xflytools
+com.mydogspies.xflytools.controller
+com.mydogspies.xflytools.controller.elements
+com.mydogspies.xflytools.controller.inlogic
+com.mydogspies.xflytools.controller.module.lamcessna172
+com.mydogspies.xflytools.controller.outlogic
+com.mydogspies.xflytools.data
+com.mydogspies.xflytools.io
+com.mydogspies.xflytools.system
+com.mydogspies.xflytools.tests
+com.mydogspies.xflytools.util

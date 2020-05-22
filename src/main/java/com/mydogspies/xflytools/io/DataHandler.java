@@ -36,10 +36,7 @@ public class DataHandler {
         this.rawString = rawString;
 
         Runnable runnable = () -> {
-
-            List<String> dataList = processStringIntoDatarefs();
-            sendToObservers(makedatarefMap(dataList));
-
+            sendToObservers(makedatarefMap(processStringIntoDatarefs()));
         };
 
         Thread thread = new Thread(runnable);

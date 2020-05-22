@@ -1,15 +1,12 @@
 package com.mydogspies.xflytools.controller.module.lamcessna172;
 
-import com.mydogspies.xflytools.controller.inlogic.InCommand;
+import com.mydogspies.xflytools.controller.APReadoutsController;
 import com.mydogspies.xflytools.controller.inlogic.InCommandMap;
 import com.mydogspies.xflytools.controller.inlogic.InCommandMapSingleton;
-import com.mydogspies.xflytools.controller.outlogic.OutCommand;
 import com.mydogspies.xflytools.controller.outlogic.OutCommandMap;
 import com.mydogspies.xflytools.controller.outlogic.OutCommandMapSingleton;
 import com.mydogspies.xflytools.data.DrefDataIO;
-import com.mydogspies.xflytools.controller.ControllerCo;
 import com.mydogspies.xflytools.controller.MainWindowController;
-import com.mydogspies.xflytools.controller.MainWindowControllerSingleton;
 import com.mydogspies.xflytools.controller.elements.AutoPilotField;
 import com.mydogspies.xflytools.controller.elements.AutoPilotLabel;
 import com.mydogspies.xflytools.io.*;
@@ -26,13 +23,12 @@ import org.slf4j.LoggerFactory;
  * It's loaded into the parent window as part of the initiation process in the MainWindowController
  *
  * @author Peter Mankowski
- * @since 0.4.0
  * @see MainWindowController
+ * @since 0.4.0
  */
-public class APReadouts implements ControllerCo, DataObserverIO {
+public class APReadouts implements DataObserverIO, APReadoutsController {
 
     private static final Logger log = LoggerFactory.getLogger(APReadouts.class);
-    private final MainWindowController main_controller = MainWindowControllerSingleton.getInstance().getController();
     private final DataHandler dataHandler = DataHandlerSingleton.getInstance().getHandler();
     private final InCommandMap inCommandMap = InCommandMapSingleton.getInstance().getMap();
     private final OutCommandMap outCommandMap = OutCommandMapSingleton.getInstance().getMap();
@@ -60,6 +56,12 @@ public class APReadouts implements ControllerCo, DataObserverIO {
         initElements();
     }
 
+    /**
+     * The method is called when values are entered into the fields.
+     * It passes the call on to our outgoing command methods which passes the data back to Xplane.
+     *
+     * @param event event called when a value is entered into the text field.
+     */
     @Override
     @FXML
     public void addToField(ActionEvent event) {
@@ -89,6 +91,11 @@ public class APReadouts implements ControllerCo, DataObserverIO {
         }
     }
 
+    /**
+     * The observer method for incoming data from Xplane.
+     *
+     * @param packet object with dataref and its value(s) sent from DataHandler.
+     */
     @Override
     public void updateFromXplane(DataObserverPacket packet) {
 
@@ -98,27 +105,19 @@ public class APReadouts implements ControllerCo, DataObserverIO {
             String command = io.getCmndByDataref(packet.getDref());
 
             if (command.equals("ap_heading")) {
-
-                InCommand cmd = inCommandMap.getInCommandMap().get("ap_heading");
-                cmd.execute(packet.getDref(), packet.getValues());
+                inCommandMap.getInCommandMap().get("ap_heading").execute(packet.getDref(), packet.getValues());
             }
 
             if (command.equals("ap_altitude")) {
-
-                InCommand cmd = inCommandMap.getInCommandMap().get("ap_altitude");
-                cmd.execute(packet.getDref(), packet.getValues());
+                inCommandMap.getInCommandMap().get("ap_altitude").execute(packet.getDref(), packet.getValues());
             }
 
             if (command.equals("ap_vertical_speed")) {
-
-                InCommand cmd = inCommandMap.getInCommandMap().get("ap_vertical_speed");
-                cmd.execute(packet.getDref(), packet.getValues());
+                inCommandMap.getInCommandMap().get("ap_vertical_speed").execute(packet.getDref(), packet.getValues());
             }
 
             if (command.equals("nav1_course")) {
-
-                InCommand cmd = inCommandMap.getInCommandMap().get("nav1_course");
-                cmd.execute(packet.getDref(), packet.getValues());
+                inCommandMap.getInCommandMap().get("nav1_course").execute(packet.getDref(), packet.getValues());
             }
 
         });

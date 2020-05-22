@@ -1,5 +1,6 @@
 package com.mydogspies.xflytools.controller.inlogic;
 
+import com.mydogspies.xflytools.controller.APReadoutsController;
 import com.mydogspies.xflytools.controller.APReadoutsControllerSingleton;
 import com.mydogspies.xflytools.controller.AddCommandMapData;
 import com.mydogspies.xflytools.controller.elements.AutoPilotLabel;
@@ -16,6 +17,7 @@ import java.util.ArrayList;
  * @author Peter Mankowski
  * @see APReadouts
  * @see AddCommandMapData
+ * @see com.mydogspies.xflytools.controller.ControllerCo
  * @since 0.4.0
  */
 public class Nav1CourseGet implements InCommand {
@@ -25,14 +27,13 @@ public class Nav1CourseGet implements InCommand {
     @Override
     public void execute(String command, ArrayList<String> values) {
 
-        final APReadouts controller = (APReadouts) APReadoutsControllerSingleton.getInstance().getController();
+        final APReadoutsController controller = (APReadoutsController) APReadoutsControllerSingleton.getInstance().getController();
         AutoPilotLabel apCourse = controller.getApCourse();
 
         String val = String.format("%03d", Math.round(Float.parseFloat(values.get(0))));
         if (!apCourse.getText().equals(val)) {
             apCourse.setText(val + (char) 176);
         }
-        log.trace("updateFromXplane(): [" + command + "] -> Nav 1 course (for AP) set to " + val);
-
+        log.trace("execute(): [" + command + "] -> Nav 1 course (for AP) set to " + val);
     }
 }

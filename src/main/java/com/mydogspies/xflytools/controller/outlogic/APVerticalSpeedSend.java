@@ -1,9 +1,6 @@
 package com.mydogspies.xflytools.controller.outlogic;
 
-import com.mydogspies.xflytools.controller.APReadoutsControllerSingleton;
-import com.mydogspies.xflytools.controller.AddCommandMapData;
-import com.mydogspies.xflytools.controller.MainWindowController;
-import com.mydogspies.xflytools.controller.MainWindowControllerSingleton;
+import com.mydogspies.xflytools.controller.*;
 import com.mydogspies.xflytools.controller.elements.AutoPilotField;
 import com.mydogspies.xflytools.controller.module.lamcessna172.APReadouts;
 import org.slf4j.Logger;
@@ -16,6 +13,7 @@ import org.slf4j.LoggerFactory;
  * @author Peter Mankowski
  * @see APReadouts
  * @see AddCommandMapData
+ * @see ControllerCo
  * @since 0.4.0
  */
 public class APVerticalSpeedSend implements OutCommand {
@@ -26,14 +24,14 @@ public class APVerticalSpeedSend implements OutCommand {
     public void execute() {
 
         final MainWindowController main_controller = MainWindowControllerSingleton.getInstance().getController();
-        final APReadouts controller = (APReadouts) APReadoutsControllerSingleton.getInstance().getController();
+        final APReadoutsController controller = (APReadoutsController) APReadoutsControllerSingleton.getInstance().getController();
 
         AutoPilotField apVSField = controller.getApVSField();
         String val = apVSField.getText();
 
         if (val.matches("[0-9]{3,4}")) {
             main_controller.sendToXplane("set", "ap_vertical_speed", val);
-            log.trace("addToField(): A/P vertical speed set to " + val + " in Xplane.");
+            log.trace("execute(): A/P vertical speed set to " + val + " in Xplane.");
         }
     }
 }

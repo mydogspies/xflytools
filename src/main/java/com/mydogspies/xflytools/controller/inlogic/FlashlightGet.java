@@ -6,7 +6,6 @@ import com.mydogspies.xflytools.controller.MainWindowControllerSingleton;
 import javafx.scene.control.ToggleButton;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import java.util.ArrayList;
 
 /**

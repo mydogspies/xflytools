@@ -1,11 +1,14 @@
 package com.mydogspies.xflytools.controller.module.lamcessna172;
 
+import com.mydogspies.xflytools.controller.LightButtonController;
+import com.mydogspies.xflytools.controller.inlogic.InCommandMap;
+import com.mydogspies.xflytools.controller.inlogic.InCommandMapSingleton;
+import com.mydogspies.xflytools.controller.outlogic.OutCommandMap;
+import com.mydogspies.xflytools.controller.outlogic.OutCommandMapSingleton;
 import com.mydogspies.xflytools.data.DrefDataIO;
-import com.mydogspies.xflytools.controller.ControllerCo;
-import com.mydogspies.xflytools.controller.MainWindowController;
-import com.mydogspies.xflytools.controller.MainWindowControllerSingleton;
 import com.mydogspies.xflytools.controller.elements.LightToggleButton;
 import com.mydogspies.xflytools.io.*;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.ToggleButton;
@@ -13,18 +16,18 @@ import javafx.scene.layout.GridPane;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.ArrayList;
-
 /**
  * This is the controller for the lighting buttons part of the GUI.
+ *
  * @author Peter Mankowski
  * @since 0.4.0
  */
-public class LightButtons implements ControllerCo, DataObserverIO {
+public class LightButtons implements LightButtonController, DataObserverIO {
 
     private static final Logger log = LoggerFactory.getLogger(LightButtons.class);
-    private final MainWindowController main_controller = MainWindowControllerSingleton.getInstance().getController();
     private final DataHandler dataHandler = DataHandlerSingleton.getInstance().getHandler();
+    private final InCommandMap inCommandMap = InCommandMapSingleton.getInstance().getMap();
+    private final OutCommandMap outCommandMap = OutCommandMapSingleton.getInstance().getMap();
 
     @FXML
     private GridPane buttonGrid;
@@ -40,7 +43,7 @@ public class LightButtons implements ControllerCo, DataObserverIO {
     @FXML
     public void initialize() {
 
-        // dataHandler.addObserver(this);
+        dataHandler.addObserver(this);
         initElements();
     }
 
@@ -60,110 +63,71 @@ public class LightButtons implements ControllerCo, DataObserverIO {
 
         if (SocketConnect.socket != null) {
 
-            switch (button_id) {
-
-                /* LIGHTING BUTTONS */
-
-                case "taxi":
-                    main_controller.sendToXplane("cmd", "taxi_lights_flip", "");
-                    log.trace("clickButton(): Taxi lights toggled");
-                    break;
-
-                case "nav":
-                    main_controller.sendToXplane("cmd", "nav_lights_flip", "");
-                    log.trace("clickButton(): Nav lights toggled");
-                    break;
-
-                case "beacon":
-                    main_controller.sendToXplane("cmd", "beacon_lights_flip", "");
-                    log.trace("clickButton(): Beacon lights toggled");
-                    break;
-
-                case "strobe":
-                    main_controller.sendToXplane("cmd", "strobe_lights_flip", "");
-                    log.trace("clickButton(): Strobe lights toggled");
-                    break;
-
-                case "landing":
-                    main_controller.sendToXplane("cmd", "landing_lights_flip", "");
-                    log.trace("clickButton(): Landings lights toggled");
-                    break;
-
+            if (button_id.equals("taxi")) {
+                outCommandMap.getOutCommandMap().get("taxi_lights_flip").execute();
             }
+
+            if (button_id.equals("nav")) {
+                outCommandMap.getOutCommandMap().get("nav_lights_flip").execute();
+            }
+
+            if (button_id.equals("beacon")) {
+                outCommandMap.getOutCommandMap().get("beacon_lights_flip").execute();
+            }
+
+            if (button_id.equals("strobe")) {
+                outCommandMap.getOutCommandMap().get("strobe_lights_flip").execute();
+            }
+
+            if (button_id.equals("landing")) {
+                outCommandMap.getOutCommandMap().get("landing_lights_flip").execute();
+            }
+
         } else {
             b.setSelected(false);
         }
     }
 
-    @Override
-    public void addToField(ActionEvent event) {
-
-    }
-
     /**
      * This method is what we get from the observer interface in order to receive data from Xplane.
+     *
      * @param packet the data object that contains the dataref, its values and the type; i.e. the module it belongs to.
      */
     @Override
     public void updateFromXplane(DataObserverPacket packet) {
 
-        DrefDataIO io = new DrefDataIO();
-        String command = io.getCmndByDataref(packet.getDref());
-        ArrayList<String> value = packet.getValues();
+        Platform.runLater(() -> {
 
-        switch (command) {
+            DrefDataIO io = new DrefDataIO();
+            String command = io.getCmndByDataref(packet.getDref());
 
-            case "taxi_light":
-                if (taxiLight.selectedProperty().getValue().equals(true) && value.get(0).equals("0")) {
-                    taxiLight.setSelected(false);
-                    log.trace("updateFromXplane(): [" + command + "] -> " + value + " | taxi light turned OFF in app.");
-                } else if (taxiLight.selectedProperty().getValue().equals(false) && value.get(0).equals("1")) {
-                    taxiLight.setSelected(true);
-                    log.trace("updateFromXplane(): [" + command + "] -> " + value + " | taxi light turned ON in app.");
-                }
-                break;
+            if (command.equals("taxi_light")) {
+                inCommandMap.getInCommandMap().get("taxi_light").execute(packet.getDref(), packet.getValues());
+            }
 
-            case "nav_light":
-                if (navLight.selectedProperty().getValue().equals(true) && value.get(0).equals("0")) {
-                    navLight.setSelected(false);
-                    log.trace("updateFromXplane(): [" + command + "] -> " + value + " | navigation lights turned OFF in app.");
-                } else if (navLight.selectedProperty().getValue().equals(false) && value.get(0).equals("1")) {
-                    navLight.setSelected(true);
-                    log.trace("updateFromXplane(): [" + command + "] -> " + value + " | navigation lights turned ON in app.");
-                }
-                break;
+            if (command.equals("nav_light")) {
+                inCommandMap.getInCommandMap().get("nav_light").execute(packet.getDref(), packet.getValues());
+            }
 
-            case "beacon_light":
-                if (beaconLight.selectedProperty().getValue().equals(true) && value.get(0).equals("0")) {
-                    beaconLight.setSelected(false);
-                    log.trace("updateFromXplane(): [" + command + "] -> " + value + " | beacon light turned OFF in app.");
-                } else if (beaconLight.selectedProperty().getValue().equals(false) && value.get(0).equals("1")) {
-                    beaconLight.setSelected(true);
-                    log.trace("updateFromXplane(): [" + command + "] -> " + value + " | beacon light turned ON in app.");
-                }
-                break;
+            if (command.equals("strobe_light")) {
+                inCommandMap.getInCommandMap().get("strobe_light").execute(packet.getDref(), packet.getValues());
+            }
 
-            case "strobe_light":
-                if (strobeLight.selectedProperty().getValue().equals(true) && value.get(0).equals("0")) {
-                    strobeLight.setSelected(false);
-                    log.trace("updateFromXplane(): [" + command + "] -> " + value + " | strobe lights turned OFF in app.");
-                } else if (strobeLight.selectedProperty().getValue().equals(false) && value.get(0).equals("1")) {
-                    strobeLight.setSelected(true);
-                    log.trace("updateFromXplane(): [" + command + "] -> " + value + " | strobe lights turned ON in app.");
-                }
-                break;
+            if (command.equals("landing_light")) {
+                inCommandMap.getInCommandMap().get("landing_light").execute(packet.getDref(), packet.getValues());
+            }
 
-            case "landing_light":
-                if (landingLight.selectedProperty().getValue().equals(true) && value.get(0).equals("0")) {
-                    landingLight.setSelected(false);
-                    log.trace("updateFromXplane(): [" + command + "] -> " + value + " | landing lights turned OFF in app.");
-                } else if (landingLight.selectedProperty().getValue().equals(false) && value.get(0).equals("1")) {
-                    landingLight.setSelected(true);
-                    log.trace("updateFromXplane(): [" + command + "] -> " + value + " | landing lights turned ON in app.");
-                }
-                break;
-        }
+            if (command.equals("beacon_light")) {
+                inCommandMap.getInCommandMap().get("beacon_light").execute(packet.getDref(), packet.getValues());
+            }
 
+        });
+
+    }
+
+    @Override
+    public void addToField(ActionEvent event) {
+        // this method is not implemented in this class
     }
 
     @Override
@@ -223,5 +187,25 @@ public class LightButtons implements ControllerCo, DataObserverIO {
         landingLight.setSelected(false);
     }
 
+    /* GETTERS and SETTERS */
 
+    public LightToggleButton getNavLight() {
+        return navLight;
+    }
+
+    public LightToggleButton getTaxiLight() {
+        return taxiLight;
+    }
+
+    public LightToggleButton getBeaconLight() {
+        return beaconLight;
+    }
+
+    public LightToggleButton getStrobeLight() {
+        return strobeLight;
+    }
+
+    public LightToggleButton getLandingLight() {
+        return landingLight;
+    }
 }

@@ -1,11 +1,14 @@
 package com.mydogspies.xflytools.controller.module.lamcessna172;
 
+import com.mydogspies.xflytools.controller.APButtonsController;
+import com.mydogspies.xflytools.controller.inlogic.InCommandMap;
+import com.mydogspies.xflytools.controller.inlogic.InCommandMapSingleton;
+import com.mydogspies.xflytools.controller.outlogic.OutCommandMap;
+import com.mydogspies.xflytools.controller.outlogic.OutCommandMapSingleton;
 import com.mydogspies.xflytools.data.DrefDataIO;
-import com.mydogspies.xflytools.controller.ControllerCo;
-import com.mydogspies.xflytools.controller.MainWindowController;
-import com.mydogspies.xflytools.controller.MainWindowControllerSingleton;
 import com.mydogspies.xflytools.controller.elements.AutoPilotButton;
 import com.mydogspies.xflytools.io.*;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.ToggleButton;
@@ -13,19 +16,18 @@ import javafx.scene.layout.GridPane;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.ArrayList;
-
 /**
  * This is the controller for the A/P buttons part of the GUI.
  *
  * @author Peter Mankowski
  * @since 0.4.0
  */
-public class APButtons implements ControllerCo, DataObserverIO {
+public class APButtons implements APButtonsController, DataObserverIO {
 
     private static final Logger log = LoggerFactory.getLogger(APButtons.class);
-    private final MainWindowController main_controller = MainWindowControllerSingleton.getInstance().getController();
     private final DataHandler dataHandler = DataHandlerSingleton.getInstance().getHandler();
+    private final InCommandMap inCommandMap = InCommandMapSingleton.getInstance().getMap();
+    private final OutCommandMap outCommandMap = OutCommandMapSingleton.getInstance().getMap();
 
     @FXML
     private GridPane apButtonGrid;
@@ -43,7 +45,7 @@ public class APButtons implements ControllerCo, DataObserverIO {
     @Override
     public void initialize() {
 
-        // dataHandler.addObserver(this);
+        dataHandler.addObserver(this);
         initElements();
     }
 
@@ -63,135 +65,78 @@ public class APButtons implements ControllerCo, DataObserverIO {
 
         if (SocketConnect.socket != null) {
 
-            switch (button_id) {
-
-                case "aptogglebtn":
-                    if (apToggleBtn.selectedProperty().getValue().equals(false)) {
-                        disableAll(true);
-                        main_controller.sendToXplane("set", "ap_mode", "0");
-                        log.trace("clickButton(): A/P is OFF");
-                    } else {
-                        disableAll(false);
-                        main_controller.sendToXplane("set", "ap_mode", "2");
-                        log.trace("clickButton(): A/P is ON");
-                    }
-                    break;
-
-                case "apheadingbtn":
-                    main_controller.sendToXplane("cmd", "ap_heading_toggle", "");
-                    log.trace("clickButton(): A/P set to Heading mode.");
-                    break;
-
-                case "apnavbtn":
-                    if (apRevBtn.selectedProperty().getValue().equals(true)) {
-                        apNavBtn.setSelected(true);
-                    }
-                    main_controller.sendToXplane("cmd", "ap_nav_toggle", "");
-                    log.trace("clickButton(): A/P set to Nav mode.");
-                    break;
-
-                case "apvsbtn":
-                    main_controller.sendToXplane("cmd", "ap_vs_toggle", "");
-                    log.trace("clickButton(): A/P set to Vertical Speed mode.");
-                    break;
-
-                case "apaltitudebtn":
-                    main_controller.sendToXplane("cmd", "ap_altitude_toggle", "");
-                    log.trace("clickButton(): A/P set to Altitude mode.");
-                    break;
-
-                case "aprevbtn":
-                    main_controller.sendToXplane("cmd", "ap_rev_toggle", "");
-                    log.trace("clickButton(): A/P set to REV mode.");
-                    break;
-
-                case "apapprbtn":
-                    main_controller.sendToXplane("cmd", "ap_appr_toggle", "");
-                    log.trace("clickButton(): A/P set to APR mode.");
-                    break;
-
-
+            if (button_id.equals("aptogglebtn")) {
+                outCommandMap.getOutCommandMap().get("ap_mode").execute();
             }
+
+            if (button_id.equals("apheadingbtn")) {
+                outCommandMap.getOutCommandMap().get("ap_heading_toggle").execute();
+            }
+
+            if (button_id.equals("apnavbtn")) {
+                outCommandMap.getOutCommandMap().get("ap_nav_toggle").execute();
+            }
+
+            if (button_id.equals("apvsbtn")) {
+                outCommandMap.getOutCommandMap().get("ap_vs_toggle").execute();
+            }
+
+            if (button_id.equals("apaltitudebtn")) {
+                outCommandMap.getOutCommandMap().get("ap_altitude_toggle").execute();
+            }
+
+            if (button_id.equals("aprevbtn")) {
+                outCommandMap.getOutCommandMap().get("ap_rev_toggle").execute();
+            }
+
+            if (button_id.equals("apapprbtn")) {
+                outCommandMap.getOutCommandMap().get("ap_appr_toggle").execute();
+            }
+
         } else {
             b.setSelected(false);
         }
     }
 
-    @Override
-    public void addToField(ActionEvent event) {
-
-    }
-
+    /**
+     * The observer method for incoming data from Xplane.
+     *
+     * @param packet object with dataref and its value(s) sent from DataHandler.
+     */
     @Override
     public void updateFromXplane(DataObserverPacket packet) {
 
-        DrefDataIO io = new DrefDataIO();
-        String command = io.getCmndByDataref(packet.getDref());
+        Platform.runLater(() -> {
 
-        ArrayList<String> value = packet.getValues();
+            DrefDataIO io = new DrefDataIO();
+            String command = io.getCmndByDataref(packet.getDref());
 
-        switch (command) {
+            if (command.equals("ap_mode")) {
+                inCommandMap.getInCommandMap().get("ap_mode").execute(packet.getDref(), packet.getValues());
+            }
 
-            case "ap_mode":
-                if (apToggleBtn.selectedProperty().getValue().equals(true) && value.get(0).equals("0")) {
-                    apToggleBtn.setSelected(false);
-                    disableAll(true);
-                    log.trace("updateData(): [" + command + "] -> " + value + " | A/P turned OFF in app.");
-                } else if (apToggleBtn.selectedProperty().getValue().equals(false) && value.get(0).equals("2")) {
-                    apToggleBtn.setSelected(true);
-                    disableAll(false);
-                    log.trace("updateData(): [" + command + "] -> " + value + " | A/P turned ON in app.");
-                }
-                break;
+            if (command.equals("ap_heading_mode")) {
+                inCommandMap.getInCommandMap().get("ap_heading_mode").execute(packet.getDref(), packet.getValues());
+            }
 
-            case "ap_heading_mode":
-                if (value.get(0).equals("1")) {
-                    apHeadingBtn.setSelected(true);
-                    apNavBtn.setSelected(false);
-                    apNavBtn.setText("Nav");
-                } else if (value.get(0).equals("2")) {
-                    apHeadingBtn.setSelected(false);
-                    apNavBtn.setSelected(true);
-                    apNavBtn.setText("Nav");
-                } else if (value.get(0).equals("13")) {
-                    apNavBtn.setText("GPSS");
-                }
-                break;
+            if (command.equals("ap_altitude_mode")) {
+                inCommandMap.getInCommandMap().get("ap_altitude_mode").execute(packet.getDref(), packet.getValues());
+            }
 
-            case "ap_altitude_mode":
-                if (value.get(0).equals("6")) {
-                    apAltitudeBtn.setSelected(true);
-                    apVSBtn.setSelected(false);
-                } else if (value.get(0).equals("4")) {
-                    apAltitudeBtn.setSelected(false);
-                    apVSBtn.setSelected(true);
-                }
-                break;
+            if (command.equals("ap_backcourse")) {
+                inCommandMap.getInCommandMap().get("ap_backcourse").execute(packet.getDref(), packet.getValues());
+            }
 
-            case "ap_backcourse":
-                if (value.get(0).equals("1")) {
-                    apRevBtn.setSelected(true);
-                } else if (value.get(0).equals("0")) {
-                    apRevBtn.setSelected(false);
-                    apApprBtn.setSelected(false);
-                }
-                break;
+            if (command.equals("ap_appr_status")) {
+                inCommandMap.getInCommandMap().get("ap_appr_status").execute(packet.getDref(), packet.getValues());
+            }
 
-            case "ap_appr_status":
-                if (value.get(0).equals("1")) {
-                    apApprBtn.setSelected(true);
-                    apNavBtn.setSelected(true);
-                } else if (value.get(0).equals("0")) {
-                    apApprBtn.setSelected(false);
-                    if (apHeadingBtn.selectedProperty().getValue().equals(true)) {
-                        apNavBtn.setSelected(false);
-                    }
-                } else if (value.get(0).equals("2")) {
-                    apApprBtn.setSelected(true);
-                }
-                break;
+        });
+    }
 
-        }
+    @Override
+    public void addToField(ActionEvent event) {
+        // method not implemented in this class
     }
 
     @Override
@@ -262,7 +207,6 @@ public class APButtons implements ControllerCo, DataObserverIO {
         apApprBtn.setDisable(state);
         apNavBtn.setDisable(state);
         apRevBtn.setDisable(state);
-
     }
 
     /**
@@ -279,5 +223,35 @@ public class APButtons implements ControllerCo, DataObserverIO {
         apNavBtn.setSelected(false);
         apRevBtn.setSelected(false);
         disableAll(true);
+    }
+
+    /* GETTERS and SETTERS */
+
+    public AutoPilotButton getApToggleBtn() {
+        return apToggleBtn;
+    }
+
+    public AutoPilotButton getApHeadingBtn() {
+        return apHeadingBtn;
+    }
+
+    public AutoPilotButton getApAltitudeBtn() {
+        return apAltitudeBtn;
+    }
+
+    public AutoPilotButton getApVSBtn() {
+        return apVSBtn;
+    }
+
+    public AutoPilotButton getApApprBtn() {
+        return apApprBtn;
+    }
+
+    public AutoPilotButton getApNavBtn() {
+        return apNavBtn;
+    }
+
+    public AutoPilotButton getApRevBtn() {
+        return apRevBtn;
     }
 }
