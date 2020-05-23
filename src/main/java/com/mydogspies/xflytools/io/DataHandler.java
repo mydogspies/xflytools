@@ -18,8 +18,7 @@ import java.util.regex.Pattern;
 public class DataHandler {
 
     private static final Logger log = LoggerFactory.getLogger(DataHandler.class);
-    private List<DataObserverIO> observers = new ArrayList<>();
-    private String rawString;
+    private final List<DataObserverIO> observers = new ArrayList<>();
 
     public DataHandler() {
 
@@ -33,10 +32,8 @@ public class DataHandler {
      */
     public void processWithDataHandler(String rawString) {
 
-        this.rawString = rawString;
-
         Runnable runnable = () -> {
-            sendToObservers(makedatarefMap(processStringIntoDatarefs()));
+            sendToObservers(makeDatarefMap(processStringIntoDatarefs(rawString)));
         };
 
         Thread thread = new Thread(runnable);
@@ -46,10 +43,11 @@ public class DataHandler {
 
     /**
      * Process the raw string by first breaking it up in individual datarefs and then putting them into a single list.
-     * @return a list of datarefs
      *
+     * @param rawString the raw dataref received from Xplane.
+     * @return  a list of separate datarefs with values
      */
-    private List<String> processStringIntoDatarefs() {
+    protected List<String> processStringIntoDatarefs(String rawString) {
 
         List<String> dataList = new ArrayList<>();
 
@@ -93,7 +91,7 @@ public class DataHandler {
      * hash map with the structure: dataref:value(s) -> (string:arraylist)
      * @param dataList the list of raw dataref commands processed by processStringIntoDatarefs().
      */
-    private Map<String, ArrayList<String>> makedatarefMap(List<String> dataList) {
+    protected Map<String, ArrayList<String>> makeDatarefMap(List<String> dataList) {
 
         // Then build our map of dataref:value(s)
         Map<String, ArrayList<String>> dataMap = new HashMap<>();

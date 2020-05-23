@@ -1,6 +1,10 @@
 package com.mydogspies.xflytools.controller.module.lamcessna172;
 
 import com.mydogspies.xflytools.controller.RadiosController;
+import com.mydogspies.xflytools.controller.inlogic.InCommandMap;
+import com.mydogspies.xflytools.controller.inlogic.InCommandMapSingleton;
+import com.mydogspies.xflytools.controller.outlogic.OutCommandMap;
+import com.mydogspies.xflytools.controller.outlogic.OutCommandMapSingleton;
 import com.mydogspies.xflytools.data.DrefDataIO;
 import com.mydogspies.xflytools.controller.MainWindowController;
 import com.mydogspies.xflytools.controller.MainWindowControllerSingleton;
@@ -24,6 +28,9 @@ public class Radios implements RadiosController, DataObserverIO {
 
     private static final Logger log = LoggerFactory.getLogger(Radios.class);
     private final MainWindowController main_controller = MainWindowControllerSingleton.getInstance().getController();
+    private final DataHandler dataHandler = DataHandlerSingleton.getInstance().getHandler();
+    private final InCommandMap inCommandMap = InCommandMapSingleton.getInstance().getMap();
+    private final OutCommandMap outCommandMap = OutCommandMapSingleton.getInstance().getMap();
 
     @FXML
     private GridPane radioGrid;
@@ -71,25 +78,33 @@ public class Radios implements RadiosController, DataObserverIO {
 
         ArrayList<String> value = packet.getValues();
 
+        if (command.equals("com1_freq")) {
+            inCommandMap.getInCommandMap().get("com1_freq").execute(packet.getDref(), packet.getValues());
+        }
+
+        if (command.equals("com2_freq")) {
+            inCommandMap.getInCommandMap().get("com2_freq").execute(packet.getDref(), packet.getValues());
+        }
+
         switch (command) {
 
-            case "com1_freq":
+            /*case "com1_freq":
                 String raw = value.get(0);
                 String formatted = raw.substring(0, 3) + "." + raw.substring(3);
                 if (!com1Text.getText().equals(formatted)) {
                     com1Text.setText(formatted);
                     log.trace("updateFromXplane(): [" + command + "] -> com1 active set to " + formatted);
                 }
-                break;
+                break;*/
 
-            case "com2_freq":
+            /*case "com2_freq":
                 String raw2 = value.get(0);
                 String formatted2 = raw2.substring(0, 3) + "." + raw2.substring(3);
                 if (!com2Text.getText().equals(formatted2)) {
                     com2Text.setText(formatted2);
                     log.trace("updateFromXplane(): [" + command + "] -> com2 active set to " + formatted2);
                 }
-                break;
+                break;*/
 
             case "nav1_freq":
                 String raw3 = value.get(0);

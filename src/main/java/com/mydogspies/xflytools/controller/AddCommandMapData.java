@@ -44,6 +44,8 @@ public class AddCommandMapData {
         inMap.put("strobe_light", new LightsStrobeToggleGet());
         inMap.put("landing_light", new LightsLandingToggleGet());
         inMap.put("baro_pilot_inhg", new MiscBaroGet());
+        inMap.put("com1_freq", new RadiosCom1FreqGet());
+        inMap.put("com2_freq", new RadiosCom2FreqGet());
 
         InCommandMap inMapObject = new InCommandMap(inMap);
         inSingleton.setMap(inMapObject);
