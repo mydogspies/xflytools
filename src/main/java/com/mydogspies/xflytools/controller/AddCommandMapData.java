@@ -11,7 +11,9 @@ import java.util.Map;
  * This class defines the maps we use for our command patterns.
  *
  * @author Peter Mankowski
+ * @see OutCommand
  * @see OutCommandMapSingleton
+ * @see InCommand
  * @see InCommandMapSingleton
  * @since 0.4.0
  */
@@ -46,6 +48,15 @@ public class AddCommandMapData {
         inMap.put("baro_pilot_inhg", new MiscBaroGet());
         inMap.put("com1_freq", new RadiosCom1FreqGet());
         inMap.put("com2_freq", new RadiosCom2FreqGet());
+        inMap.put("nav1_freq", new RadiosNav1FreqGet());
+        inMap.put("nav2_freq", new RadiosNav2FreqGet());
+        inMap.put("transponder_code", new RadiosTransponderCodeGet());
+        inMap.put("com1_stdby_freq", new RadiosCom1StbyFreqGet());
+        inMap.put("com2_stdby_freq", new RadiosCom2StbyFreqGet());
+        inMap.put("nav1_stdby_freq", new RadiosNav1StdbyFreqGet());
+        inMap.put("nav2_stdby_freq", new RadiosNav2StdbyFreqGet());
+        inMap.put("adf1_freq", new RadiosAdf1FreqGet());
+        inMap.put("adf1_stdby_freq", new RadiosAdf1StdbyFreqGet());
 
         InCommandMap inMapObject = new InCommandMap(inMap);
         inSingleton.setMap(inMapObject);
@@ -76,6 +87,21 @@ public class AddCommandMapData {
         outMap.put("baro_units", new MiscBaroToggleSend());
         outMap.put("baro_pilot_std", new MiscBaroStandardSend());
         outMap.put("baro_pilot_inhg", new MiscBaroSend());
+        outMap.put("com1_freq", new RadiosCom1FreqSend());
+        outMap.put("com1_stdby_freq", new RadiosCom1StdbyFreqSend());
+        outMap.put("com2_freq", new RadiosCom2FreqSend());
+        outMap.put("com2_stdby_freq", new RadiosCom2StdbyFreqSend());
+        outMap.put("nav1_freq", new RadiosNav1FreqSend());
+        outMap.put("nav1_stdby_freq", new RadiosNav1StdbyFreqSend());
+        outMap.put("nav2_freq", new RadiosNav2FreqSend());
+        outMap.put("nav2_stdby_freq", new RadiosNav2StdbyFreqSend());
+        outMap.put("transponder_code", new RadiosTransponderCodeSend());
+        outMap.put("adf1_freq", new RadiosAdf1FreqSend());
+        outMap.put("com1_flip", new RadiosCom1SwapSend());
+        outMap.put("com2_flip", new RadiosCom2SwapSend());
+        outMap.put("nav1_flip", new RadiosNav1SwapSend());
+        outMap.put("nav2_flip", new RadiosNav2SwapSend());
+        outMap.put("adf1_flip", new RadiosAdf1SwapSend());
 
         OutCommandMap outMapObject = new OutCommandMap(outMap);
         outSingleton.setMap(outMapObject);

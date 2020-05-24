@@ -6,28 +6,26 @@ import com.mydogspies.xflytools.controller.inlogic.InCommandMapSingleton;
 import com.mydogspies.xflytools.controller.outlogic.OutCommandMap;
 import com.mydogspies.xflytools.controller.outlogic.OutCommandMapSingleton;
 import com.mydogspies.xflytools.data.DrefDataIO;
-import com.mydogspies.xflytools.controller.MainWindowController;
-import com.mydogspies.xflytools.controller.MainWindowControllerSingleton;
 import com.mydogspies.xflytools.controller.elements.RadioTextField;
 import com.mydogspies.xflytools.controller.elements.SwapButton;
 import com.mydogspies.xflytools.io.*;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.layout.GridPane;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import java.util.ArrayList;
 
 /**
  * This is the controller for the radio readouts part of the GUI.
+ *
  * @author Peter Mankowski
  * @since 0.4.0
  */
 public class Radios implements RadiosController, DataObserverIO {
 
     private static final Logger log = LoggerFactory.getLogger(Radios.class);
-    private final MainWindowController main_controller = MainWindowControllerSingleton.getInstance().getController();
     private final DataHandler dataHandler = DataHandlerSingleton.getInstance().getHandler();
     private final InCommandMap inCommandMap = InCommandMapSingleton.getInstance().getMap();
     private final OutCommandMap outCommandMap = OutCommandMapSingleton.getInstance().getMap();
@@ -52,146 +50,82 @@ public class Radios implements RadiosController, DataObserverIO {
     private SwapButton nav2swap;
     private SwapButton adf1swap;
 
-
     /* INIT */
 
     @Override
     @FXML
     public void initialize() {
 
-        // dataHandler.addObserver(this);
+        dataHandler.addObserver(this);
         initElements();
     }
 
-    @Override
-    public void clickButton(ActionEvent event) {}
-
     /**
      * This method is what we get from the observer interface in order to receive data from Xplane.
+     *
      * @param packet the data object that contains the dataref, its values and the type; i.e. the module it belongs to.
      */
     @Override
     public void updateFromXplane(DataObserverPacket packet) {
 
-        DrefDataIO io = new DrefDataIO();
-        String command = io.getCmndByDataref(packet.getDref());
+        Platform.runLater(() -> {
 
-        ArrayList<String> value = packet.getValues();
+            DrefDataIO io = new DrefDataIO();
+            String command = io.getCmndByDataref(packet.getDref());
 
-        if (command.equals("com1_freq")) {
-            inCommandMap.getInCommandMap().get("com1_freq").execute(packet.getDref(), packet.getValues());
-        }
+            ArrayList<String> value = packet.getValues();
 
-        if (command.equals("com2_freq")) {
-            inCommandMap.getInCommandMap().get("com2_freq").execute(packet.getDref(), packet.getValues());
-        }
+            if (command.equals("com1_freq")) {
+                inCommandMap.getInCommandMap().get("com1_freq").execute(packet.getDref(), packet.getValues());
+            }
 
-        switch (command) {
+            if (command.equals("com2_freq")) {
+                inCommandMap.getInCommandMap().get("com2_freq").execute(packet.getDref(), packet.getValues());
+            }
 
-            /*case "com1_freq":
-                String raw = value.get(0);
-                String formatted = raw.substring(0, 3) + "." + raw.substring(3);
-                if (!com1Text.getText().equals(formatted)) {
-                    com1Text.setText(formatted);
-                    log.trace("updateFromXplane(): [" + command + "] -> com1 active set to " + formatted);
-                }
-                break;*/
+            if (command.equals("nav1_freq")) {
+                inCommandMap.getInCommandMap().get("nav1_freq").execute(packet.getDref(), packet.getValues());
+            }
 
-            /*case "com2_freq":
-                String raw2 = value.get(0);
-                String formatted2 = raw2.substring(0, 3) + "." + raw2.substring(3);
-                if (!com2Text.getText().equals(formatted2)) {
-                    com2Text.setText(formatted2);
-                    log.trace("updateFromXplane(): [" + command + "] -> com2 active set to " + formatted2);
-                }
-                break;*/
+            if (command.equals("nav2_freq")) {
+                inCommandMap.getInCommandMap().get("nav2_freq").execute(packet.getDref(), packet.getValues());
+            }
 
-            case "nav1_freq":
-                String raw3 = value.get(0);
-                String formatted3 = raw3.substring(0, 3) + "." + raw3.substring(3);
-                if (!nav1Text.getText().equals(formatted3)) {
-                    nav1Text.setText(formatted3);
-                    log.trace("updateFromXplane(): [" + command + "] -> nav1 active set to " + formatted3);
-                }
-                break;
+            if (command.equals("transponder_code")) {
+                inCommandMap.getInCommandMap().get("transponder_code").execute(packet.getDref(), packet.getValues());
+            }
 
-            case "nav2_freq":
-                String raw4 = value.get(0);
-                String formatted4 = raw4.substring(0, 3) + "." + raw4.substring(3);
-                if (!nav2Text.getText().equals(formatted4)) {
-                    nav2Text.setText(formatted4);
-                    log.trace("updateFromXplane(): [" + command + "] -> nav2 active set to " + value);
-                }
-                break;
+            if (command.equals("com1_stdby_freq")) {
+                inCommandMap.getInCommandMap().get("com1_stdby_freq").execute(packet.getDref(), packet.getValues());
+            }
 
-            case "transponder_code":
-                if (!transponder.getText().equals(value.get(0))) {
-                    transponder.setText(value.get(0));
-                    log.trace("updateFromXplane(): [" + command + "] -> transponder set to " + value);
-                }
-                break;
+            if (command.equals("com2_stdby_freq")) {
+                inCommandMap.getInCommandMap().get("com2_stdby_freq").execute(packet.getDref(), packet.getValues());
+            }
 
-            case "com1_stdby_freq":
-                String raw5 = value.get(0);
-                String formatted5 = raw5.substring(0, 3) + "." + raw5.substring(3);
-                if (!com1Stby.getText().equals(formatted5)) {
-                    com1Stby.setText(formatted5);
-                    log.trace("updateFromXplane(): [" + command + "] -> com1 stand-by set to " + formatted5);
-                }
-                break;
+            if (command.equals("nav1_stdby_freq")) {
+                inCommandMap.getInCommandMap().get("nav1_stdby_freq").execute(packet.getDref(), packet.getValues());
+            }
 
-            case "com2_stdby_freq":
-                String raw6 = value.get(0);
-                String formatted6 = raw6.substring(0, 3) + "." + raw6.substring(3);
-                if (!com2Stby.getText().equals(formatted6)) {
-                    com2Stby.setText(formatted6);
-                    log.trace("updateFromXplane(): [" + command + "] -> com2 stand-by set to " + formatted6);
-                }
-                break;
+            if (command.equals("nav2_stdby_freq")) {
+                inCommandMap.getInCommandMap().get("nav2_stdby_freq").execute(packet.getDref(), packet.getValues());
+            }
 
-            case "nav1_stdby_freq":
-                String raw7 = value.get(0);
-                String formatted7 = raw7.substring(0, 3) + "." + raw7.substring(3);
-                if (!nav1Stby.getText().equals(formatted7)) {
-                    nav1Stby.setText(formatted7);
-                    log.trace("updateFromXplane(): [" + command + "] -> nav1 stand-by set to " + formatted7);
-                }
-                break;
+            if (command.equals("adf1_freq")) {
+                inCommandMap.getInCommandMap().get("adf1_freq").execute(packet.getDref(), packet.getValues());
+            }
 
-            case "nav2_stdby_freq":
-                String raw8 = value.get(0);
-                String formatted8 = raw8.substring(0, 3) + "." + raw8.substring(3);
-                if (!nav2Stby.getText().equals(formatted8)) {
-                    nav2Stby.setText(formatted8);
-                    log.trace("updateFromXplane(): [" + command + "] -> nav2 stand-by set to " + formatted8);
-                }
-                break;
+            if (command.equals("adf1_stdby_freq")) {
+                inCommandMap.getInCommandMap().get("adf1_stdby_freq").execute(packet.getDref(), packet.getValues());
+            }
 
-            case "adf1_freq":
-                String raw9 = value.get(0);
-                if (!adf1Text.getText().equals(raw9)) {
-                    adf1Text.setText(raw9);
-                    log.trace("updateFromXplane(): [" + command + "] -> adf1 set to " + raw9);
-                }
-                break;
-
-            case "adf1_stdby_freq":
-                String raw10 = value.get(0);
-                if (!adf1Stby.getText().equals(raw10)) {
-                    adf1Stby.setText(raw10);
-                    log.trace("updateFromXplane(): [" + command + "] -> adf1 stand-by set to " + raw10);
-                }
-                break;
-
-        }
+        });
 
     }
 
-    @Override
-    public void disableAll(boolean state) {}
-
     /**
      * Triggers when enter is pressed within a radio text field
+     *
      * @param event the trigger from the specific tect field
      */
     @Override
@@ -205,116 +139,61 @@ public class Radios implements RadiosController, DataObserverIO {
             RadioTextField b = (RadioTextField) event.getSource();
             String field_id = b.getId();
 
-            switch (field_id) {
+            if (field_id.equals("com1text")) {
+                outCommandMap.getOutCommandMap().get("com1_freq").execute();
+            }
 
-                case "com1text":
-                    String val = com1Text.getText();
-                    if (matchesFreqFormat(val, 3)) {
-                        val = formatFreqToSend(val, 3);
-                        main_controller.sendToXplane("set", "com1_freq", val);
-                        log.trace("addToField(): Com1 active set to " + val + " in Xplane.");
-                    }
-                    break;
+            if (field_id.equals("com1stby")) {
+                outCommandMap.getOutCommandMap().get("com1_stdby_freq").execute();
+            }
 
-                case "com1stby":
-                    String val2 = com1Stby.getText();
-                    if (matchesFreqFormat(val2, 3)) {
-                        val2 = formatFreqToSend(val2, 3);
-                        main_controller.sendToXplane("set", "com1_stdby_freq", val2);
-                        log.trace("addToField(): Com1 standby set to " + val2 + " in Xplane.");
-                    }
-                    break;
+            if (field_id.equals("com2text")) {
+                outCommandMap.getOutCommandMap().get("com2_freq").execute();
+            }
 
-                case "com2text":
-                    String val3 = com2Text.getText();
-                    if (matchesFreqFormat(val3, 3)) {
-                        val3 = formatFreqToSend(val3, 3);
-                        main_controller.sendToXplane("set", "com2_freq", val3);
-                        log.trace("addToField(): Com2 active set to " + val3 + " in Xplane.");
-                    }
-                    break;
+            if (field_id.equals("com2stby")) {
+                outCommandMap.getOutCommandMap().get("com2_stdby_freq").execute();
+            }
 
-                case "com2stby":
-                    String val4 = com2Stby.getText();
-                    if (matchesFreqFormat(val4, 3)) {
-                        val4 = formatFreqToSend(val4, 3);
-                        main_controller.sendToXplane("set", "com2_stdby_freq", val4);
-                        log.trace("addToField(): Com2 standby set to " + val4 + " in Xplane.");
-                    }
-                    break;
+            if (field_id.equals("nav1text")) {
+                outCommandMap.getOutCommandMap().get("nav1_freq").execute();
+            }
 
-                case "nav1text":
-                    String val5 = nav1Text.getText();
-                    if (matchesFreqFormat(val5, 2)) {
-                        val5 = formatFreqToSend(val5, 2);
-                        main_controller.sendToXplane("set", "nav1_freq", val5);
-                        log.trace("addToField(): Nav1 active set to " + val5 + " in Xplane.");
-                    }
-                    break;
+            if (field_id.equals("nav1stby")) {
+                outCommandMap.getOutCommandMap().get("nav1_stdby_freq").execute();
+            }
 
-                case "nav1stby":
-                    String val6 = nav1Stby.getText();
-                    if (matchesFreqFormat(val6, 2)) {
-                        val6 = formatFreqToSend(val6, 2);
-                        main_controller.sendToXplane("set", "nav1_stdby_freq", val6);
-                        log.trace("addToField(): Nav1 standby set to " + val6 + " in Xplane.");
-                    }
-                    break;
+            if (field_id.equals("nav2text")) {
+                outCommandMap.getOutCommandMap().get("nav2_freq").execute();
+            }
 
-                case "nav2text":
-                    String val7 = nav2Text.getText();
-                    if (matchesFreqFormat(val7, 2)) {
-                        val7 = formatFreqToSend(val7, 2);
-                        main_controller.sendToXplane("set", "nav2_freq", val7);
-                        log.trace("addToField(): Nav2 active set to " + val7 + " in Xplane.");
-                    }
-                    break;
+            if (field_id.equals("nav2stby")) {
+                outCommandMap.getOutCommandMap().get("nav2_stdby_freq").execute();
+            }
 
-                case "nav2stby":
-                    String val8 = nav2Stby.getText();
-                    if (matchesFreqFormat(val8, 2)) {
-                        val8 = formatFreqToSend(val8, 2);
-                        main_controller.sendToXplane("set", "nav2_stdby_freq", val8);
-                        log.trace("addToField(): Nav2 standby set to " + val8 + " in Xplane.");
-                    }
-                    break;
+            if (field_id.equals("transponderCode")) {
+                outCommandMap.getOutCommandMap().get("transponder_code").execute();
+            }
 
-                case "transponderCode":
-                    String val9 = transponder.getText();
-                    if (val9.matches("[0-9]{4}")) {
-                        main_controller.sendToXplane("set", "transponder_code", val9);
-                        log.trace("addToField(): Transponder set to " + val9 + " in Xplane.");
-                    }
-                    break;
+            if (field_id.equals("adf1text")) {
+                outCommandMap.getOutCommandMap().get("adf1_freq").execute();
+            }
 
-                case "adf1text":
-                    String val10 = adf1Text.getText();
-                    if (matchesFreqFormat(val10, 0)) {
-                        val10 = formatFreqToSend(val10, 0);
-                        main_controller.sendToXplane("set", "adf1_freq", val10);
-                        log.trace("addToField(): Adf1 set to " + val10 + " in Xplane.");
-                    }
-                    break;
-
-                case "adf1stby":
-                    String val11 = adf1Stby.getText();
-                    if (matchesFreqFormat(val11, 0)) {
-                        val11 = formatFreqToSend(val11, 0);
-                        main_controller.sendToXplane("set", "adf1_stdby_freq", val11);
-                        log.trace("addToField(): Adf1 stand-by set to " + val11 + " in Xplane.");
-                    }
-                    break;
+            if (field_id.equals("adf1stby")) {
+                outCommandMap.getOutCommandMap().get("adf1_stdby_freq").execute();
             }
         }
     }
 
     /**
      * Matches frequency input to be in 1XX. format plus 1 to 3 decimals OR 1XX without decimals.
-     * @param value inputted frequency via the radio text fields
+     *
+     * @param value       inputted frequency via the radio text fields
      * @param maxDecimals the amount of decimals we want to match to.
      * @return true of number of decimals match, otherwise false
      */
-    private boolean matchesFreqFormat(String value, int maxDecimals) {
+    @Override
+    public boolean matchesFreqFormat(String value, int maxDecimals) {
 
         if (maxDecimals > 0) {
             if (value.matches("[1][0-9]{2}\\.[0-9]{1," + maxDecimals + "}") || value.matches("[1][0-9]{2}")) {
@@ -335,10 +214,12 @@ public class Radios implements RadiosController, DataObserverIO {
     /**
      * Takes the matched value (so either 1 to 3 decimals or none) and sees to it's always carries full 3
      * decimals by adding zeroes.
+     *
      * @param value a frequency inputted via the radio fields.
      * @return frequency formatted to always having 3 decimals.
      */
-    private String formatFreqToSend(String value, int numberOfDecimals) {
+    @Override
+    public String formatFreqToSend(String value, int numberOfDecimals) {
 
         StringBuilder result = new StringBuilder(value.replace(".", ""));
 
@@ -372,10 +253,12 @@ public class Radios implements RadiosController, DataObserverIO {
 
     /**
      * Swaps between two com or nav radios using the native swap function within Xplane
+     *
      * @param event upon clicked swap button
      */
     @FXML
-    private void toggleRadio(ActionEvent event) {
+    @Override
+    public void clickButton(ActionEvent event) {
 
         log.debug("toggleRadio(): ActionEvent called: " + event);
 
@@ -384,34 +267,31 @@ public class Radios implements RadiosController, DataObserverIO {
             SwapButton b = (SwapButton) event.getSource();
             String button_id = b.getId();
 
-            switch (button_id) {
+            if (button_id.equals("com1swap")) {
+                outCommandMap.getOutCommandMap().get("com1_flip").execute();
+            }
 
-                case "com1swap":
-                    main_controller.sendToXplane("cmd", "com1_flip", "");
-                    log.trace("toggleRadio(): Com1 frequencies flipped.");
-                    break;
+            if (button_id.equals("com2swap")) {
+                outCommandMap.getOutCommandMap().get("com2_flip").execute();
+            }
 
-                case "com2swap":
-                    main_controller.sendToXplane("cmd", "com2_flip", "");
-                    log.trace("toggleRadio(): Com1 frequencies flipped.");
-                    break;
+            if (button_id.equals("nav1swap")) {
+                outCommandMap.getOutCommandMap().get("nav1_flip").execute();
+            }
 
-                case "nav1swap":
-                    main_controller.sendToXplane("cmd", "nav1_flip", "");
-                    log.trace("toggleRadio(): Com1 frequencies flipped.");
-                    break;
+            if (button_id.equals("nav2swap")) {
+                outCommandMap.getOutCommandMap().get("nav2_flip").execute();
+            }
 
-                case "nav2swap":
-                    main_controller.sendToXplane("cmd", "nav2_flip", "");
-                    log.trace("toggleRadio(): Com1 frequencies flipped.");
-                    break;
-
-                case "adf1swap":
-                    main_controller.sendToXplane("cmd", "adf1_flip", "");
-                    log.trace("toggleRadio(): Adf1 frequencies flipped.");
-                    break;
+            if (button_id.equals("adf1swap")) {
+                outCommandMap.getOutCommandMap().get("adf1_flip").execute();
             }
         }
+    }
+
+    @Override
+    public void disableAll(boolean state) {
+        // not implemented in this class
     }
 
     @Override
@@ -423,35 +303,35 @@ public class Radios implements RadiosController, DataObserverIO {
         com1swap.setId("com1swap");
         com1swap.setText("<>");
         com1swap.getStyleClass().add("swap-button");
-        com1swap.setOnAction(this::toggleRadio);
-        radioGrid.add(com1swap,3, 1);
+        com1swap.setOnAction(this::clickButton);
+        radioGrid.add(com1swap, 3, 1);
 
         com2swap = new SwapButton();
         com2swap.setId("com2swap");
         com2swap.setText("<>");
         com2swap.getStyleClass().add("swap-button");
-        com2swap.setOnAction(this::toggleRadio);
+        com2swap.setOnAction(this::clickButton);
         radioGrid.add(com2swap, 3, 2);
 
         nav1swap = new SwapButton();
         nav1swap.setId("nav1swap");
         nav1swap.setText("<>");
         nav1swap.getStyleClass().add("swap-button");
-        nav1swap.setOnAction(this::toggleRadio);
+        nav1swap.setOnAction(this::clickButton);
         radioGrid.add(nav1swap, 3, 3);
 
         nav2swap = new SwapButton();
         nav2swap.setId("nav2swap");
         nav2swap.setText("<>");
         nav2swap.getStyleClass().add("swap-button");
-        nav2swap.setOnAction(this::toggleRadio);
-        radioGrid.add(nav2swap,3, 4);
+        nav2swap.setOnAction(this::clickButton);
+        radioGrid.add(nav2swap, 3, 4);
 
         adf1swap = new SwapButton();
         adf1swap.setId("adf1swap");
         adf1swap.setText("<>");
         adf1swap.getStyleClass().add("swap-button");
-        adf1swap.setOnAction(this::toggleRadio);
+        adf1swap.setOnAction(this::clickButton);
         radioGrid.add(adf1swap, 3, 5);
 
         /* RADIO FIELDS */
@@ -475,14 +355,14 @@ public class Radios implements RadiosController, DataObserverIO {
         nav1Stby.setText("");
         nav1Stby.getStyleClass().addAll("radio-field");
         nav1Stby.setOnAction(this::addToField);
-        radioGrid.add(nav1Stby,4, 3);
+        radioGrid.add(nav1Stby, 4, 3);
 
         nav2Stby = new RadioTextField();
         nav2Stby.setId("nav2stby");
         nav2Stby.setText("");
         nav2Stby.getStyleClass().addAll("radio-field");
         nav2Stby.setOnAction(this::addToField);
-        radioGrid.add(nav2Stby,4, 4);
+        radioGrid.add(nav2Stby, 4, 4);
 
         adf1Stby = new RadioTextField();
         adf1Stby.setId("adf1stby");

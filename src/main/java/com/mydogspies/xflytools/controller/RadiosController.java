@@ -13,6 +13,14 @@ import com.mydogspies.xflytools.controller.elements.SwapButton;
  */
 public interface RadiosController extends ControllerCo {
 
+    /* METHODS */
+
+    boolean matchesFreqFormat(String value, int maxDecimals);
+
+    String formatFreqToSend(String value, int numberOfDecimals);
+
+    /* JFX ELEMENTS */
+
     public RadioTextField getTransponder();
 
     public RadioTextField getCom1Text();

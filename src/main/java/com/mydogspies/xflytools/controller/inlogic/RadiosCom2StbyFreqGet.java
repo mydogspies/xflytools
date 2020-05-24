@@ -10,7 +10,7 @@ import org.slf4j.LoggerFactory;
 import java.util.ArrayList;
 
 /**
- * The actual implementation of the command pattern for the com 2 radio frequency in default Xplane.
+ * The actual implementation of the command pattern for the com 2 standby radio frequency in default Xplane.
  * This method updates the data in Xflytools.
  *
  * @author Peter Mankowski
@@ -19,21 +19,21 @@ import java.util.ArrayList;
  * @see com.mydogspies.xflytools.controller.ControllerCo
  * @since 0.4.0
  */
-public class RadiosCom2FreqGet implements InCommand {
+public class RadiosCom2StbyFreqGet implements InCommand {
 
-    private static final Logger log = LoggerFactory.getLogger(RadiosCom2FreqGet.class);
+    private static final Logger log = LoggerFactory.getLogger(RadiosCom2StbyFreqGet.class);
 
     @Override
     public void execute(String command, ArrayList<String> values) {
 
         final RadiosController controller = (RadiosController) RadiosControllerSingleton.getInstance().getController();
-        RadioTextField com2Text = controller.getCom2Text();
+        RadioTextField com2Stby = controller.getCom2Stby();
 
         String raw = values.get(0);
         String formatted = raw.substring(0, 3) + "." + raw.substring(3);
-        if (!com2Text.getText().equals(formatted)) {
-            com2Text.setText(formatted);
-            log.trace("execute(): [" + command + "] -> com2 active set to " + formatted);
+        if (!com2Stby.getText().equals(formatted)) {
+            com2Stby.setText(formatted);
+            log.trace("updateFromXplane(): [" + command + "] -> com2 stand-by set to " + formatted);
         }
     }
 }
