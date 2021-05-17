@@ -7,11 +7,10 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * This class is our TCP receiver. Note it runs in its own thread.
+ * The singleton that refers to the handler is also instantiated here.
  *
  * @author Peter Mankowski
  * @since 0.1.0
@@ -19,6 +18,7 @@ import java.util.List;
 public class ReceiveData {
 
     private static final Logger log = LoggerFactory.getLogger(ReceiveData.class);
+    private DataHandler dataHandler = DataHandlerSingleton.getInstance().getHandler();
 
     public void startReceiver() {
 
@@ -39,8 +39,9 @@ public class ReceiveData {
                             rawString.append((char) c);
                         } while (input.available() > 0);
 
-                        // sen it off to the data handler
-                        new DataHandler(rawString.toString());
+                        // send it off to the data handler
+                        dataHandler.processWithDataHandler(rawString.toString());
+
                     }
                 }
             } catch (IOException | IllegalStateException e) {

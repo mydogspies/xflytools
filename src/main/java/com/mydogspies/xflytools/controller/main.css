@@ -1,0 +1,231 @@
+/*
+Xflytools version 0.1.0
+This is the general stylesheet for the main window
+ */
+
+/* GENERAL */
+
+.root {
+    -fx-focus-color: transparent;
+    -fx-faint-focus-color: transparent;
+    -fx-border-style: none;
+    -fx-border-width: 0;
+    -fx-border-insets: 0;
+}
+
+.button {
+    -fx-background-insets: 0;
+}
+
+.toggle-button {
+    -fx-background-insets: 0;
+}
+
+#background {
+    -fx-background-color: #323232;
+
+}
+
+.general-label {
+    -fx-text-fill: #B1B4B5;
+}
+
+/* IP ADDRESS FIELD */
+
+#ipaddress {
+    -fx-background-color: #31353D;
+    -fx-text-fill: #B1B4B5;
+}
+
+/* RADIO LABELS, FIELDS and BUTTON */
+
+.radio-label {
+    -fx-background-color: #323232;
+    -fx-text-fill: #FFC076;
+    -fx-max-width: 75px;
+    -fx-font-size: 15px;
+}
+
+.radio-field {
+    -fx-background-color: #323232;
+    -fx-text-fill: #FFA031;
+    -fx-max-width: 75px;
+    -fx-font-size: 15px;
+}
+
+.swap-button {
+    -fx-base: #424242;
+    /* -fx-text-fill: #B1B4B5; */
+    -fx-text-fill: #FFF8EE;
+    -fx-background-radius: 4px;
+}
+
+
+/* MENUS */
+
+.menu-bar {
+    -fx-background-color: #262626;
+}
+
+.menu .label {
+    -fx-text-fill: #B1B4B5;
+}
+
+/* COMBO BOXES */
+
+.combo-box {
+    -fx-background-color: #31353D;
+}
+
+.combo-box .list-cell {
+    -fx-background-color: #31353D;
+    -fx-text-fill: #B1B4B5;
+}
+
+.combo-box-popup .list-view{
+    -fx-background: #323232;
+    -fx-text-fill: #B1B4B5;
+}
+
+/* TOGGLE BUTTONS */
+
+.light-toggle-button {
+    /* -fx-base: #424242; */
+    -fx-base: #4e4643;
+    -fx-text-fill: #FFF3D0;
+    -fx-column-halignment: center;
+    -fx-background-radius: 8px;
+    -fx-min-width: 38px;
+}
+
+.light-toggle-button:selected {
+    -fx-base: #F0C755;
+    -fx-text-fill: #1C1C1C;
+}
+
+.light-toggle-button:hover {
+    -fx-base: #444444;
+    -fx-text-fill: #B1B4B5;
+}
+
+/* AUTOPILOT */
+
+/* Note that the style for the GPSS variant of Nav is hard
+coded in the APButtons class, in the updateData method */
+
+.ap-labels {
+    -fx-background-color: #323232;
+    -fx-text-fill: #7ECEFD;
+    -fx-font-size: 16px;
+    -fx-translate-x: 20px;
+}
+
+.ap-fields {
+    -fx-background-color: #31353D;
+    -fx-text-fill: #7ECEFD;
+    -fx-max-width: 45px;
+    -fx-translate-x: 15px;
+}
+
+.ap-field-button {
+    /* -fx-base: #424242; c*/
+    -fx-base: #484850;
+    -fx-text-fill: #B1EFFF;
+    -fx-background-radius: 4px;
+}
+
+.ap-buttons {
+    /* -fx-base: #424242; */
+    -fx-base: #484850;
+    -fx-text-fill: #B1EFFF;
+    -fx-column-halignment: center;
+    -fx-background-radius: 8px;
+    -fx-min-width: 38px;
+}
+
+.ap-buttons:selected {
+    -fx-base: #62DEFF;
+    -fx-text-fill: #1C1C1C;
+}
+
+.ap-buttons:hover {
+    -fx-base: #444444;
+    -fx-text-fill: #B1B4B5;
+}
+
+#aptogglebtn {
+    -fx-font-size: 12px;
+}
+
+#aptogglebtn:selected {
+    -fx-text-fill: #900B0A;
+    -fx-font-weight: bold;
+}
+
+/* CONNECT LABEL and TOGGLE BUTTON*/
+
+#toggleConnect {
+    -fx-base: #424242;
+    -fx-text-fill: #DEDEDE;
+    -fx-translate-y: 10px;
+    -fx-background-radius: 4px;
+}
+
+#toggleConnect:hover {
+    -fx-base: #444444;
+    -fx-text-fill: #B1B4B5;
+}
+
+#toggleConnect:selected {
+    -fx-base: #689F38;
+    -fx-text-fill: #1C1C1C;
+}
+
+.connect-label {
+    -fx-translate-y: 10px;
+}
+
+/* BARO */
+
+.baro-field {
+    -fx-background-color: #31353D;
+    -fx-text-fill: #FFA031;
+    -fx-font-size: 15px;
+    -fx-max-width: 58px;
+}
+
+.baro-button {
+    -fx-base: #424242;
+    -fx-text-fill: #B1EFFF;
+    -fx-max-width: 26px;
+    -fx-max-height: 18px;
+    -fx-font-size: 7px;
+    -fx-translate-x: 4px;
+    -fx-background-radius: 3px;
+}
+
+.baro-button:selected {
+    -fx-base: #0067A6;
+}
+
+/* MISC */
+
+.flash-light {
+    -fx-base: #424242;
+    -fx-text-fill: #D29F04;
+    -fx-background-radius: 8px;
+    -fx-max-width: 45px;
+    -fx-max-height: 10px;
+    -fx-translate-y: 7px;
+    -fx-translate-x: -7px;
+}
+
+.flash-light:selected {
+    -fx-base: #916E03;
+    -fx-text-fill: #1C1C1C;
+}
+
+.flash-light:hover {
+    -fx-base: #444444;
+    -fx-text-fill: #B1B4B5;
+}

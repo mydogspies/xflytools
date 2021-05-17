@@ -5,6 +5,6 @@
 _config.yml
 bin/
 /out/
-/src/test/
 /target/
 /ext_resources/
+/.idea/

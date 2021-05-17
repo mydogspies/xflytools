@@ -1,9 +1,12 @@
 package com.mydogspies.xflytools.io;
 
+import com.mydogspies.xflytools.data.DrefDatabase;
 import com.mydogspies.xflytools.Main;
 import com.mydogspies.xflytools.data.DrefData;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.List;
 
 /**
  * Subscribes to all the datarefs in he database.
@@ -16,11 +19,13 @@ public class SubscribeDatarefs {
 
     public static void subRefs() {
 
+        List<DrefData> drefDatabase = DrefDatabase.getInstance().getDatabase();
+
         SendData sendData = new SendData();
         String string;
 
         // fetch from database
-        for (DrefData data : Main.database) {
+        for (DrefData data : drefDatabase) {
 
             // only fetch datarefs, not commands!
             if (data.getIo().equals("set")) {

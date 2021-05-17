@@ -28,7 +28,7 @@ public class SocketConnect {
        try {
            socket = new Socket();
            socket.connect(new InetSocketAddress(server, port), 5000);
-           log.info("connect(): Connected to: " + socket.getLocalAddress());
+           log.info("connect(): New socket established on: " + socket.getInetAddress() + " port " + socket.getPort());
        } catch (SocketTimeoutException e_timeout) {
            log.error("connect(): Connection error (Socket timed out): " + e_timeout.getMessage());
        } catch (IOException e) {
