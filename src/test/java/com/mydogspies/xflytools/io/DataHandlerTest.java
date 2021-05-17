@@ -10,6 +10,9 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class DataHandlerTest {
 
+
+    /* processStringIntoDatarefs() */
+
     @Test
     void testProcessStringIntoDatarefsWithACorrectSingleStringTest() {
 
@@ -35,6 +38,8 @@ class DataHandlerTest {
         assertEquals("sim/cockpit2/radios/actuators/com2_frequency_hz_833 136990", processedString.get(1));
         assertEquals("sim/cockpit/radios/nav1_obs_degm 100", processedString.get(2));
     }
+
+    /* makeDatarefMap */
 
     @Test
     void makeDatarefMapWithADatalistTest() {
